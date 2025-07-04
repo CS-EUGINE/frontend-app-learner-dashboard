@@ -28,6 +28,7 @@ import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
 import './App.scss';
+import './sass/_tailwind.scss';
 
 export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
