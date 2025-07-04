@@ -9,7 +9,6 @@ const RecommendedCoursesList = ({  }) => {
     <div className="tw:py-8">
       <h6 className="tw:text-secondary tw:text-[28px] tw:font-semibold tw:py-4">{formatMessage(messages.recommendedCourses)}</h6>
 
-      {/* Static Courses */}
       <div className="tw:grid tw:grid-cols-1 tw:gap-6 tw:md:grid-cols-4">
         <div className="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden">
           <img
