@@ -1,16 +1,17 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar as faStarSolid,
   faStarHalfAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
+import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
 
 const StarRating = ({
   max = 5,
   value = 0,
   hovered = null,
   disabled = false,
-  color = "#F8B84E",
+  color = '#F8B84E',
   onRate,
   onHover,
 }) => {
@@ -72,6 +73,16 @@ const StarRating = ({
       })}
     </div>
   );
+};
+
+StarRating.propTypes = {
+  max: PropTypes.number,
+  value: PropTypes.number,
+  hovered: PropTypes.number,
+  disabled: PropTypes.bool,
+  color: PropTypes.string,
+  onRate: PropTypes.func,
+  onHover: PropTypes.func,
 };
 
 export default StarRating;
