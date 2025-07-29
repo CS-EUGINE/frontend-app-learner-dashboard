@@ -3,17 +3,18 @@ import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { reduxHooks } from 'hooks';
-import {
-  CourseFilterControls,
-} from 'containers/CourseFilterControls';
 import CourseListSlot from 'plugin-slots/CourseListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 
 import { useCourseListData } from './hooks';
+import { Container, Tabs, Tab } from '@openedx/paragon';
 
+import myDashboardBg from 'assets/my-dashboard-bg.png';
 import messages from './messages';
 
 import './index.scss';
+import RelatedCoursesList from './RelatedCoursesList';
+import RecommendedCoursesList from './RecommendedCoursesList';
 
 /**
  * Renders the list of CourseCards, as well as the controls (CourseFilterControls) for modifying the list.
@@ -26,13 +27,73 @@ export const CoursesPanel = () => {
   const courseListData = useCourseListData();
   return (
     <div className="course-list-container">
-      <div className="course-list-heading-container">
-        <h2 className="course-list-title">{formatMessage(messages.myCourses)}</h2>
-        <div className="course-filter-controls-container">
-          <CourseFilterControls {...courseListData.filterOptions} />
+      <div className="course-list-heading-container tw:relative">
+        <div
+          className="tw:absolute tw:inset-0 tw:bg-cover tw:bg-center tw:z-0"
+          style={{ backgroundImage: `url(${myDashboardBg})` }}
+        ></div>
+
+        <div className="tw:absolute tw:inset-0 tw:bg-[#4EA1C9] tw:opacity-[0.92] tw:z-0" />
+
+        <div className="tw:relative tw:w-full tw:py-10 tw:z-10">
+          <Container fluid size='xl'>
+            <h2 className="course-list-title tw:text-white">{formatMessage(messages.myCourses)}</h2>
+          </Container>
         </div>
       </div>
-      {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+      <Container fluid size='xl'>
+        <Tabs
+          variant="tabs"
+          defaultActiveKey="all"
+          id="course-list-content-tab"
+          className="tw:border-none"
+        >
+          <Tab
+            eventKey="all" 
+            title={
+              <span>
+                All <span>({courseListData?.length ?? 0})</span>
+              </span>
+            } 
+            tabClassName="tw:px-8 tw:py-4"
+          >
+            <section className='tw:my-8'>
+              {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+            </section>
+          </Tab>
+          <Tab
+            eventKey="in-progress"
+            title={
+              <span>
+                In Progress <span>(0)</span>
+              </span>
+            }
+            tabClassName="tw:px-8 tw:py-4"
+          >
+            <section className='tw:my-8'>
+              {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+            </section>
+          </Tab>
+          <Tab
+            eventKey="completed"
+            title={
+              <span>
+                Completed <span>(0)</span>
+              </span>
+            }
+            tabClassName="tw:px-8 tw:py-4"
+          >
+            <section className='tw:my-8'>
+              {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+            </section>
+          </Tab>
+        </Tabs>
+
+        <RelatedCoursesList />
+
+        <RecommendedCoursesList />
+        
+      </Container>
     </div>
   );
 };
