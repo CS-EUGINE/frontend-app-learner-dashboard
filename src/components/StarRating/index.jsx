@@ -19,7 +19,7 @@ const StarRating = ({
   const displayValue = hovered !== null ? hovered : value;
 
   const handleMouseMove = (e, starValue) => {
-    if (disabled) return;
+    if (disabled) { return; }
     const { left, width } = e.target.getBoundingClientRect();
     const x = e.clientX - left;
     const newHover = x < width / 2 ? starValue - 0.5 : starValue;
@@ -27,7 +27,7 @@ const StarRating = ({
   };
 
   const handleClick = (e, starValue) => {
-    if (disabled) return;
+    if (disabled) { return; }
     const { left, width } = e.target.getBoundingClientRect();
     const x = e.clientX - left;
     const rateValue = x < width / 2 ? starValue - 0.5 : starValue;
@@ -36,7 +36,7 @@ const StarRating = ({
 
   return (
     <div
-      className={`tw:flex tw:space-x-1`}
+      className="tw:flex tw:space-x-1"
     >
       {Array.from({ length: safeMax }).map((_, index) => {
         const starValue = index + 1;
@@ -58,11 +58,11 @@ const StarRating = ({
             onClick={(e) => handleClick(e, starValue)}
             style={{
               padding: 0,
-              border: "none",
-              background: "none",
-              cursor: disabled ? "default" : "pointer",
+              border: 'none',
+              background: 'none',
+              cursor: disabled ? 'default' : 'pointer',
             }}
-            aria-label={`Rate ${starValue}${starValue === 1 ? " star" : " stars"}`}
+            aria-label={`Rate ${starValue}${starValue === 1 ? ' star' : ' stars'}`}
             disabled={disabled}
             tabIndex={disabled ? -1 : 0}
             title={starValue}
