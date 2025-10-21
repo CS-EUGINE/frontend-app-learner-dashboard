@@ -1,9 +1,13 @@
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import React, { useState } from 'react';
+
 import messages from './messages';
+import CourseCard from '../../../components/CourseCard';
 
 const RelatedCoursesList = ({  }) => {
   const { formatMessage } = useIntl();
+  const [hoveredValue, setHoveredValue] = useState(null);
 
   return (
     <div className="tw:py-8">
@@ -11,73 +15,18 @@ const RelatedCoursesList = ({  }) => {
 
       {/* Static Courses */}
       <div className="tw:grid tw:grid-cols-1 tw:gap-6 tw:md:grid-cols-4">
-        <div className="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden">
-          <img
-            src="https://www.dropbox.com/scl/fi/r3cbzqu9xq4z761sjmdtk/datascience.png?rlkey=hd7zl58n47vf874hbnsgjvvzj&st=15gbjx1l&raw=1"
-            alt="Data Science"
-            className="tw:w-full tw:h-58 tw:object-cover"
+        {[...Array(4)].map((_, index) => (
+          <CourseCard
+            key={index}
+            courseUrl={'http://local.openedx.io:8000/courses/course-v1:UCSICollege+INF246x+2022_T1/about'}
+            imageUrl={'https://www.dropbox.com/scl/fi/r3cbzqu9xq4z761sjmdtk/datascience.png?rlkey=hd7zl58n47vf874hbnsgjvvzj&st=15gbjx1l&raw=1'}
+            title={'Data Science'}
+            description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.'}
+            price={'$28'}
+            rating={4.6}
+            selfPaced={true}
           />
-          <div className="tw:text-center tw:p-6">
-            <h3 className="tw:text-xl tw:font-bold tw:text-[#6255A1] tw:mb-2">
-              Data Science
-            </h3>
-            <p className="tw:text-gray-600 tw:text-sm tw:mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt.
-            </p>
-          </div>
-        </div>
-
-        <div className="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden">
-          <img
-            src="https://www.dropbox.com/scl/fi/r3cbzqu9xq4z761sjmdtk/datascience.png?rlkey=hd7zl58n47vf874hbnsgjvvzj&st=15gbjx1l&raw=1"
-            alt="Data Science"
-            className="tw:w-full tw:h-58 tw:object-cover"
-          />
-          <div className="tw:text-center tw:p-6">
-            <h3 className="tw:text-xl tw:font-bold tw:text-[#6255A1] tw:mb-2">
-              Data Science
-            </h3>
-            <p className="tw:text-gray-600 tw:text-sm tw:mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt.
-            </p>
-          </div>
-        </div>
-
-        <div className="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden">
-          <img
-            src="https://www.dropbox.com/scl/fi/r3cbzqu9xq4z761sjmdtk/datascience.png?rlkey=hd7zl58n47vf874hbnsgjvvzj&st=15gbjx1l&raw=1"
-            alt="Data Science"
-            className="tw:w-full tw:h-58 tw:object-cover"
-          />
-          <div className="tw:text-center tw:p-6">
-            <h3 className="tw:text-xl tw:font-bold tw:text-[#6255A1] tw:mb-2">
-              Data Science
-            </h3>
-            <p className="tw:text-gray-600 tw:text-sm tw:mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt.
-            </p>
-          </div>
-        </div>
-
-        <div className="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden">
-          <img
-            src="https://www.dropbox.com/scl/fi/r3cbzqu9xq4z761sjmdtk/datascience.png?rlkey=hd7zl58n47vf874hbnsgjvvzj&st=15gbjx1l&raw=1"
-            alt="Data Science"
-            className="tw:w-full tw:h-58 tw:object-cover"
-          />
-          <div className="tw:text-center tw:p-6">
-            <h3 className="tw:text-xl tw:font-bold tw:text-[#6255A1] tw:mb-2">
-              Data Science
-            </h3>
-            <p className="tw:text-gray-600 tw:text-sm tw:mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

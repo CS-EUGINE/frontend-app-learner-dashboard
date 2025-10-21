@@ -6,7 +6,7 @@ import { reduxHooks } from 'hooks';
 import CourseListSlot from 'plugin-slots/CourseListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 
-import { useCourseListData } from './hooks';
+import { useCourseListData, useInProgressCourseListData, useCompletedCourseListData } from './hooks';
 import { Container, Tabs, Tab } from '@openedx/paragon';
 
 import myDashboardBg from 'assets/my-dashboard-bg.png';
@@ -24,7 +24,9 @@ import RecommendedCoursesList from './RecommendedCoursesList';
 export const CoursesPanel = () => {
   const { formatMessage } = useIntl();
   const hasCourses = reduxHooks.useHasCourses();
-  const courseListData = useCourseListData();
+  const allCoursesData = useCourseListData();
+  const inProgressData = useInProgressCourseListData();
+  const completedData = useCompletedCourseListData();
   return (
     <div className="course-list-container">
       <div className="course-list-heading-container tw:relative">
@@ -52,39 +54,39 @@ export const CoursesPanel = () => {
             eventKey="all" 
             title={
               <span>
-                All <span>({courseListData?.length ?? 0})</span>
+                All <span>({allCoursesData?.visibleList.length ?? 0})</span>
               </span>
             } 
             tabClassName="tw:px-8 tw:py-4"
           >
             <section className='tw:my-8'>
-              {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+              {hasCourses ? <CourseListSlot courseListData={allCoursesData} /> : <NoCoursesViewSlot />}
             </section>
           </Tab>
           <Tab
             eventKey="in-progress"
             title={
               <span>
-                In Progress <span>(0)</span>
+                In Progress <span>({inProgressData?.visibleList.length ?? 0})</span>
               </span>
             }
             tabClassName="tw:px-8 tw:py-4"
           >
             <section className='tw:my-8'>
-              {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+              {hasCourses ? <CourseListSlot courseListData={inProgressData} /> : <NoCoursesViewSlot />}
             </section>
           </Tab>
           <Tab
             eventKey="completed"
             title={
               <span>
-                Completed <span>(0)</span>
+                Completed <span>({completedData?.visibleList.length ?? 0})</span>
               </span>
             }
             tabClassName="tw:px-8 tw:py-4"
           >
             <section className='tw:my-8'>
-              {hasCourses ? <CourseListSlot courseListData={courseListData} /> : <NoCoursesViewSlot />}
+              {hasCourses ? <CourseListSlot courseListData={completedData} /> : <NoCoursesViewSlot />}
             </section>
           </Tab>
         </Tabs>
