@@ -14,7 +14,7 @@ const CourseCard = ({
   };
 
   return (
-    <div className="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden tw:cursor-pointer" onClick={() => handleOnClick()}>
+    <div className="tw:bg-white tw:shadow-md tw:border tw:border-gray-200 tw:rounded-lg tw:overflow-hidden tw:cursor-pointer" onClick={() => handleOnClick()}>
       <div className="tw:relative tw:w-full tw:h-60">
         {/* Badge */}
         <div className="tw:absolute tw:top-3 tw:left-3 tw:bg-[#69AF79] tw:text-white tw:rounded-full tw:w-10 tw:h-10 tw:flex tw:items-center tw:justify-center tw:text-sm tw:font-bold tw-shadow-lg tw:z-10">
@@ -26,9 +26,9 @@ const CourseCard = ({
           className="tw:w-full tw:h-full tw:object-cover"
         />
         <div
-          className="tw:absolute tw:inset-0 tw:bg-[#727175] tw:opacity-40"
+          className="tw:absolute tw:inset-0 tw:bg-[#727175] tw:opacity-25"
           style={{
-            clipPath: "polygon(0 0, 100% 0px, 100% 65%, 70% 100%, 100% 65%, 0px 105%)"
+            clipPath: "polygon(0 0, 100% 0, 100% 60%, 0 100%)"
           }}
         ></div>
       </div>

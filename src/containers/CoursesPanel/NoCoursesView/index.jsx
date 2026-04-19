@@ -1,38 +1,29 @@
 import React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button, Image } from '@openedx/paragon';
-import { Search } from '@openedx/paragon/icons';
 import { baseAppUrl } from 'data/services/lms/urls';
 
-import emptyCourseSVG from 'assets/empty-course.svg';
+import noCourseSVG from 'assets/no-course.svg';
 import { reduxHooks } from 'hooks';
 
 import messages from './messages';
-import './index.scss';
 
 export const NoCoursesView = () => {
   const { formatMessage } = useIntl();
   const { courseSearchUrl } = reduxHooks.usePlatformSettingsData();
   return (
     <div
-      id="no-courses-content-view"
-      className="d-flex align-items-center justify-content-center mb-4.5"
+      className="tw:flex tw:flex-col tw:items-center tw:justify-center tw:border tw:border-gray-200 tw:rounded-lg tw:py-32 tw:px-6 tw:bg-no-repeat tw:bg-center"
+      style={{ backgroundImage: `url(${noCourseSVG})`, backgroundSize: '340px' }}
     >
-      <Image src={emptyCourseSVG} alt={formatMessage(messages.bannerAlt)} />
-      <h1>
+      <h2 className="tw:text-xl tw:font-bold tw:text-secondary tw:mb-4">
         {formatMessage(messages.lookingForChallengePrompt)}
-      </h1>
-      <p>
-        {formatMessage(messages.exploreCoursesPrompt)}
-      </p>
-      <Button
-        variant="brand"
-        as="a"
+      </h2>
+      <a
         href={baseAppUrl(courseSearchUrl)}
-        iconBefore={Search}
+        className="tw:bg-secondary tw:text-white tw:px-6 tw:py-2 tw:rounded tw:text-sm tw:font-semibold tw:no-underline hover:tw:opacity-90"
       >
         {formatMessage(messages.exploreCoursesButton)}
-      </Button>
+      </a>
     </div>
   );
 };

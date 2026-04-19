@@ -3,8 +3,8 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   lookingForChallengePrompt: {
     id: 'Dashboard.NoCoursesView.lookingForChallengePrompt',
-    defaultMessage: 'Looking for a new challenge?',
-    description: 'Prompt user for new challenge',
+    defaultMessage: 'Complete First Your Courses',
+    description: 'Prompt user to complete courses',
   },
   exploreCoursesPrompt: {
     id: 'Dashboard.NoCoursesView.exploreCoursesPrompt',
@@ -13,7 +13,7 @@ const messages = defineMessages({
   },
   exploreCoursesButton: {
     id: 'Dashboard.NoCoursesView.exploreCoursesButton',
-    defaultMessage: 'Explore courses',
+    defaultMessage: 'Explore Courses',
     description: 'Button to explore more courses',
   },
   bannerAlt: {
