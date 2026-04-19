@@ -52,4 +52,86 @@ export const useCourseListData = () => {
   };
 };
 
+/**
+ * Hook for getting in-progress courses (courses that have been started but not archived)
+ * @returns Object containing in-progress course list data
+ */
+export const useInProgressCourseListData = () => {
+  const filters = reduxHooks.useFilters();
+  const removeFilter = reduxHooks.useRemoveFilter();
+  const pageNumber = reduxHooks.usePageNumber();
+  const setPageNumber = reduxHooks.useSetPageNumber();
+
+  const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
+
+  const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
+
+  const { numPages, visibleList } = reduxHooks.useCurrentCourseList({
+    sortBy,
+    filters,
+    pageSize: querySearch?.disable_pagination === 1 ? 0 : ListPageSize,
+  });
+
+  const inProgressCourses = (visibleList || []).filter(
+    course => course.courseRun?.isStarted && !course.courseRun?.isArchived
+  );
+
+  const handleRemoveFilter = (filter) => () => removeFilter(filter);
+
+  return {
+    pageNumber,
+    numPages,
+    setPageNumber,
+    visibleList: inProgressCourses,
+    filterOptions: {
+      sortBy,
+      setSortBy,
+      filters,
+      handleRemoveFilter,
+    },
+    showFilters: filters.length > 0,
+  };
+};
+
+/**
+ * Hook for getting completed courses (archived courses)
+ * @returns Object containing completed course list data
+ */
+export const useCompletedCourseListData = () => {
+  const filters = reduxHooks.useFilters();
+  const removeFilter = reduxHooks.useRemoveFilter();
+  const pageNumber = reduxHooks.usePageNumber();
+  const setPageNumber = reduxHooks.useSetPageNumber();
+
+  const [sortBy, setSortBy] = module.state.sortBy(SortKeys.enrolled);
+
+  const querySearch = queryString.parse(window.location.search, { parseNumbers: true });
+
+  const { numPages, visibleList } = reduxHooks.useCurrentCourseList({
+    sortBy,
+    filters,
+    pageSize: querySearch?.disable_pagination === 1 ? 0 : ListPageSize,
+  });
+
+  const completedCourses = (visibleList || []).filter(
+    course => course.courseRun?.isArchived
+  );
+
+  const handleRemoveFilter = (filter) => () => removeFilter(filter);
+
+  return {
+    pageNumber,
+    numPages,
+    setPageNumber,
+    visibleList: completedCourses,
+    filterOptions: {
+      sortBy,
+      setSortBy,
+      filters,
+      handleRemoveFilter,
+    },
+    showFilters: filters.length > 0,
+  };
+};
+
 export default useCourseListData;
