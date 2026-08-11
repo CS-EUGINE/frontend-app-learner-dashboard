@@ -36,3 +36,39 @@
   // copy from legacy dashboard
   height: 40px;
 }
+
+// Breathing room between header nav items, which otherwise sit flush together.
+// Scoped to the header so it cannot leak into .nav-link elsewhere on the page.
+.site-header-desktop,
+.site-header-mobile {
+  .nav-link {
+    margin: 0 10px;
+  }
+}
+
+// Cart icon + count badge in the header's right-hand secondary menu.
+.cart-nav-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+
+  &__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9999px;
+    background-color: #c32d3a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    // Keep the badge legible where it overlaps the icon.
+    box-shadow: 0 0 0 2px #fff;
+  }
+}

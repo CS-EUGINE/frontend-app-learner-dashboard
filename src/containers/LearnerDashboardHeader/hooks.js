@@ -4,6 +4,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import track from 'tracking';
 import { StrictDict } from 'utils';
 import { linkNames } from 'tracking/constants';
+import api from 'data/services/lms/api';
 
 import getLearnerHeaderMenu from './LearnerDashboardMenu';
 
@@ -12,6 +13,13 @@ import * as module from './hooks';
 export const state = StrictDict({
   isOpen: (val) => React.useState(val), // eslint-disable-line
 });
+
+// Fallback for when the redux store has not been populated with platform
+// settings, which is the case on every route except the dashboard itself.
+export const DEFAULT_COURSE_SEARCH_URL = '/courses';
+
+/** True when the browser is currently on the cart route. */
+export const isCartPath = () => global.location.pathname.replace(/\/$/, '').endsWith('/cart');
 
 export const useIsCollapsed = () => {
   const { width } = useWindowSize();
@@ -27,11 +35,44 @@ export const findCoursesNavDropdownClicked = (href) => track.findCourses.findCou
   linkName: linkNames.learnerHomeNavDropdownExplore,
 });
 
+/**
+ * useCartItemCount()
+ * Fetches how many courses are sitting in the learner's cart, for the header
+ * badge. Failures are swallowed: a cart outage should not break the header.
+ */
+export const useCartItemCount = () => {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    let cancelled = false;
+    // Wrapped in try/catch as well as .catch(): the http client can throw
+    // synchronously when auth is not initialized, and that would otherwise
+    // escape the effect and take the whole header down with it.
+    try {
+      api.fetchCart()
+        .then(({ data }) => {
+          if (!cancelled) { setCount(data.itemCount || 0); }
+        })
+        .catch(() => {});
+    } catch (e) {
+      // A cart outage must never break the header.
+    }
+    return () => { cancelled = true; };
+  }, []);
+  return count;
+};
+
 export const useLearnerDashboardHeaderMenu = ({
-  courseSearchUrl, authenticatedUser, exploreCoursesClick,
+  courseSearchUrl, authenticatedUser, exploreCoursesClick, cartItemCount = 0, isCartPage = false,
 }) => {
   const { formatMessage } = useIntl();
-  return getLearnerHeaderMenu(formatMessage, courseSearchUrl, authenticatedUser, exploreCoursesClick);
+  return getLearnerHeaderMenu(
+    formatMessage,
+    courseSearchUrl,
+    authenticatedUser,
+    exploreCoursesClick,
+    cartItemCount,
+    isCartPage,
+  );
 };
 
 export const useLearnerDashboardHeaderData = () => {
@@ -48,6 +89,7 @@ export default {
   useIsCollapsed,
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
+  useCartItemCount,
   useLearnerDashboardHeaderData,
   useLearnerDashboardHeaderMenu,
 };

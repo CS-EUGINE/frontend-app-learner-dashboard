@@ -27,6 +27,7 @@ import { configuration } from './config';
 import messages from './i18n';
 
 import App from './App';
+import CartPage from './containers/CartPage';
 import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
@@ -35,6 +36,7 @@ subscribe(APP_READY, () => {
       <NoticesWrapper>
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
+          <Route path="/cart" element={<PageWrap><CartPage /></PageWrap>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </NoticesWrapper>

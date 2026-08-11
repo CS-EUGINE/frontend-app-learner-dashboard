@@ -26,6 +26,7 @@ jest.mock('@edx/frontend-platform', () => ({
 
 jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
+jest.mock('./containers/CartPage', () => 'CartPage');
 jest.mock('components/NoticesWrapper', () => 'NoticesWrapper');
 
 describe('app registry', () => {
