@@ -27,9 +27,21 @@ const programsUrl = () => baseAppUrl('/dashboard/programs');
 export const creditPurchaseUrl = (courseId) => `${getEcommerceUrl()}/credit/checkout/${courseId}/`;
 export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/providers/${providerId}/request/`;
 
+// Course shopping cart (Paymongo checkout)
+const cartUrl = () => `${getApiUrl()}/course_cart/`;
+const cartItemsUrl = () => `${getApiUrl()}/course_cart/items/`;
+const cartItemUrl = (courseId) => `${getApiUrl()}/course_cart/items/${courseId}/`;
+const cartCheckoutUrl = () => `${getApiUrl()}/course_cart/checkout/`;
+const cartVerifyUrl = () => `${getApiUrl()}/course_cart/verify/`;
+
 export default StrictDict({
   getApiUrl,
   baseAppUrl,
+  cartUrl,
+  cartItemsUrl,
+  cartItemUrl,
+  cartCheckoutUrl,
+  cartVerifyUrl,
   courseUnenroll,
   creditPurchaseUrl,
   creditRequestUrl,

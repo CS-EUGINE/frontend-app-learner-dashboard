@@ -71,6 +71,28 @@ export const createCreditRequest = ({ providerId, courseId, username }) => post(
   { course_key: courseId, username },
 );
 
+/*********************************************************************************
+ * Shopping cart
+ *********************************************************************************/
+export const fetchCart = () => get(urls.cartUrl());
+
+export const addCartItem = ({ courseId }) => post(
+  urls.cartItemsUrl(),
+  { [apiKeys.courseId]: courseId },
+);
+
+export const removeCartItem = ({ courseId }) => client()
+  .delete(urls.cartItemUrl(encodeURIComponent(courseId)));
+
+export const clearCart = () => client().delete(urls.cartUrl());
+
+export const verifyCartPayment = () => post(urls.cartVerifyUrl(), {});
+
+export const checkoutCart = ({ courseIds } = {}) => post(
+  urls.cartCheckoutUrl(),
+  courseIds && courseIds.length ? { course_ids: courseIds } : {},
+);
+
 export default {
   initializeList,
   unenrollFromCourse,
@@ -81,4 +103,10 @@ export default {
   logUpgrade,
   logShare,
   createCreditRequest,
+  fetchCart,
+  addCartItem,
+  removeCartItem,
+  clearCart,
+  checkoutCart,
+  verifyCartPayment,
 };

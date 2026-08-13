@@ -27,6 +27,14 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
       />
       <Route
         element={
+          <PageWrap>
+            <CartPage />
+          </PageWrap>
+        }
+        path="/cart"
+      />
+      <Route
+        element={
           <Navigate
             replace={true}
             to="/"

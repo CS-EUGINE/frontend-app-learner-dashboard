@@ -61,6 +61,16 @@ const messages = defineMessages({
     defaultMessage: 'Discover New',
     description: 'Header link for switching to discover page.',
   },
+  cart: {
+    id: 'learnerVariantDashboard.cart',
+    defaultMessage: 'Cart',
+    description: 'Header link to the shopping cart page.',
+  },
+  cartWithCount: {
+    id: 'learnerVariantDashboard.cartWithCount',
+    defaultMessage: 'Cart ({count})',
+    description: 'Header link to the shopping cart page, showing how many courses are in it.',
+  },
   logoAltText: {
     id: 'learnerVariantDashboard.logoAltText',
     defaultMessage: 'edX, Inc. Dashboard',

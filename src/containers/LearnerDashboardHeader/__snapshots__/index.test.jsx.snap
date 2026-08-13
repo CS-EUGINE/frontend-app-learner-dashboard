@@ -8,7 +8,7 @@ exports[`LearnerDashboardHeader render 1`] = `
       [
         {
           "content": "Courses",
-          "href": "/",
+          "href": "/learner-dashboard/",
           "isActive": true,
           "type": "item",
         },
@@ -20,7 +20,19 @@ exports[`LearnerDashboardHeader render 1`] = `
         },
       ]
     }
-    secondaryMenuItems={[]}
+    secondaryMenuItems={
+      [
+        {
+          "content": <CartNavIcon
+            count={0}
+            label="Cart"
+          />,
+          "href": "/learner-dashboard/cart",
+          "isActive": false,
+          "type": "item",
+        },
+      ]
+    }
     userMenuItems={
       [
         {

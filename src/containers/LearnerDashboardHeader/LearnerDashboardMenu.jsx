@@ -1,7 +1,10 @@
+import React from 'react';
+
 import { getConfig } from '@edx/frontend-platform';
 
 import urls from 'data/services/lms/urls';
 
+import CartNavIcon from './CartNavIcon';
 import messages from './messages';
 
 const getLearnerHeaderMenu = (
@@ -9,13 +12,17 @@ const getLearnerHeaderMenu = (
   courseSearchUrl,
   authenticatedUser,
   exploreCoursesClick,
+  cartItemCount = 0,
+  isCartPage = false,
 ) => ({
   mainMenu: [
     {
       type: 'item',
-      href: '/',
+      // PUBLIC_PATH, not '/': the router basename is /learner-dashboard/, so a
+      // bare '/' lands at the origin root and renders a blank page.
+      href: getConfig().PUBLIC_PATH,
       content: formatMessage(messages.course),
-      isActive: true,
+      isActive: !isCartPage,
     },
     ...(getConfig().ENABLE_PROGRAMS ? [{
       type: 'item',
@@ -37,6 +44,21 @@ const getLearnerHeaderMenu = (
       href: `${getConfig().SUPPORT_URL}`,
       content: formatMessage(messages.help),
     }] : []),
+    {
+      type: 'item',
+      // Prefixed with PUBLIC_PATH so the link lands inside the router basename
+      // (e.g. /learner-dashboard/cart) rather than at the bare origin root.
+      href: `${getConfig().PUBLIC_PATH}cart`,
+      isActive: isCartPage,
+      content: (
+        <CartNavIcon
+          count={cartItemCount}
+          label={cartItemCount > 0
+            ? formatMessage(messages.cartWithCount, { count: cartItemCount })
+            : formatMessage(messages.cart)}
+        />
+      ),
+    },
   ],
   userMenu: [
     {
