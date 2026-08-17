@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Form } from '@openedx/paragon';
 
-import { formatCurrency } from './CartItemRow';
+import { formatCurrency } from 'utils';
 import messages from './messages';
 
 export const CartSummary = ({

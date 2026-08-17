@@ -158,7 +158,7 @@ const AnnouncementsList = () => {
                 className={`tw:w-8 tw:h-8 tw:rounded tw:text-sm tw:font-semibold tw:cursor-pointer ${
                   currentPage === page
                     ? 'tw:bg-secondary tw:text-white'
-                    : 'tw:bg-transparent tw:text-gray-400 hover:tw:text-secondary'
+                    : 'tw:bg-transparent tw:text-gray-400 tw:hover:text-secondary'
                 }`}
               >
                 {page}

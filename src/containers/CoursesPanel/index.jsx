@@ -6,7 +6,12 @@ import { reduxHooks } from 'hooks';
 import CourseListSlot from 'plugin-slots/CourseListSlot';
 import NoCoursesViewSlot from 'plugin-slots/NoCoursesViewSlot';
 
-import { useCourseListData, useInProgressCourseListData, useCompletedCourseListData } from './hooks';
+import {
+  useCourseListData,
+  useInProgressCourseListData,
+  useCompletedCourseListData,
+  useCourseCatalog,
+} from './hooks';
 import { Container, Tabs, Tab } from '@openedx/paragon';
 
 import myDashboardBg from 'assets/my-dashboard-bg.png';
@@ -28,6 +33,7 @@ export const CoursesPanel = () => {
   const allCoursesData = useCourseListData();
   const inProgressData = useInProgressCourseListData();
   const completedData = useCompletedCourseListData();
+  const { catalog } = useCourseCatalog();
   const [activeTab, setActiveTab] = useState('all');
 
   const activeTabHasCourses = () => {
@@ -106,10 +112,10 @@ export const CoursesPanel = () => {
         </Tabs>
         
         {activeTabHasCourses() && (
-          <RelatedCoursesList />
+          <RelatedCoursesList courses={catalog.related} />
         )}
-        
-        <RecommendedCoursesList />
+
+        <RecommendedCoursesList courses={catalog.recommended} />
 
         {activeTabHasCourses() && (
           <AnnouncementsList />

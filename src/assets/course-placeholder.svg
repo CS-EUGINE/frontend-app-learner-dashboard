@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Course">
+  <defs>
+    <linearGradient id="cp-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6255A1"/>
+      <stop offset="1" stop-color="#4EA1C9"/>
+    </linearGradient>
+    <linearGradient id="cp-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="300" fill="url(#cp-bg)"/>
+  <path d="M0 0 H400 V150 L0 240 Z" fill="url(#cp-sheen)"/>
+
+  <!-- Mortarboard, drawn body-first so the board sits on top of it -->
+  <g fill="#ffffff" opacity="0.82">
+    <path d="M152 138 L152 176 Q200 198 248 176 L248 138 Z" opacity="0.55"/>
+    <path d="M200 96 L288 132 L200 168 L112 132 Z"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.82" fill="none" stroke-linecap="round">
+    <path d="M288 132 L288 172" stroke-width="6"/>
+  </g>
+  <circle cx="288" cy="182" r="9" fill="#ffffff" opacity="0.82"/>
+</svg>

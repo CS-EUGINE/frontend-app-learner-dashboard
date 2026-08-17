@@ -132,6 +132,10 @@ const initCourses = jest.fn(() => []);
 let initializeApp;
 
 const mockApi = () => {
+  // The catalog strips fetch on mount; there is no http client in this harness.
+  api.fetchCourseCatalog = jest.fn(() => Promise.resolve({
+    data: { related: [], recommended: [] },
+  }));
   api.initializeList = jest.fn(() => new Promise(
     (resolve, reject) => {
       resolveFns.init = {

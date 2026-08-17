@@ -9,6 +9,7 @@ const getBaseUrl = () => getConfig().LMS_BASE_URL;
 export const getApiUrl = () => (`${getConfig().LMS_BASE_URL}/api`);
 
 const getInitApiUrl = () => (`${getApiUrl()}/learner_home/init`);
+const courseCatalogUrl = () => `${getApiUrl()}/learner_home/catalog/`;
 
 const event = () => `${getBaseUrl()}/event`;
 const courseUnenroll = () => `${getBaseUrl()}/change_enrollment`;
@@ -42,6 +43,7 @@ export default StrictDict({
   cartItemUrl,
   cartCheckoutUrl,
   cartVerifyUrl,
+  courseCatalogUrl,
   courseUnenroll,
   creditPurchaseUrl,
   creditRequestUrl,

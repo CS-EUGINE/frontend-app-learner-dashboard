@@ -4,14 +4,11 @@ import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Form } from '@openedx/paragon';
 
-import messages from './messages';
+import { formatCurrency } from 'utils';
+import coursePlaceholder from 'assets/course-placeholder.svg';
+import { handleImageError } from 'components/CourseCard';
 
-export const formatCurrency = (amount, currency) => new Intl.NumberFormat('en-PH', {
-  style: 'currency',
-  currency: currency || 'PHP',
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 0,
-}).format(amount);
+import messages from './messages';
 
 export const CartItemRow = ({
   item, isSelected, isPending, onToggle, onRemove,
@@ -38,7 +35,12 @@ export const CartItemRow = ({
       </Form.Checkbox>
 
       <div className="cart-row__card">
-        <img src={item.imageUrl || ''} alt="" className="cart-row__thumb" />
+        <img
+          src={item.imageUrl || coursePlaceholder}
+          alt=""
+          onError={handleImageError}
+          className="cart-row__thumb"
+        />
 
         <div className="cart-row__body">
           <p className="cart-row__title">{item.title}</p>
