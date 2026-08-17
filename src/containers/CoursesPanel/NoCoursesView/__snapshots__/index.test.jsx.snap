@@ -2,26 +2,24 @@
 
 exports[`NoCoursesView snapshot 1`] = `
 <div
-  className="d-flex align-items-center justify-content-center mb-4.5"
-  id="no-courses-content-view"
+  className="tw:flex tw:flex-col tw:items-center tw:justify-center tw:border tw:border-gray-200 tw:rounded-lg tw:py-32 tw:px-6 tw:bg-no-repeat tw:bg-center"
+  style={
+    {
+      "backgroundImage": "url(icon/mock/path)",
+      "backgroundSize": "340px",
+    }
+  }
 >
-  <Image
-    alt="No Courses view banner"
-    src="icon/mock/path"
-  />
-  <h1>
-    Looking for a new challenge?
-  </h1>
-  <p>
-    Explore our courses to add them to your dashboard.
-  </p>
-  <Button
-    as="a"
-    href="http://localhost:18000/course-search-url"
-    iconBefore={[MockFunction icons.Search]}
-    variant="brand"
+  <h2
+    className="tw:text-xl tw:font-bold tw:text-secondary tw:mb-4"
   >
-    Explore courses
-  </Button>
+    Complete First Your Courses
+  </h2>
+  <a
+    className="tw:bg-secondary tw:text-white tw:px-6 tw:py-2 tw:rounded tw:text-sm tw:font-semibold tw:no-underline tw:hover:opacity-90"
+    href="http://localhost:18000/course-search-url"
+  >
+    Explore Courses
+  </a>
 </div>
 `;

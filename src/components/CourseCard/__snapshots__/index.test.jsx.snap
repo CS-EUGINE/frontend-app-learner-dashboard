@@ -2,136 +2,141 @@
 
 exports[`CourseCard matches snapshot with required props 1`] = `
 <DocumentFragment>
-  <div
-    class="tw:bg-white tw:shadow-md tw:rounded-lg tw:overflow-hidden"
+  <a
+    class="tw:block tw:no-underline tw:bg-white tw:rounded-[12px] tw:overflow-hidden tw:shadow-[0_1px_3px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.06)] tw:hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] tw:hover:-translate-y-0.5 tw:transition tw:duration-200"
+    href="#"
   >
     <div
-      class="tw:relative tw:w-full tw:h-60"
+      class="tw:relative tw:w-full tw:h-[170px] tw:overflow-hidden"
     >
-      <div
-        class="tw:absolute tw:top-3 tw:left-3 tw:bg-[#69AF79] tw:text-white tw:rounded-full tw:w-10 tw:h-10 tw:flex tw:items-center tw:justify-center tw:text-sm tw:font-bold tw-shadow-lg tw:z-10"
-      >
-        $28
-      </div>
       <img
         alt="Test Course"
-        class="tw:w-full tw:h-full tw:object-cover"
+        class="tw:w-full tw:h-full tw:object-cover tw:object-center"
         src="https://example.com/image.png"
+        style="clip-path: polygon(0 0, 100% 0, 100% 60%, 0 100%);"
       />
-      <div
-        class="tw:absolute tw:inset-0 tw:bg-[#727175] tw:opacity-40"
-        style="clip-path: polygon(0 0, 100% 0px, 100% 65%, 70% 100%, 100% 65%, 0px 105%);"
-      />
+      <span
+        class="tw:absolute tw:top-3 tw:left-3 tw:z-[2] tw:px-3 tw:py-1 tw:rounded-full tw:text-white tw:text-[13px]/[1.3] tw:font-bold tw:whitespace-nowrap tw:shadow-[0_1px_3px_rgba(0,0,0,0.25)] tw:bg-[#12805C]"
+      >
+        $28
+      </span>
     </div>
     <div
-      class="tw:px-6 tw:pb-2 tw:pt-4"
+      class="tw:p-4"
     >
       <h3
-        class="tw:text-xl tw:text-center tw:font-bold tw:text-[#6255A1] tw:mb-2"
+        class="tw:text-center tw:text-[18px]/[24px] tw:font-bold tw:text-[#6255A1] tw:m-0 tw:line-clamp-2"
       >
         Test Course
       </h3>
       <p
-        class="tw:text-gray-600 tw:text-sm tw:mb-4"
+        class="tw:text-[13px]/[18px] tw:text-[#6B7280] tw:mb-3 tw:line-clamp-2"
       >
         A sample course description.
       </p>
-    </div>
-    <footer
-      class="tw:flex tw:flex-col tw:px-6 tw:pb-6"
-    >
       <div
-        class="tw:flex tw:space-x-2 tw:items-center tw:text-center"
+        class="tw:flex tw:items-center tw:gap-2 tw:mb-2.5 tw:text-[13px] tw:text-[#6B7280]"
       >
-        <div
-          class="tw:flex tw:space-x-1"
+        <span
+          class="tw:flex tw:text-[14px]"
         >
-          <button
-            aria-label="Rate 1 star"
-            class="tw:focus:outline-none tw:bg-transparent"
-            disabled=""
-            style="padding: 0px; background: none; cursor: default;"
-            tabindex="-1"
-            title="1"
-            type="button"
+          <div
+            class="tw:flex tw:space-x-1"
           >
-            <span
-              color="#F8B84E"
-              icon="[object Object]"
-            />
-          </button>
-          <button
-            aria-label="Rate 2 stars"
-            class="tw:focus:outline-none tw:bg-transparent"
-            disabled=""
-            style="padding: 0px; background: none; cursor: default;"
-            tabindex="-1"
-            title="2"
-            type="button"
-          >
-            <span
-              color="#F8B84E"
-              icon="[object Object]"
-            />
-          </button>
-          <button
-            aria-label="Rate 3 stars"
-            class="tw:focus:outline-none tw:bg-transparent"
-            disabled=""
-            style="padding: 0px; background: none; cursor: default;"
-            tabindex="-1"
-            title="3"
-            type="button"
-          >
-            <span
-              color="#F8B84E"
-              icon="[object Object]"
-            />
-          </button>
-          <button
-            aria-label="Rate 4 stars"
-            class="tw:focus:outline-none tw:bg-transparent"
-            disabled=""
-            style="padding: 0px; background: none; cursor: default;"
-            tabindex="-1"
-            title="4"
-            type="button"
-          >
-            <span
-              color="#F8B84E"
-              icon="[object Object]"
-            />
-          </button>
-          <button
-            aria-label="Rate 5 stars"
-            class="tw:focus:outline-none tw:bg-transparent"
-            disabled=""
-            style="padding: 0px; background: none; cursor: default;"
-            tabindex="-1"
-            title="5"
-            type="button"
-          >
-            <span
-              color="#F8B84E"
-              icon="[object Object]"
-            />
-          </button>
-        </div>
-        <span>
+            <button
+              aria-label="Rate 1 star"
+              class="tw:focus:outline-none tw:bg-transparent"
+              disabled=""
+              style="padding: 0px; background: none; cursor: default;"
+              tabindex="-1"
+              title="1"
+              type="button"
+            >
+              <span
+                color="#F5A623"
+                icon="[object Object]"
+              />
+            </button>
+            <button
+              aria-label="Rate 2 stars"
+              class="tw:focus:outline-none tw:bg-transparent"
+              disabled=""
+              style="padding: 0px; background: none; cursor: default;"
+              tabindex="-1"
+              title="2"
+              type="button"
+            >
+              <span
+                color="#F5A623"
+                icon="[object Object]"
+              />
+            </button>
+            <button
+              aria-label="Rate 3 stars"
+              class="tw:focus:outline-none tw:bg-transparent"
+              disabled=""
+              style="padding: 0px; background: none; cursor: default;"
+              tabindex="-1"
+              title="3"
+              type="button"
+            >
+              <span
+                color="#F5A623"
+                icon="[object Object]"
+              />
+            </button>
+            <button
+              aria-label="Rate 4 stars"
+              class="tw:focus:outline-none tw:bg-transparent"
+              disabled=""
+              style="padding: 0px; background: none; cursor: default;"
+              tabindex="-1"
+              title="4"
+              type="button"
+            >
+              <span
+                color="#F5A623"
+                icon="[object Object]"
+              />
+            </button>
+            <button
+              aria-label="Rate 5 stars"
+              class="tw:focus:outline-none tw:bg-transparent"
+              disabled=""
+              style="padding: 0px; background: none; cursor: default;"
+              tabindex="-1"
+              title="5"
+              type="button"
+            >
+              <span
+                color="#F5A623"
+                icon="[object Object]"
+              />
+            </button>
+          </div>
+        </span>
+        <span
+          aria-hidden="true"
+          class="tw:text-[#D1D5DB]"
+        >
           |
         </span>
-        <p
-          class="tw:mb-0"
+        <span
+          class="tw:whitespace-nowrap"
         >
           4.2 Reviews
-        </p>
+        </span>
       </div>
-      <small
-        class="tw:text-grey-neutral"
+      <div
+        class="tw:flex tw:items-center tw:justify-between tw:gap-2 tw:border-t tw:border-[#F3F4F6] tw:pt-2.5"
       >
-        Self-Paced
-      </small>
-    </footer>
-  </div>
+        <span
+          class="tw:text-[12px] tw:text-[#6B7280] tw:bg-[#F3F4F6] tw:rounded tw:px-2 tw:py-0.5 tw:whitespace-nowrap tw:ml-auto"
+        >
+          Self-Paced
+        </span>
+      </div>
+    </div>
+  </a>
 </DocumentFragment>
 `;

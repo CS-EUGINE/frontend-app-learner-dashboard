@@ -20,6 +20,8 @@ export const initializeList = ({ user } = {}) => get(
   stringifyUrl(urls.getInitApiUrl(), { [apiKeys.user]: user }),
 );
 
+export const fetchCourseCatalog = () => get(urls.courseCatalogUrl());
+
 export const updateEntitlementEnrollment = ({ uuid, courseId }) => post(
   urls.entitlementEnrollment(uuid),
   { [apiKeys.courseRunId]: courseId },
@@ -95,6 +97,7 @@ export const checkoutCart = ({ courseIds } = {}) => post(
 
 export default {
   initializeList,
+  fetchCourseCatalog,
   unenrollFromCourse,
   updateEmailSettings,
   updateEntitlementEnrollment,

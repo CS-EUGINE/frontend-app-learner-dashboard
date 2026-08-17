@@ -2,7 +2,10 @@ import React from 'react';
 
 import queryString from 'query-string';
 
+import { logError } from '@edx/frontend-platform/logging';
+
 import { ListPageSize, SortKeys } from 'data/constants/app';
+import api from 'data/services/lms/api';
 import { reduxHooks } from 'hooks';
 import { StrictDict } from 'utils';
 
@@ -132,6 +135,45 @@ export const useCompletedCourseListData = () => {
     },
     showFilters: filters.length > 0,
   };
+};
+
+export const emptyCatalog = { related: [], recommended: [] };
+
+/**
+ * Loads the course catalog that backs the "Related" and "Recommended" strips.
+ * One request serves both, so the panel fetches once and hands each strip its
+ * own slice. A failure leaves both lists empty and the strips unrendered — a
+ * suggestion the learner never asked for is not worth an error banner.
+ *
+ * @returns {{catalog: object, isLoading: boolean}}
+ */
+export const useCourseCatalog = () => {
+  const [catalog, setCatalog] = React.useState(emptyCatalog);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    api.fetchCourseCatalog()
+      .then(({ data }) => {
+        if (!cancelled) {
+          setCatalog({
+            related: data.related || [],
+            recommended: data.recommended || [],
+          });
+        }
+      })
+      .catch((error) => {
+        logError(error);
+      })
+      .finally(() => {
+        if (!cancelled) { setIsLoading(false); }
+      });
+
+    return () => { cancelled = true; };
+  }, []);
+
+  return { catalog, isLoading };
 };
 
 export default useCourseListData;
