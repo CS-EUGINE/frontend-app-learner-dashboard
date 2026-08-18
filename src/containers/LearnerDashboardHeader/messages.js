@@ -61,6 +61,16 @@ const messages = defineMessages({
     defaultMessage: 'Discover New',
     description: 'Header link for switching to discover page.',
   },
+  dashboard: {
+    id: 'learnerVariantDashboard.dashboard',
+    defaultMessage: 'Dashboard',
+    description: 'User menu link back to the learner dashboard.',
+  },
+  myCourses: {
+    id: 'learnerVariantDashboard.myCourses',
+    defaultMessage: 'My courses',
+    description: 'User menu link to the course authoring / review page, shown only to course authors.',
+  },
   cart: {
     id: 'learnerVariantDashboard.cart',
     defaultMessage: 'Cart',

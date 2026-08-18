@@ -14,6 +14,7 @@ const getLearnerHeaderMenu = (
   exploreCoursesClick,
   cartItemCount = 0,
   isCartPage = false,
+  authoredCourseCount = 0,
 ) => ({
   mainMenu: [
     {
@@ -64,6 +65,14 @@ const getLearnerHeaderMenu = (
     {
       heading: '',
       items: [
+        // Mirrors the LMS navbar dropdown, which leads with Dashboard. Uses
+        // PUBLIC_PATH for the same reason as the main menu: a bare '/' would
+        // leave the router basename and render a blank page.
+        {
+          type: 'item',
+          href: getConfig().PUBLIC_PATH,
+          content: formatMessage(messages.dashboard),
+        },
         {
           type: 'item',
           href: `${getConfig().ACCOUNT_PROFILE_URL}/u/${authenticatedUser?.username}`,
@@ -78,6 +87,13 @@ const getLearnerHeaderMenu = (
           type: 'item',
           href: getConfig().ORDER_HISTORY_URL,
           content: formatMessage(messages.orderHistory),
+        }] : []),
+        // Course authors only. This page lives in the LMS, not in this MFE, so
+        // it needs baseAppUrl rather than the router basename.
+        ...(authoredCourseCount > 0 ? [{
+          type: 'item',
+          href: urls.baseAppUrl('/my-courses'),
+          content: formatMessage(messages.myCourses),
         }] : []),
       ],
     },

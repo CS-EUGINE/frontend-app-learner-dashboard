@@ -88,6 +88,11 @@ export const removeCartItem = ({ courseId }) => client()
 
 export const clearCart = () => client().delete(urls.cartUrl());
 
+/*********************************************************************************
+ * Course approval
+ *********************************************************************************/
+export const fetchAuthoredCourses = () => get(urls.authoredCoursesUrl());
+
 export const verifyCartPayment = () => post(urls.cartVerifyUrl(), {});
 
 export const checkoutCart = ({ courseIds } = {}) => post(
@@ -112,4 +117,5 @@ export default {
   clearCart,
   checkoutCart,
   verifyCartPayment,
+  fetchAuthoredCourses,
 };

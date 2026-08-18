@@ -61,8 +61,34 @@ export const useCartItemCount = () => {
   return count;
 };
 
+/**
+ * useAuthoredCourseCount()
+ * How many courses the viewer authors. Drives whether the header offers a
+ * "My courses" link -- learners who author nothing should never see an
+ * authoring entry point. Failures are swallowed for the same reason as the
+ * cart: this is a nav affordance, not something worth breaking the header for.
+ */
+export const useAuthoredCourseCount = () => {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    let cancelled = false;
+    try {
+      api.fetchAuthoredCourses()
+        .then(({ data }) => {
+          if (!cancelled) { setCount(data.count || 0); }
+        })
+        .catch(() => {});
+    } catch (e) {
+      // An approval-service outage must never break the header.
+    }
+    return () => { cancelled = true; };
+  }, []);
+  return count;
+};
+
 export const useLearnerDashboardHeaderMenu = ({
   courseSearchUrl, authenticatedUser, exploreCoursesClick, cartItemCount = 0, isCartPage = false,
+  authoredCourseCount = 0,
 }) => {
   const { formatMessage } = useIntl();
   return getLearnerHeaderMenu(
@@ -72,6 +98,7 @@ export const useLearnerDashboardHeaderMenu = ({
     exploreCoursesClick,
     cartItemCount,
     isCartPage,
+    authoredCourseCount,
   );
 };
 
@@ -90,6 +117,7 @@ export default {
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
   useCartItemCount,
+  useAuthoredCourseCount,
   useLearnerDashboardHeaderData,
   useLearnerDashboardHeaderMenu,
 };

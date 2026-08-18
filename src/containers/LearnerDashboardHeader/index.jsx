@@ -11,6 +11,7 @@ import ConfirmEmailBanner from './ConfirmEmailBanner';
 import {
   useLearnerDashboardHeaderMenu,
   useCartItemCount,
+  useAuthoredCourseCount,
   findCoursesNavClicked,
   isCartPath,
   DEFAULT_COURSE_SEARCH_URL,
@@ -32,6 +33,7 @@ export const LearnerDashboardHeader = () => {
   };
 
   const cartItemCount = useCartItemCount();
+  const authoredCourseCount = useAuthoredCourseCount();
 
   const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({
     courseSearchUrl,
@@ -39,6 +41,7 @@ export const LearnerDashboardHeader = () => {
     exploreCoursesClick,
     cartItemCount,
     isCartPage: isCartPath(),
+    authoredCourseCount,
   });
 
   return (
