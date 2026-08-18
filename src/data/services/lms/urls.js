@@ -35,6 +35,10 @@ const cartItemUrl = (courseId) => `${getApiUrl()}/course_cart/items/${courseId}/
 const cartCheckoutUrl = () => `${getApiUrl()}/course_cart/checkout/`;
 const cartVerifyUrl = () => `${getApiUrl()}/course_cart/verify/`;
 
+// Course approval: how many courses this user authors, used to decide whether
+// the header should offer a "My courses" link at all.
+const authoredCoursesUrl = () => `${getApiUrl()}/course-approval/v1/authored/`;
+
 export default StrictDict({
   getApiUrl,
   baseAppUrl,
@@ -43,6 +47,7 @@ export default StrictDict({
   cartItemUrl,
   cartCheckoutUrl,
   cartVerifyUrl,
+  authoredCoursesUrl,
   courseCatalogUrl,
   courseUnenroll,
   creditPurchaseUrl,
