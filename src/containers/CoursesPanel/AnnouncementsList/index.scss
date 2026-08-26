@@ -1,0 +1,17 @@
+// The border is the only thing that tells one announcement level from another,
+// so it is written as real CSS rather than with Tailwind utilities: this MFE
+// imports Tailwind with `important` (src/sass/_input.scss), so a `tw:border`
+// on the card would set border-width on all four sides with !important and
+// flatten the rail — beating even an inline style trying to restore it.
+.announcement-card {
+  border: 1px solid #E1EBF0;
+  border-left: 6px solid #15376D; // info, and the fallback for an unknown level
+}
+
+.announcement-card--success {
+  border-left-color: #1B7F5A;
+}
+
+.announcement-card--warning {
+  border-left-color: #B26A00;
+}
