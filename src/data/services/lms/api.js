@@ -95,9 +95,23 @@ export const fetchAuthoredCourses = () => get(urls.authoredCoursesUrl());
 
 export const verifyCartPayment = () => post(urls.cartVerifyUrl(), {});
 
-export const checkoutCart = ({ courseIds } = {}) => post(
+// Prices a code against the current selection without spending a use, so the
+// cart can preview it on every Apply. The code is sent again with the checkout,
+// which re-quotes it server-side rather than trusting the preview.
+export const previewCartDiscount = ({ code, courseIds } = {}) => post(
+  urls.cartDiscountUrl(),
+  {
+    code,
+    ...(courseIds && courseIds.length ? { course_ids: courseIds } : {}),
+  },
+);
+
+export const checkoutCart = ({ courseIds, discountCode } = {}) => post(
   urls.cartCheckoutUrl(),
-  courseIds && courseIds.length ? { course_ids: courseIds } : {},
+  {
+    ...(courseIds && courseIds.length ? { course_ids: courseIds } : {}),
+    ...(discountCode ? { discount_code: discountCode } : {}),
+  },
 );
 
 export default {
@@ -115,6 +129,7 @@ export default {
   addCartItem,
   removeCartItem,
   clearCart,
+  previewCartDiscount,
   checkoutCart,
   verifyCartPayment,
   fetchAuthoredCourses,

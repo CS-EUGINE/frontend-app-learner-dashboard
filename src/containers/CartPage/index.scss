@@ -197,6 +197,55 @@ $cart-muted: #7a7a8c;
     margin: 0.375rem 0 0;
   }
 
+  // Takes the place of the input once a code sticks, so the applied code and
+  // the figure in the summary can never disagree.
+  &__coupon-applied {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+    border: 1px solid #b7e0c2;
+    border-radius: 0.375rem;
+    background-color: #f0faf3;
+
+    .btn { flex-shrink: 0; }
+  }
+
+  &__coupon-tick {
+    flex: none;
+    color: #178253;
+  }
+
+  &__coupon-detail {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &__coupon-code {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #0d4a2f;
+    overflow-wrap: anywhere;
+  }
+
+  &__coupon-scope {
+    font-size: 0.6875rem;
+    color: $cart-muted;
+  }
+
+  &__coupon-error {
+    font-size: 0.75rem;
+    color: #c02020;
+    margin: 0.375rem 0 0;
+  }
+
+  &__discount {
+    color: #178253;
+    font-weight: 600;
+  }
+
   &__panel {
     border: 1px solid $cart-border;
     border-radius: 0.5rem;

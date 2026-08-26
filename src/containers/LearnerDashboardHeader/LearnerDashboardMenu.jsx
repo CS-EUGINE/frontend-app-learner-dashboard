@@ -97,6 +97,21 @@ const getLearnerHeaderMenu = (
         }] : []),
       ],
     },
+    // Staff and admins move between the two dashboards all day, and from here
+    // the only way back to /staff was the address bar. Its own group so it
+    // reads as a tool rather than another personal link, and it lives in the
+    // LMS, so baseAppUrl rather than the router basename. `administrator` is
+    // the JWT's spelling of `is_staff`.
+    ...(authenticatedUser?.administrator ? [{
+      heading: '',
+      items: [
+        {
+          type: 'item',
+          href: urls.baseAppUrl('/staff'),
+          content: formatMessage(messages.staffDashboard),
+        },
+      ],
+    }] : []),
     {
       heading: '',
       items: [

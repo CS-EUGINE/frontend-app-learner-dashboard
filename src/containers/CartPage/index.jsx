@@ -23,6 +23,11 @@ export const CartPage = () => {
     selected,
     selectedItems,
     subtotalCentavos,
+    discount,
+    discountCentavos,
+    discountError,
+    totalCentavos,
+    isApplyingDiscount,
     fulfilledCourses,
     isLoading,
     loadError,
@@ -30,6 +35,8 @@ export const CartPage = () => {
     isCheckingOut,
     pendingCourseId,
     toggleSelected,
+    applyDiscount,
+    removeDiscount,
     removeItem,
     clear,
     checkout,
@@ -120,8 +127,15 @@ export const CartPage = () => {
                   <CartSummary
                     count={selectedItems.length}
                     subtotalCentavos={subtotalCentavos}
+                    discount={discount}
+                    discountCentavos={discountCentavos}
+                    discountError={discountError}
+                    totalCentavos={totalCentavos}
+                    isApplyingDiscount={isApplyingDiscount}
                     isCheckingOut={isCheckingOut}
                     isDisabled={isBusy || selectedItems.length === 0}
+                    onApplyDiscount={applyDiscount}
+                    onRemoveDiscount={removeDiscount}
                     onCheckout={checkout}
                   />
                 </div>

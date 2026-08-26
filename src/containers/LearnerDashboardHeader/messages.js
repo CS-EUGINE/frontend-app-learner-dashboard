@@ -71,6 +71,11 @@ const messages = defineMessages({
     defaultMessage: 'My courses',
     description: 'User menu link to the course authoring / review page, shown only to course authors.',
   },
+  staffDashboard: {
+    id: 'learnerVariantDashboard.staffDashboard',
+    defaultMessage: 'Staff Dashboard',
+    description: 'User menu link to the LMS staff dashboard, shown only to staff.',
+  },
   cart: {
     id: 'learnerVariantDashboard.cart',
     defaultMessage: 'Cart',

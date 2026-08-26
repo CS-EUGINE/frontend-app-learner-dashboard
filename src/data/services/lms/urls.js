@@ -32,6 +32,7 @@ export const creditRequestUrl = (providerId) => `${getApiUrl()}/credit/v1/provid
 const cartUrl = () => `${getApiUrl()}/course_cart/`;
 const cartItemsUrl = () => `${getApiUrl()}/course_cart/items/`;
 const cartItemUrl = (courseId) => `${getApiUrl()}/course_cart/items/${courseId}/`;
+const cartDiscountUrl = () => `${getApiUrl()}/course_cart/discount/`;
 const cartCheckoutUrl = () => `${getApiUrl()}/course_cart/checkout/`;
 const cartVerifyUrl = () => `${getApiUrl()}/course_cart/verify/`;
 
@@ -45,6 +46,7 @@ export default StrictDict({
   cartUrl,
   cartItemsUrl,
   cartItemUrl,
+  cartDiscountUrl,
   cartCheckoutUrl,
   cartVerifyUrl,
   authoredCoursesUrl,
