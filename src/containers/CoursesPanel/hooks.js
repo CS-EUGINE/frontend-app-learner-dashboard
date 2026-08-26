@@ -176,4 +176,47 @@ export const useCourseCatalog = () => {
   return { catalog, isLoading };
 };
 
+/**
+ * Loads the site announcements shown under the course lists.
+ *
+ * The endpoint only answers signed-in callers and already applies the
+ * active/starts_at/ends_at window, so whatever comes back is what the learner
+ * should see; the component only paginates and filters it. A failure leaves the
+ * list empty and the section unrendered — a notice we could not fetch is not
+ * worth an error banner on the dashboard.
+ *
+ * `date` arrives as an ISO string and is parsed here so every consumer sorts
+ * and formats the same Date rather than re-parsing the string.
+ *
+ * @returns {{announcements: object[], isLoading: boolean}}
+ */
+export const useAnnouncements = () => {
+  const [announcements, setAnnouncements] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    api.fetchAnnouncements()
+      .then(({ data }) => {
+        if (!cancelled) {
+          setAnnouncements((data.announcements || []).map((announcement) => ({
+            ...announcement,
+            date: new Date(announcement.date),
+          })));
+        }
+      })
+      .catch((error) => {
+        logError(error);
+      })
+      .finally(() => {
+        if (!cancelled) { setIsLoading(false); }
+      });
+
+    return () => { cancelled = true; };
+  }, []);
+
+  return { announcements, isLoading };
+};
+
 export default useCourseListData;
