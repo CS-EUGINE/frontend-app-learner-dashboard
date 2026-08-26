@@ -76,10 +76,30 @@ const messages = defineMessages({
     description: 'Button that applies a coupon code',
     defaultMessage: 'Apply',
   },
-  couponUnavailable: {
-    id: 'learner-dash.cart.couponUnavailable',
-    description: 'Note explaining that coupon codes are not enabled',
-    defaultMessage: 'Coupon codes are not enabled yet.',
+  couponHint: {
+    id: 'learner-dash.cart.couponHint',
+    description: 'Note under the coupon field explaining the one-code rule',
+    defaultMessage: 'One code per order. It comes off the courses the code covers.',
+  },
+  couponApplying: {
+    id: 'learner-dash.cart.couponApplying',
+    description: 'Button label while a coupon code is being checked',
+    defaultMessage: 'Checking...',
+  },
+  couponApplied: {
+    id: 'learner-dash.cart.couponApplied',
+    description: 'Confirmation that a coupon code is applied, naming the code',
+    defaultMessage: '{code} applied',
+  },
+  couponRemove: {
+    id: 'learner-dash.cart.couponRemove',
+    description: 'Button that removes the applied coupon code',
+    defaultMessage: 'Remove',
+  },
+  couponPartial: {
+    id: 'learner-dash.cart.couponPartial',
+    description: 'Note when a coupon only covers some of the selected courses',
+    defaultMessage: 'Applies to {count, plural, one {# course} other {# courses}} in your selection.',
   },
   summary: {
     id: 'learner-dash.cart.summary',
@@ -95,6 +115,16 @@ const messages = defineMessages({
     id: 'learner-dash.cart.promo',
     description: 'Promotional discount row in the order summary',
     defaultMessage: 'Promo:',
+  },
+  freeOrderNote: {
+    id: 'learner-dash.cart.freeOrderNote',
+    description: 'Note replacing the payment note when a code covers the whole order',
+    defaultMessage: 'Your code covers the whole order, so there is nothing to pay.',
+  },
+  enrollFree: {
+    id: 'learner-dash.cart.enrollFree',
+    description: 'Checkout button label when a code has taken the total to zero',
+    defaultMessage: 'Complete enrollment',
   },
   total: {
     id: 'learner-dash.cart.total',
