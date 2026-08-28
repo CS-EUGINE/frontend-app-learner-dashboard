@@ -117,9 +117,11 @@ export const CoursesPanel = () => {
 
         <RecommendedCoursesList courses={catalog.recommended} />
 
-        {activeTabHasCourses() && (
-          <AnnouncementsList />
-        )}
+        {/* Announcements are site-wide, not course-scoped: they render for every
+            signed-in user regardless of role or enrollments. The component
+            returns null while loading and when there is nothing to show, so
+            mounting it unconditionally costs nothing on an empty dashboard. */}
+        <AnnouncementsList />
         
       </Container>
     </div>
