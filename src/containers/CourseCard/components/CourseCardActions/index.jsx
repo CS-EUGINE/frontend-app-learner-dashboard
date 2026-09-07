@@ -6,6 +6,7 @@ import { ActionRow } from '@openedx/paragon';
 import { reduxHooks } from 'hooks';
 
 import CourseCardActionSlot from 'plugin-slots/CourseCardActionSlot';
+import FeedbackButton from './FeedbackButton';
 import SelectSessionButton from './SelectSessionButton';
 import BeginCourseButton from './BeginCourseButton';
 import ResumeButton from './ResumeButton';
@@ -27,6 +28,12 @@ export const CourseCardActions = ({ cardId }) => {
       )}
       {(isArchived && !isEntitlement) && (
         <ViewCourseButton cardId={cardId} />
+      )}
+      {/* Feedback sits beside Resume and under exactly the same condition: an
+          in-progress course the learner has actually opened. It comes first so
+          the primary action stays at the end of the row. */}
+      {!(isArchived || isEntitlement) && hasStarted && (
+        <FeedbackButton cardId={cardId} />
       )}
       {!(isArchived || isEntitlement) && (hasStarted
         ? <ResumeButton cardId={cardId} />

@@ -2,7 +2,7 @@
 
 exports[`Dashboard snapshots courses loaded, show select session modal, no available dashboards snapshot 1`] = `
 <div
-  className="d-flex flex-column p-2 pt-0"
+  className="d-flex flex-column pt-0"
   id="dashboard-container"
 >
   <h1
@@ -18,7 +18,9 @@ exports[`Dashboard snapshots courses loaded, show select session modal, no avail
     id="dashboard-content"
   >
     <DashboardLayout>
-      <CoursesPanel />
+      <CourseFeedbackProvider>
+        <CoursesPanel />
+      </CourseFeedbackProvider>
     </DashboardLayout>
   </div>
 </div>
@@ -26,7 +28,7 @@ exports[`Dashboard snapshots courses loaded, show select session modal, no avail
 
 exports[`Dashboard snapshots courses still loading snapshot 1`] = `
 <div
-  className="d-flex flex-column p-2 pt-0"
+  className="d-flex flex-column pt-0"
   id="dashboard-container"
 >
   <h1
@@ -45,7 +47,7 @@ exports[`Dashboard snapshots courses still loading snapshot 1`] = `
 
 exports[`Dashboard snapshots there are no courses, there ARE available dashboards snapshot 1`] = `
 <div
-  className="d-flex flex-column p-2 pt-0"
+  className="d-flex flex-column pt-0"
   id="dashboard-container"
 >
   <h1
@@ -61,7 +63,9 @@ exports[`Dashboard snapshots there are no courses, there ARE available dashboard
     id="dashboard-content"
   >
     <DashboardLayout>
-      <CoursesPanel />
+      <CourseFeedbackProvider>
+        <CoursesPanel />
+      </CourseFeedbackProvider>
     </DashboardLayout>
   </div>
 </div>

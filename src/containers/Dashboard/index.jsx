@@ -5,6 +5,7 @@ import { RequestKeys } from 'data/constants/requests';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
+import { CourseFeedbackProvider } from 'containers/CourseFeedbackModal/context';
 
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
@@ -33,7 +34,11 @@ export const Dashboard = () => {
           ? (<LoadingView />)
           : (
             <DashboardLayout>
-              <CoursesPanel />
+              {/* One fetch of "which courses has this learner already
+                  reviewed", shared by every course card below. */}
+              <CourseFeedbackProvider>
+                <CoursesPanel />
+              </CourseFeedbackProvider>
             </DashboardLayout>
           )}
       </div>
