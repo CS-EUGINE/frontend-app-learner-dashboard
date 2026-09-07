@@ -37,6 +37,10 @@ const cartDiscountUrl = () => `${getApiUrl()}/course_cart/discount/`;
 const cartCheckoutUrl = () => `${getApiUrl()}/course_cart/checkout/`;
 const cartVerifyUrl = () => `${getApiUrl()}/course_cart/verify/`;
 
+// The header bell's feed. One GET per dashboard load, one POST to mark read.
+const notificationsUrl = () => `${getApiUrl()}/notifications/`;
+const notificationsReadUrl = () => `${getApiUrl()}/notifications/read/`;
+
 // Learner reviews of the courses they are enrolled in. One GET for the whole
 // dashboard, one POST per review.
 const courseFeedbackUrl = () => `${getApiUrl()}/course_feedback/`;
@@ -58,6 +62,8 @@ export default StrictDict({
   authoredCoursesUrl,
   courseCatalogUrl,
   courseFeedbackUrl,
+  notificationsUrl,
+  notificationsReadUrl,
   courseUnenroll,
   creditPurchaseUrl,
   creditRequestUrl,

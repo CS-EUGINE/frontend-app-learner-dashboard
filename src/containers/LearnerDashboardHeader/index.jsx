@@ -6,6 +6,9 @@ import Header from '@edx/frontend-component-header';
 import { reduxHooks } from 'hooks';
 import urls from 'data/services/lms/urls';
 
+import NotificationsPanel from 'containers/Notifications/NotificationsPanel';
+import { useNotifications } from 'containers/Notifications/hooks';
+
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 
 import {
@@ -35,6 +38,14 @@ export const LearnerDashboardHeader = () => {
   const cartItemCount = useCartItemCount();
   const authoredCourseCount = useAuthoredCourseCount();
 
+  // The bell's state lives here, not in the menu item, because the drawer is
+  // rendered outside <Header>: it owns the right-hand edge of the window rather
+  // than hanging off the bell, so the packaged header cannot clip or displace it.
+  const {
+    notifications, unreadCount, markRead,
+  } = useNotifications();
+  const [isPanelOpen, setIsPanelOpen] = React.useState(false);
+
   const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({
     courseSearchUrl,
     authenticatedUser,
@@ -42,6 +53,16 @@ export const LearnerDashboardHeader = () => {
     cartItemCount,
     isCartPage: isCartPath(),
     authoredCourseCount,
+    notifications: {
+      unreadCount,
+      // A plain click opens the panel; anything else (middle-click, ctrl-click,
+      // Enter on the link) is left alone and follows the href to the full page.
+      onBellClick: (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button > 0) { return; }
+        event.preventDefault();
+        setIsPanelOpen((open) => !open);
+      },
+    },
   });
 
   return (
@@ -51,6 +72,14 @@ export const LearnerDashboardHeader = () => {
         mainMenuItems={learnerHomeHeaderMenu.mainMenu}
         secondaryMenuItems={learnerHomeHeaderMenu.secondaryMenu}
         userMenuItems={learnerHomeHeaderMenu.userMenu}
+      />
+      <NotificationsPanel
+        notifications={notifications}
+        unreadCount={unreadCount}
+        isOpen={isPanelOpen}
+        onClose={() => setIsPanelOpen(false)}
+        onMarkAllRead={() => markRead()}
+        onActivate={(id) => markRead([id])}
       />
       <MasqueradeBar />
     </>

@@ -103,6 +103,17 @@ export const fetchAuthoredCourses = () => get(urls.authoredCoursesUrl());
 // its own.
 export const fetchCourseFeedback = () => get(urls.courseFeedbackUrl());
 
+/*********************************************************************************
+ * Notifications
+ *********************************************************************************/
+export const fetchNotifications = () => get(urls.notificationsUrl());
+
+// `ids` omitted means "everything unread", which is what Mark all read sends.
+export const markNotificationsRead = ({ ids } = {}) => post(
+  urls.notificationsReadUrl(),
+  ids ? { ids } : {},
+);
+
 // Refused server-side with 409 if this learner already reviewed the course:
 // one review per course is the rule, and the browser is not where it is kept.
 export const postCourseFeedback = ({
@@ -162,4 +173,6 @@ export default {
   fetchAuthoredCourses,
   fetchCourseFeedback,
   postCourseFeedback,
+  fetchNotifications,
+  markNotificationsRead,
 };

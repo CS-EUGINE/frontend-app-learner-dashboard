@@ -106,6 +106,16 @@ const messages = defineMessages({
     defaultMessage: 'Career',
     description: 'The text for the user menu Career navigation link.',
   },
+  notifications: {
+    id: 'learnerDashboard.menu.notifications.label',
+    defaultMessage: 'Notifications',
+    description: 'Accessible label for the header notification bell.',
+  },
+  notificationsWithCount: {
+    id: 'learnerDashboard.menu.notificationsWithCount.label',
+    defaultMessage: 'Notifications, {count} unread',
+    description: 'Accessible label for the header notification bell when there are unread items.',
+  },
   newAlert: {
     id: 'header.menu.new.label',
     defaultMessage: 'New',
