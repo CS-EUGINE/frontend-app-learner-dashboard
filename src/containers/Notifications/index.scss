@@ -1,0 +1,241 @@
+// Brand navy for the unread cues; the bell itself inherits the header's colour.
+$notif-accent: #15376D;
+$notif-security: #B26A00;
+
+.notification-bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &__badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #dc2626;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+  }
+}
+
+// The drawer and its backdrop. Both are ours rather than a Paragon Sheet: that
+// component ships a stylesheet whose width rules a page-level override could
+// not reliably beat, and the popup it replaced could not be anchored inside the
+// third-party header at all. Owning the geometry here means no cascade to lose.
+$notif-drawer-width: 40%;
+$notif-ease: cubic-bezier(0.4, 0, 0.2, 1);
+$notif-duration: 260ms;
+
+.notifications-backdrop {
+  position: fixed;
+  inset: 0;
+  // A navy-black tint rather than flat black: it reads as this site dimming
+  // rather than a browser dialog, and it makes the drawer unmistakably the
+  // active surface.
+  background: rgba(9, 22, 40, 0.5);
+  z-index: 1040;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $notif-duration $notif-ease, visibility 0s linear $notif-duration;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity $notif-duration $notif-ease, visibility 0s;
+  }
+}
+
+.notifications-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: $notif-drawer-width;
+  // Narrow windows would otherwise get a strip too thin to read a notification
+  // in; phones get the whole screen (see the media query below).
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: -8px 0 28px rgba(9, 22, 40, 0.18);
+  z-index: 1041;
+  outline: none;
+
+  // Parked off-screen rather than unmounted, so both directions animate.
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform $notif-duration $notif-ease, visibility 0s linear $notif-duration;
+
+  &.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform $notif-duration $notif-ease, visibility 0s;
+  }
+
+  // Someone who has asked for less motion gets the drawer without the slide.
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    &.is-open { transition: none; }
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 14px 10px 14px 20px;
+    border-bottom: 1px solid #E1EBF0;
+    flex: none;
+  }
+
+  &__heading {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #0F2A54;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  // The only part that scrolls, so the heading and the footer link stay put
+  // however long the feed is.
+  &__list {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  &__empty {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  &__empty-title { font-weight: 600; color: #0F2A54; margin: 0 0 4px; }
+  &__empty-hint { font-size: 0.8125rem; color: #6b7280; margin: 0; }
+
+  &__footer {
+    flex: none;
+    display: block;
+    padding: 14px 16px;
+    border-top: 1px solid #E1EBF0;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $notif-accent;
+
+    &:hover,
+    &:focus {
+      background: #E7F2F8;
+      // Pinned: the platform repaints every anchor #0079bc on hover.
+      color: #0F2A54 !important;
+      text-decoration: none;
+    }
+  }
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid #F1F5F8;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+
+  &:hover,
+  &:focus {
+    background: #F5F9FB;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &:last-child { border-bottom: 0; }
+
+  &--unread { background: #F7FBFD; }
+
+  &__icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: #E7F2F8;
+    color: $notif-accent;
+
+    // Security notices are the ones a learner must not skim past.
+    &--security { background: #FDF3E3; color: $notif-security; }
+
+    .pgn__icon { width: 1.15rem; height: 1.15rem; }
+  }
+
+  &__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+  &__title { font-size: 0.875rem; font-weight: 600; color: #0F2A54; }
+  &__body { font-size: 0.8125rem; color: #6b7280; }
+  &__time { font-size: 0.75rem; color: #9ca3af; }
+
+  &__dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 6px;
+    border-radius: 999px;
+    background: $notif-accent;
+  }
+}
+
+.notifications-page {
+  &__empty { padding: 48px 24px; text-align: center; }
+  &__empty-title { font-weight: 600; color: #0F2A54; margin: 0 0 4px; }
+  &__empty-hint { font-size: 0.8125rem; color: #6b7280; margin: 0; }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__title { font-size: 1.5rem; font-weight: 700; color: #0F2A54; margin: 0; }
+
+  &__list {
+    background: #fff;
+    border: 1px solid #E1EBF0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  &__back {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-weight: 600;
+    color: $notif-accent;
+
+    &:hover,
+    &:focus { color: #0F2A54 !important; text-decoration: none; }
+  }
+}

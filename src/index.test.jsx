@@ -27,6 +27,9 @@ jest.mock('@edx/frontend-platform', () => ({
 jest.mock('data/store', () => ({ redux: 'store' }));
 jest.mock('./App', () => 'App');
 jest.mock('./containers/CartPage', () => 'CartPage');
+// Same reason as CartPage above: the real page pulls in the header and the
+// redux store, which this suite deliberately does not stand up.
+jest.mock('./containers/Notifications/NotificationsPage', () => 'NotificationsPage');
 jest.mock('components/NoticesWrapper', () => 'NoticesWrapper');
 
 describe('app registry', () => {

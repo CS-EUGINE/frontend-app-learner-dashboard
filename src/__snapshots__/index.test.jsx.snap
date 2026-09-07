@@ -35,6 +35,14 @@ exports[`app registry subscribe: APP_READY.  links App to root element 1`] = `
       />
       <Route
         element={
+          <PageWrap>
+            <NotificationsPage />
+          </PageWrap>
+        }
+        path="/notifications"
+      />
+      <Route
+        element={
           <Navigate
             replace={true}
             to="/"

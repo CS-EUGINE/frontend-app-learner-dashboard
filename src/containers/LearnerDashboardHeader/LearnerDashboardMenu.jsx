@@ -4,6 +4,7 @@ import { getConfig } from '@edx/frontend-platform';
 
 import urls from 'data/services/lms/urls';
 
+import NotificationBell from 'containers/Notifications/NotificationBell';
 import CartNavIcon from './CartNavIcon';
 import messages from './messages';
 
@@ -15,6 +16,7 @@ const getLearnerHeaderMenu = (
   cartItemCount = 0,
   isCartPage = false,
   authoredCourseCount = 0,
+  notifications = {},
 ) => ({
   mainMenu: [
     {
@@ -40,6 +42,24 @@ const getLearnerHeaderMenu = (
     },
   ],
   secondaryMenu: [
+    {
+      // Href and onClick both: the click opens the panel in place, while
+      // middle-click, ctrl-click and keyboard activation still reach the full
+      // page. A bell that only works with a plain left click is a dead end.
+      type: 'item',
+      href: `${getConfig().PUBLIC_PATH}notifications`,
+      onClick: (e) => {
+        if (notifications.onBellClick) { notifications.onBellClick(e); }
+      },
+      content: (
+        <NotificationBell
+          count={notifications.unreadCount || 0}
+          label={notifications.unreadCount
+            ? formatMessage(messages.notificationsWithCount, { count: notifications.unreadCount })
+            : formatMessage(messages.notifications)}
+        />
+      ),
+    },
     ...(getConfig().SUPPORT_URL ? [{
       type: 'item',
       href: `${getConfig().SUPPORT_URL}`,

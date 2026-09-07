@@ -88,7 +88,7 @@ export const useAuthoredCourseCount = () => {
 
 export const useLearnerDashboardHeaderMenu = ({
   courseSearchUrl, authenticatedUser, exploreCoursesClick, cartItemCount = 0, isCartPage = false,
-  authoredCourseCount = 0,
+  authoredCourseCount = 0, notifications = {},
 }) => {
   const { formatMessage } = useIntl();
   return getLearnerHeaderMenu(
@@ -99,6 +99,7 @@ export const useLearnerDashboardHeaderMenu = ({
     cartItemCount,
     isCartPage,
     authoredCourseCount,
+    notifications,
   );
 };
 

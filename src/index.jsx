@@ -28,6 +28,7 @@ import messages from './i18n';
 
 import App from './App';
 import CartPage from './containers/CartPage';
+import NotificationsPage from './containers/Notifications/NotificationsPage';
 import NoticesWrapper from './components/NoticesWrapper';
 
 subscribe(APP_READY, () => {
@@ -37,6 +38,7 @@ subscribe(APP_READY, () => {
         <Routes>
           <Route path="/" element={<PageWrap><App /></PageWrap>} />
           <Route path="/cart" element={<PageWrap><CartPage /></PageWrap>} />
+          <Route path="/notifications" element={<PageWrap><NotificationsPage /></PageWrap>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </NoticesWrapper>
