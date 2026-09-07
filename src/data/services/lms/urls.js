@@ -37,6 +37,10 @@ const cartDiscountUrl = () => `${getApiUrl()}/course_cart/discount/`;
 const cartCheckoutUrl = () => `${getApiUrl()}/course_cart/checkout/`;
 const cartVerifyUrl = () => `${getApiUrl()}/course_cart/verify/`;
 
+// Learner reviews of the courses they are enrolled in. One GET for the whole
+// dashboard, one POST per review.
+const courseFeedbackUrl = () => `${getApiUrl()}/course_feedback/`;
+
 // Course approval: how many courses this user authors, used to decide whether
 // the header should offer a "My courses" link at all.
 const authoredCoursesUrl = () => `${getApiUrl()}/course-approval/v1/authored/`;
@@ -53,6 +57,7 @@ export default StrictDict({
   cartVerifyUrl,
   authoredCoursesUrl,
   courseCatalogUrl,
+  courseFeedbackUrl,
   courseUnenroll,
   creditPurchaseUrl,
   creditRequestUrl,

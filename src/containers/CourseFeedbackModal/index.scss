@@ -1,0 +1,75 @@
+// Gold rather than a brand blue: a row of navy stars reads as five buttons,
+// not as a rating. The empty state is a light blue-grey so the row still sits
+// inside the palette.
+$feedback-star-on: #F5A623;
+$feedback-star-off: #D9E4EA;
+
+.course-feedback-modal {
+  .course-feedback-modal__intro {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.course-feedback-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  // Kept in the layout and focusable, just invisible: display:none would take
+  // the radios out of the tab order and off the accessibility tree, which is
+  // the whole reason for using radios instead of buttons.
+  .course-feedback-stars__input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  .course-feedback-stars__star {
+    margin: 0;
+    cursor: pointer;
+    color: $feedback-star-off;
+    line-height: 0;
+    border-radius: 4px;
+
+    .pgn__icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  .course-feedback-stars__star--on {
+    color: $feedback-star-on;
+  }
+
+  .course-feedback-stars__input:focus-visible + .course-feedback-stars__star {
+    outline: 2px solid #15376D;
+    outline-offset: 2px;
+  }
+
+  .course-feedback-stars__label {
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0F2A54;
+  }
+}
+
+// The card's "already sent" state, in place of the button.
+.course-feedback-sent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  .pgn__icon {
+    width: 1.125rem;
+    height: 1.125rem;
+    color: $feedback-star-on;
+  }
+}

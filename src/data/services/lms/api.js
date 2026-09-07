@@ -95,6 +95,30 @@ export const clearCart = () => client().delete(urls.cartUrl());
  *********************************************************************************/
 export const fetchAuthoredCourses = () => get(urls.authoredCoursesUrl());
 
+/*********************************************************************************
+ * Course feedback
+ *********************************************************************************/
+// Every review this learner has already written, fetched once for the whole
+// dashboard so a card can tell whether its course is done without a request of
+// its own.
+export const fetchCourseFeedback = () => get(urls.courseFeedbackUrl());
+
+// Refused server-side with 409 if this learner already reviewed the course:
+// one review per course is the rule, and the browser is not where it is kept.
+export const postCourseFeedback = ({
+  courseId,
+  rating,
+  headline,
+  comment,
+  wouldRecommend,
+}) => post(urls.courseFeedbackUrl(), {
+  course_id: courseId,
+  rating,
+  headline,
+  comment,
+  would_recommend: wouldRecommend,
+});
+
 export const verifyCartPayment = () => post(urls.cartVerifyUrl(), {});
 
 // Prices a code against the current selection without spending a use, so the
@@ -136,4 +160,6 @@ export default {
   checkoutCart,
   verifyCartPayment,
   fetchAuthoredCourses,
+  fetchCourseFeedback,
+  postCourseFeedback,
 };

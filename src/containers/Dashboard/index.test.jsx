@@ -5,6 +5,7 @@ import { reduxHooks } from 'hooks';
 import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
+import { CourseFeedbackProvider } from 'containers/CourseFeedbackModal/context';
 
 import DashboardLayout from './DashboardLayout';
 import LoadingView from './LoadingView';
@@ -22,6 +23,9 @@ jest.mock('hooks', () => ({
 
 jest.mock('containers/EnterpriseDashboardModal', () => 'EnterpriseDashboardModal');
 jest.mock('containers/CoursesPanel', () => 'CoursesPanel');
+jest.mock('containers/CourseFeedbackModal/context', () => ({
+  CourseFeedbackProvider: 'CourseFeedbackProvider',
+}));
 jest.mock('./LoadingView', () => 'LoadingView');
 jest.mock('./DashboardLayout', () => 'DashboardLayout');
 
@@ -111,7 +115,9 @@ describe('Dashboard', () => {
           showSelectSessionModal: true,
         },
         content: ['LoadedView', (
-          <DashboardLayout><CoursesPanel /></DashboardLayout>
+          <DashboardLayout>
+            <CourseFeedbackProvider><CoursesPanel /></CourseFeedbackProvider>
+          </DashboardLayout>
         )],
         showEnterpriseModal: false,
         showSelectSessionModal: true,
@@ -127,7 +133,9 @@ describe('Dashboard', () => {
           showSelectSessionModal: false,
         },
         content: ['Dashboard layout with no courses sidebar and content', (
-          <DashboardLayout><CoursesPanel /></DashboardLayout>
+          <DashboardLayout>
+            <CourseFeedbackProvider><CoursesPanel /></CourseFeedbackProvider>
+          </DashboardLayout>
         )],
         showEnterpriseModal: true,
         showSelectSessionModal: false,
