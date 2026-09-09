@@ -1,0 +1,119 @@
+// House button colours: every button in the app on one pair.
+//
+// The compound selectors (`.btn.btn-primary`, not `.btn-primary`) are
+// deliberate. Paragon writes a variant's resting colour at (0,1,0), but its
+// disabled colour at `.btn-primary:disabled` (0,2,0) and its pressed colour at
+// `.btn-primary:not(:disabled, .disabled):active` (0,3,0). A single-class
+// override ties those two and then loses on source order, so the button looks
+// right at rest and snaps back the moment it is disabled or pressed. That is
+// exactly how the masquerade Submit stayed magenta: its field starts empty, so
+// the button is disabled the first time you look at it.
+//
+// Semantic variants are deliberately untouched -- success, danger, warning and
+// info carry meaning rather than brand. So is `tertiary`, which is Paragon's
+// neutral light button rather than a primary action.
+
+$btn-blue: #2f57e8;
+$btn-blue-hover: #1e48e3;
+$btn-blue-tint: #eef2fe;
+
+// Solid. `brand` is Paragon's magenta accent, which reads as a warning sitting
+// next to everything else here, so it joins primary rather than keeping its own
+// colour.
+.btn.btn-primary,
+.btn.btn-brand {
+  background-color: $btn-blue;
+  border-color: $btn-blue;
+  color: #fff;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus,
+.btn.btn-primary:not(:disabled):not(.disabled):active,
+.btn.btn-primary:not(:disabled):not(.disabled).active,
+.btn.btn-brand:hover,
+.btn.btn-brand:focus,
+.btn.btn-brand:not(:disabled):not(.disabled):active,
+.btn.btn-brand:not(:disabled):not(.disabled).active,
+.show > .btn.btn-primary.dropdown-toggle,
+.show > .btn.btn-brand.dropdown-toggle {
+  background-color: $btn-blue-hover;
+  border-color: $btn-blue-hover;
+  color: #fff;
+}
+
+// Placed after the hover rule and at the same specificity, so a disabled button
+// keeps the resting fill in the browsers that still fire :hover on one.
+// Bootstrap fades it with `opacity`, so the same fill is what reads as greyed
+// out rather than as a second colour.
+.btn.btn-primary.disabled,
+.btn.btn-primary:disabled,
+.btn.btn-brand.disabled,
+.btn.btn-brand:disabled {
+  background-color: $btn-blue;
+  border-color: $btn-blue;
+  color: #fff;
+}
+
+// Outline. Paragon tints these on hover rather than filling them; that shape is
+// kept so an outline button still reads as the secondary action standing next
+// to a solid one.
+.btn.btn-outline-primary {
+  color: $btn-blue;
+  border-color: $btn-blue;
+}
+
+.btn.btn-outline-primary:hover,
+.btn.btn-outline-primary:focus,
+.btn.btn-outline-primary:not(:disabled):not(.disabled):active,
+.btn.btn-outline-primary:not(:disabled):not(.disabled).active {
+  color: $btn-blue-hover;
+  background-color: $btn-blue-tint;
+  border-color: $btn-blue-hover;
+}
+
+.btn.btn-outline-primary.disabled,
+.btn.btn-outline-primary:disabled {
+  color: $btn-blue;
+  background-color: transparent;
+  border-color: $btn-blue;
+}
+
+// Link-styled buttons. The disabled state is left as Paragon's grey, which is
+// the right answer for a link that cannot be followed.
+.btn.btn-link {
+  color: $btn-blue;
+}
+
+.btn.btn-link:hover,
+.btn.btn-link:focus {
+  color: $btn-blue-hover;
+}
+
+// Paragon draws the focus ring for these variants as a 2px border on a
+// ::before, having set `box-shadow: none` -- so recolouring a box-shadow does
+// nothing and leaves the old colour ringing a blue button.
+.btn.btn-primary:focus::before,
+.btn.btn-primary.focus::before,
+.btn.btn-brand:focus::before,
+.btn.btn-brand.focus::before,
+.btn.btn-outline-primary:focus::before,
+.btn.btn-outline-primary.focus::before {
+  border-color: $btn-blue;
+}
+
+// The empty state's "Explore Courses" call to action is a plain <a>, not a
+// Paragon Button, so none of the above reaches it. It was painted with the
+// Tailwind `secondary` token, which is the same #6255A1 that paints the panel
+// headings -- retinting the token would have repainted those too, so the
+// anchor carries a class of its own instead. Note the generated Tailwind
+// utilities are all `!important`, which is why the colour classes had to come
+// off the element rather than be overridden from here.
+.explore-courses-cta {
+  background-color: $btn-blue;
+
+  &:hover,
+  &:focus {
+    background-color: $btn-blue-hover;
+  }
+}

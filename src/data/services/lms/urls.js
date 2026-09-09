@@ -36,6 +36,8 @@ const cartItemUrl = (courseId) => `${getApiUrl()}/course_cart/items/${courseId}/
 const cartDiscountUrl = () => `${getApiUrl()}/course_cart/discount/`;
 const cartCheckoutUrl = () => `${getApiUrl()}/course_cart/checkout/`;
 const cartVerifyUrl = () => `${getApiUrl()}/course_cart/verify/`;
+// Paid orders, for the purchase history page.
+const cartOrdersUrl = () => `${getApiUrl()}/course_cart/orders/`;
 
 // The header bell's feed. One GET per dashboard load, one POST to mark read.
 const notificationsUrl = () => `${getApiUrl()}/notifications/`;
@@ -59,6 +61,7 @@ export default StrictDict({
   cartDiscountUrl,
   cartCheckoutUrl,
   cartVerifyUrl,
+  cartOrdersUrl,
   authoredCoursesUrl,
   courseCatalogUrl,
   courseFeedbackUrl,

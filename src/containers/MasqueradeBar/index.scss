@@ -2,37 +2,67 @@
 
 .masquerade-bar {
   display: flex;
-  align-items: flex-start;
-  padding: map-get($spacers, 3);
+  // Centred, not flex-start: the label, the input and the chip are different
+  // heights, and topping them out left "Viewing as:" riding above its own chip.
+  align-items: center;
+  gap: map-get($spacers, 2);
+  padding: map-get($spacers, 2) map-get($spacers, 3);
   margin-bottom: map-get($spacers, 2);
 
   .masquerade-form-label {
-    padding: map-get($spacers, 2) map-get($spacers, 3);
+    padding: 0;
     display: flex;
     align-items: center;
     margin-bottom: 0;
     white-space: nowrap;
+    font-size: $font-size-sm;
 
     &>.pgn__icon {
-      margin-right: map-get($spacers, 3);
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-right: map-get($spacers, 2);
     }
   }
 
+  // A staff-only lookup, not the subject of the page: it does not need to grow
+  // to the full md breakpoint. Fixed and short keeps it reading as a control in
+  // a utility strip rather than as the page's main input.
   .masquerade-form-input {
     margin-bottom: 0;
-    flex-grow: 1;
-    max-width: map-get($grid-breakpoints, 'md');
+    flex: 0 1 18rem;
+    max-width: 18rem;
+
+    .form-control {
+      height: auto;
+      padding: 0.25rem 0.625rem;
+      font-size: $font-size-sm;
+      line-height: 1.5;
+    }
+  }
+
+  // Colour comes from the app-wide button rules in sass/_buttons.scss, which
+  // put `brand` on the same blue as `primary`. This only shrinks the button to
+  // match the rest of the strip.
+  .btn.btn-brand {
+    padding: 0.25rem 0.875rem;
+    font-size: $font-size-sm;
   }
 
   .masquerade-chip {
-    padding: map-get($spacers, 2) map-get($spacers, 3);
-    font-size: $font-size-base;
+    padding: map-get($spacers, 1) map-get($spacers, 2);
+    font-size: $font-size-sm;
   }
 }
 
 @include media-breakpoint-down(md) {
   .masquerade-bar {
     margin: auto;
-    padding: map-get($spacers, 3) map-get($spacers, 4);
+    padding: map-get($spacers, 2) map-get($spacers, 3);
+
+    // Nothing to spare for a fixed width on a phone.
+    .masquerade-form-input {
+      flex: 1 1 auto;
+      max-width: none;
+    }
   }
 }

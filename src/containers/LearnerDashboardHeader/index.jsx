@@ -17,6 +17,7 @@ import {
   useAuthoredCourseCount,
   findCoursesNavClicked,
   isCartPath,
+  isPurchasesPath,
   DEFAULT_COURSE_SEARCH_URL,
 } from './hooks';
 
@@ -52,6 +53,7 @@ export const LearnerDashboardHeader = () => {
     exploreCoursesClick,
     cartItemCount,
     isCartPage: isCartPath(),
+    isPurchasesPage: isPurchasesPath(),
     authoredCourseCount,
     notifications: {
       unreadCount,

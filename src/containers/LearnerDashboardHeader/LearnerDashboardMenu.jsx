@@ -15,6 +15,7 @@ const getLearnerHeaderMenu = (
   exploreCoursesClick,
   cartItemCount = 0,
   isCartPage = false,
+  isPurchasesPage = false,
   authoredCourseCount = 0,
   notifications = {},
 ) => ({
@@ -25,7 +26,7 @@ const getLearnerHeaderMenu = (
       // bare '/' lands at the origin root and renders a blank page.
       href: getConfig().PUBLIC_PATH,
       content: formatMessage(messages.course),
-      isActive: !isCartPage,
+      isActive: !isCartPage && !isPurchasesPage,
     },
     ...(getConfig().ENABLE_PROGRAMS ? [{
       type: 'item',
@@ -102,6 +103,13 @@ const getLearnerHeaderMenu = (
           type: 'item',
           href: `${getConfig().ACCOUNT_SETTINGS_URL}`,
           content: formatMessage(messages.account),
+        },
+        // Ours, not the ecommerce Order History below it: this is the history of
+        // Paymongo cart orders, and it lives inside the router basename.
+        {
+          type: 'item',
+          href: `${getConfig().PUBLIC_PATH}purchases`,
+          content: formatMessage(messages.purchaseHistory),
         },
         ...(getConfig().ORDER_HISTORY_URL ? [{
           type: 'item',

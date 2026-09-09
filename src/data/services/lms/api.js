@@ -90,6 +90,10 @@ export const removeCartItem = ({ courseId }) => client()
 
 export const clearCart = () => client().delete(urls.cartUrl());
 
+// Everything this learner has actually paid for. Paid orders only: the
+// server decides what counts as a purchase, not the page.
+export const fetchCartOrders = () => get(urls.cartOrdersUrl());
+
 /*********************************************************************************
  * Course approval
  *********************************************************************************/
@@ -167,6 +171,7 @@ export default {
   addCartItem,
   removeCartItem,
   clearCart,
+  fetchCartOrders,
   previewCartDiscount,
   checkoutCart,
   verifyCartPayment,

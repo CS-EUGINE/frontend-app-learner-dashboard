@@ -6,6 +6,8 @@ import { Badge } from '@openedx/paragon';
 
 import track from 'tracking';
 import { reduxHooks } from 'hooks';
+import { handleImageError } from 'components/CourseCard';
+import coursePlaceholder from 'assets/course-placeholder.svg';
 import verifiedRibbon from 'assets/verified-ribbon.png';
 import useActionDisabledState from './hooks';
 
@@ -23,9 +25,16 @@ export const CourseCardImage = ({ cardId, orientation }) => {
   const wrapperClassName = `pgn__card-wrapper-image-cap overflow-visible ${orientation}`;
   const image = (
     <>
+      {/*
+        Studio hands every course the same default image path whether or not
+        anyone uploaded one, so a non-empty bannerImgSrc is no evidence the
+        file resolves. Fall back on both counts: no URL at all, and a URL that
+        404s once the browser tries it. Same helper the cart rows use.
+      */}
       <img
         className="pgn__card-image-cap show"
-        src={bannerImgSrc}
+        src={bannerImgSrc || coursePlaceholder}
+        onError={handleImageError}
         alt={formatMessage(messages.bannerAlt)}
       />
       {

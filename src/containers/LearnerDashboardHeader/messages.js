@@ -76,6 +76,11 @@ const messages = defineMessages({
     defaultMessage: 'Staff Dashboard',
     description: 'User menu link to the LMS staff dashboard, shown only to staff.',
   },
+  purchaseHistory: {
+    id: 'learnerVariantDashboard.purchaseHistory',
+    defaultMessage: 'Purchase History',
+    description: 'User menu link to the learner\'s own history of paid course orders.',
+  },
   cart: {
     id: 'learnerVariantDashboard.cart',
     defaultMessage: 'Cart',

@@ -59,10 +59,18 @@ export const MasqueradeBar = () => {
               {formatMessage(messages.ViewAs)}
             </FormLabel>
             <FormGroup isInvalid={isMasqueradingFailed} className="masquerade-form-input">
+              {/*
+                A placeholder rather than Paragon's floatingLabel: the label
+                animates up out of the field and over its own top border, which
+                in a one-line bar sitting between the header and the hero reads
+                as text floating loose on the page. The field is still named
+                for assistive tech by the "View as:" label it already points
+                at through aria-labelledby.
+              */}
               <FormControl
                 value={masqueradeInput}
                 onChange={handleMasqueradeInputChange}
-                floatingLabel={formatMessage(messages.StudentNameInput)}
+                placeholder={formatMessage(messages.StudentNameInput)}
                 aria-labelledby="masquerade-form-label"
               />
               {isMasqueradingFailed && (

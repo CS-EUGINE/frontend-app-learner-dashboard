@@ -24,6 +24,57 @@
   align-self: center;
 }
 
+/* Tab strip.
+
+   The padding lives here rather than on each <Tab tabClassName="...">, because
+   Paragon builds the overflow "More..." tab itself: it is spliced into the
+   child list inside the Tabs component, so it can never receive a class we
+   pass per tab. That is why it used to sit at a different size and baseline
+   from the real tabs once the strip narrowed enough to collapse.
+
+   It also nests a `btn-link` Dropdown.Toggle *inside* the nav-link, so left
+   alone it arrives with two helpings of padding and the button font size on
+   top. Zero out the outer anchor, strip the button back to a plain label, and
+   let one rule set the rhythm for every tab in the strip. */
+.pgn__tabs {
+  $tab-padding-y: 1rem;
+  $tab-padding-x: 2rem;
+
+  .nav-link {
+    padding: $tab-padding-y $tab-padding-x;
+  }
+
+  // The overflow tab is a shell around the dropdown; the toggle inside carries
+  // the padding so the whole tab stays clickable and lines up with the rest.
+  .nav-link.pgn__tab_more {
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+
+    .dropdown { display: flex; }
+
+    #pgn__tab-toggle {
+      display: flex;
+      align-items: center;
+      padding: $tab-padding-y $tab-padding-x;
+      border: 0;
+      background: none;
+      box-shadow: none;
+      color: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      text-decoration: none;
+    }
+
+    #pgn__tab-toggle:hover,
+    #pgn__tab-toggle:focus {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
+
 @include media-breakpoint-down(md) {
   .course-list-heading-container {
     flex-direction: column-reverse;
@@ -38,5 +89,15 @@
   .course-list-title {
     font-size: $h3-font-size;
     margin: map-get($spacers, 2) 0;
+  }
+
+  // Narrow screens are exactly where the strip collapses into "More...", so
+  // both selectors have to be tightened together or the two drift apart again.
+  .pgn__tabs {
+    .nav-link,
+    .nav-link.pgn__tab_more #pgn__tab-toggle {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 }

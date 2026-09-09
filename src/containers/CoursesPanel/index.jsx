@@ -77,7 +77,6 @@ export const CoursesPanel = () => {
                 All <span>({allCoursesData?.visibleList.length ?? 0})</span>
               </span>
             } 
-            tabClassName="tw:px-8 tw:py-4"
           >
             <section className='tw:my-8'>
               {allCoursesData?.visibleList.length > 0 ? <CourseListSlot courseListData={allCoursesData} /> : <NoCoursesViewSlot />}
@@ -90,7 +89,6 @@ export const CoursesPanel = () => {
                 In Progress <span>({inProgressData?.visibleList.length ?? 0})</span>
               </span>
             }
-            tabClassName="tw:px-8 tw:py-4"
           >
             <section className='tw:my-8'>
               {inProgressData?.visibleList.length > 0 ? <CourseListSlot courseListData={inProgressData} /> : <NoCoursesViewSlot />}
@@ -103,7 +101,6 @@ export const CoursesPanel = () => {
                 Completed <span>({completedData?.visibleList.length ?? 0})</span>
               </span>
             }
-            tabClassName="tw:px-8 tw:py-4"
           >
             <section className='tw:my-8'>
               {completedData?.visibleList.length > 0 ? <CourseListSlot courseListData={completedData} /> : <NoCoursesViewSlot />}

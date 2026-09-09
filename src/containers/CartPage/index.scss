@@ -1,5 +1,6 @@
 $cart-indigo: #372ea8;
 $cart-blue: #2f57e8;
+$cart-blue-hover: #1e48e3;
 $cart-border: #e6e6ef;
 $cart-muted: #7a7a8c;
 
@@ -13,11 +14,20 @@ $cart-muted: #7a7a8c;
     margin: 0 auto;
   }
 
+  // Title on the left, the way out to past purchases on the right.
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
   &__title {
     font-size: 1.75rem;
     font-weight: 700;
     color: $cart-indigo;
-    margin-bottom: 1.75rem;
+    margin-bottom: 0;
   }
 
   // Items on the left, summary rail on the right.
@@ -58,6 +68,13 @@ $cart-muted: #7a7a8c;
     font-size: 0.875rem;
     color: $cart-muted;
     margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 575.98px) {
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 
   @media (max-width: 991.98px) {
@@ -157,7 +174,8 @@ $cart-muted: #7a7a8c;
     color: $cart-blue;
     text-decoration: none;
 
-    &:hover:not(:disabled) { text-decoration: underline; }
+    &:hover:not(:disabled) { color: $cart-blue-hover; text-decoration: underline; }
+    &:focus:not(:disabled) { color: $cart-blue-hover; }
     &:disabled { opacity: 0.5; }
   }
 
@@ -279,11 +297,11 @@ $cart-muted: #7a7a8c;
     }
   }
 
+  // Colour comes from the app-wide button rules in sass/_buttons.scss; this
+  // only owns the checkout button's shape in the summary rail.
   &__checkout {
     width: 100%;
     margin-top: 1.25rem;
-    background-color: $cart-blue;
-    border-color: $cart-blue;
   }
 
   &__note {

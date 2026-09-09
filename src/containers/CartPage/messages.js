@@ -11,6 +11,11 @@ const messages = defineMessages({
     description: 'Heading of the shopping cart page',
     defaultMessage: 'Shopping Cart',
   },
+  purchaseHistory: {
+    id: 'learner-dash.cart.purchaseHistory',
+    description: 'Button leading from the cart to the learner\'s past purchases',
+    defaultMessage: 'Purchase History',
+  },
   itemCount: {
     id: 'learner-dash.cart.itemCount',
     description: 'Number of courses currently in the cart',

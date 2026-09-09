@@ -16,7 +16,7 @@ exports[`NoCoursesView snapshot 1`] = `
     Complete First Your Courses
   </h2>
   <a
-    className="tw:bg-secondary tw:text-white tw:px-6 tw:py-2 tw:rounded tw:text-sm tw:font-semibold tw:no-underline tw:hover:opacity-90"
+    className="explore-courses-cta tw:text-white tw:px-6 tw:py-2 tw:rounded tw:text-sm tw:font-semibold tw:no-underline"
     href="http://localhost:18000/course-search-url"
   >
     Explore Courses

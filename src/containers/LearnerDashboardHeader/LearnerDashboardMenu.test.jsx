@@ -7,6 +7,7 @@ const build = (authenticatedUser) => getLearnerHeaderMenu(
   () => {},
   0,
   false,
+  false,
   0,
 );
 
@@ -33,5 +34,19 @@ describe('staff dashboard entry in the user menu', () => {
     const all = labels(menu);
     expect(all.indexOf('Staff Dashboard')).toBeLessThan(all.indexOf('Sign Out'));
     expect(all.indexOf('Dashboard')).toBeLessThan(all.indexOf('Staff Dashboard'));
+  });
+});
+
+describe('purchase history entry in the user menu', () => {
+  test('every learner gets it, inside the router basename', () => {
+    const menu = build({ username: 'learner', administrator: false });
+    expect(labels(menu)).toContain('Purchase History');
+    expect(hrefs(menu).some(href => href && href.endsWith('purchases'))).toBe(true);
+  });
+
+  test('it sits with the personal links, after Account', () => {
+    const all = labels(build({ username: 'learner', administrator: false }));
+    expect(all.indexOf('Account')).toBeLessThan(all.indexOf('Purchase History'));
+    expect(all.indexOf('Purchase History')).toBeLessThan(all.indexOf('Sign Out'));
   });
 });

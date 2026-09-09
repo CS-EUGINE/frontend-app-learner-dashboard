@@ -21,6 +21,9 @@ export const DEFAULT_COURSE_SEARCH_URL = '/courses';
 /** True when the browser is currently on the cart route. */
 export const isCartPath = () => global.location.pathname.replace(/\/$/, '').endsWith('/cart');
 
+/** True when the browser is currently on the purchase history route. */
+export const isPurchasesPath = () => global.location.pathname.replace(/\/$/, '').endsWith('/purchases');
+
 export const useIsCollapsed = () => {
   const { width } = useWindowSize();
   const isCollapsed = React.useMemo(() => (width <= breakpoints.large.minWidth), [width]);
@@ -88,7 +91,7 @@ export const useAuthoredCourseCount = () => {
 
 export const useLearnerDashboardHeaderMenu = ({
   courseSearchUrl, authenticatedUser, exploreCoursesClick, cartItemCount = 0, isCartPage = false,
-  authoredCourseCount = 0, notifications = {},
+  isPurchasesPage = false, authoredCourseCount = 0, notifications = {},
 }) => {
   const { formatMessage } = useIntl();
   return getLearnerHeaderMenu(
@@ -98,6 +101,7 @@ export const useLearnerDashboardHeaderMenu = ({
     exploreCoursesClick,
     cartItemCount,
     isCartPage,
+    isPurchasesPage,
     authoredCourseCount,
     notifications,
   );

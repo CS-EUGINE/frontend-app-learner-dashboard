@@ -57,7 +57,16 @@ export const CartPage = () => {
           <LearnerDashboardHeader />
           <main className="cart-page">
             <div className="cart-page__inner">
-              <h1 className="cart-page__title">{formatMessage(messages.heading)}</h1>
+              <div className="cart-page__header">
+                <h1 className="cart-page__title">{formatMessage(messages.heading)}</h1>
+                <Button
+                  variant="outline-primary"
+                  size="sm"
+                  href={`${getConfig().PUBLIC_PATH}purchases`}
+                >
+                  {formatMessage(messages.purchaseHistory)}
+                </Button>
+              </div>
 
               {fulfilledCourses.length > 0 && (
                 <Alert variant="success">

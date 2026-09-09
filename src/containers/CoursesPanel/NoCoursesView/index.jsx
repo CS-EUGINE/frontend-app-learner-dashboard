@@ -20,7 +20,7 @@ export const NoCoursesView = () => {
       </h2>
       <a
         href={baseAppUrl(courseSearchUrl)}
-        className="tw:bg-secondary tw:text-white tw:px-6 tw:py-2 tw:rounded tw:text-sm tw:font-semibold tw:no-underline tw:hover:opacity-90"
+        className="explore-courses-cta tw:text-white tw:px-6 tw:py-2 tw:rounded tw:text-sm tw:font-semibold tw:no-underline"
       >
         {formatMessage(messages.exploreCoursesButton)}
       </a>
