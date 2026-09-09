@@ -117,3 +117,50 @@ $btn-blue-tint: #eef2fe;
     background-color: $btn-blue-hover;
   }
 }
+
+// The site header is third-party chrome (@edx/frontend-component-header) with
+// its own design, and it builds two of its controls out of Paragon button
+// classes: the user-menu trigger is `btn btn-outline-primary` and the
+// signed-out Sign in / Register pair is `btn-link` + `btn-outline-primary`.
+// The app-wide rules above therefore reached into the header and repainted the
+// account dropdown. `header` is an element selector, so these land at (0,2,1)
+// and win back without needing !important.
+//
+// The values are Paragon's stock ramp, written as literals on purpose: this is
+// a revert to what the vendor ships, so it should read as "put it back", not as
+// something that tracks our theme. Only `#0A3055` is `$primary`; the rest are
+// derived shades and a neutral that we do not have clean variables for.
+header .btn.btn-outline-primary {
+  color: $primary;
+  border-color: $primary;
+}
+
+header .btn.btn-outline-primary:hover,
+header .btn.btn-outline-primary:focus,
+header .btn.btn-outline-primary:not(:disabled):not(.disabled):active,
+header .btn.btn-outline-primary:not(:disabled):not(.disabled).active {
+  color: #082644;
+  background-color: #f0f3f5;
+  border-color: #07223c;
+}
+
+header .btn.btn-outline-primary.disabled,
+header .btn.btn-outline-primary:disabled {
+  color: $primary;
+  background-color: transparent;
+  border-color: $primary;
+}
+
+header .btn.btn-outline-primary:focus::before,
+header .btn.btn-outline-primary.focus::before {
+  border-color: $primary;
+}
+
+header .btn.btn-link {
+  color: #006DAA;
+}
+
+header .btn.btn-link:hover,
+header .btn.btn-link:focus {
+  color: #003c5e;
+}

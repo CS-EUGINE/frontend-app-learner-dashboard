@@ -20,6 +20,8 @@ describe('MasqueradeBar', () => {
     handleMasqueradeInputChange: jest.fn().mockName('handleMasqueradeInputChange'),
     handleClearMasquerade: jest.fn().mockName('handleClearMasquerade'),
     handleMasqueradeSubmit: jest.fn().mockName('handleMasqueradeSubmit'),
+    isCollapsed: false,
+    handleToggleCollapsed: jest.fn().mockName('handleToggleCollapsed'),
     formatMessage,
   };
 
@@ -55,6 +57,13 @@ describe('MasqueradeBar', () => {
         ...masqueradeMockData,
         isMasqueradingFailed: true,
         masqueradeErrorMessage: 'test-error',
+      });
+      expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
+    });
+    test('is collapsed', () => {
+      hooks.useMasqueradeBarData.mockReturnValueOnce({
+        ...masqueradeMockData,
+        isCollapsed: true,
       });
       expect(shallow(<MasqueradeBar />).snapshot).toMatchSnapshot();
     });

@@ -8,10 +8,11 @@ import {
   FormControlFeedback,
   FormLabel,
   FormGroup,
+  IconButton,
   StatefulButton,
   Icon,
 } from '@openedx/paragon';
-import { Close, PersonSearch } from '@openedx/paragon/icons';
+import { Close, KeyboardArrowUp, PersonSearch } from '@openedx/paragon/icons';
 
 import messages from './messages';
 import { useMasqueradeBarData } from './hooks';
@@ -30,10 +31,34 @@ export const MasqueradeBar = () => {
     handleMasqueradeInputChange,
     handleClearMasquerade,
     handleMasqueradeSubmit,
+    isCollapsed,
+    handleToggleCollapsed,
     formatMessage,
   } = useMasqueradeBarData({ authenticatedUser });
 
   if (!canMasquerade) { return null; }
+
+  // Minimized, the bar keeps a thin strip with the person-search icon on it
+  // rather than disappearing: an icon that depicts the tool is findable again,
+  // where a bar that vanishes completely is not.
+  if (isCollapsed) {
+    return (
+      <div className="w-100 shadow-sm px-2">
+        <div className="masquerade-bar masquerade-bar--collapsed">
+          <IconButton
+            className="masquerade-toggle"
+            type="button"
+            size="sm"
+            src={PersonSearch}
+            iconAs={Icon}
+            alt={formatMessage(messages.ExpandBar)}
+            aria-expanded={false}
+            onClick={handleToggleCollapsed}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-100 shadow-sm px-2">
@@ -91,6 +116,24 @@ export const MasqueradeBar = () => {
               type="submit"
             />
           </>
+        )}
+        {/*
+          `type="button"`, because a bare <button> inside a <form> defaults to
+          submit and minimizing the bar would otherwise try to masquerade.
+          Hidden while masquerading: there is nothing to minimize then, and the
+          hook refuses to collapse in that state anyway.
+        */}
+        {!isMasquerading && (
+          <IconButton
+            className="masquerade-toggle"
+            type="button"
+            size="sm"
+            src={KeyboardArrowUp}
+            iconAs={Icon}
+            alt={formatMessage(messages.MinimizeBar)}
+            aria-expanded
+            onClick={handleToggleCollapsed}
+          />
         )}
       </Form>
     </div>

@@ -41,6 +41,7 @@ describe('MasqueradeBar hooks', () => {
 
   describe('state values', () => {
     state.testGetter(state.keys.masqueradeInput);
+    state.testGetter(state.keys.isCollapsed);
   });
   describe('useMasqueradeBarData', () => {
     beforeEach(() => state.mock());
@@ -85,6 +86,44 @@ describe('MasqueradeBar hooks', () => {
       const out = createHook();
       out.handleClearMasquerade();
       expect(clearMasquerade).toHaveBeenCalled();
+    });
+    test('handleToggleCollapsed', () => {
+      const out = createHook();
+      expect(out.isCollapsed).toEqual(false);
+      out.handleToggleCollapsed();
+      const [updater] = state.setState.isCollapsed.mock.calls[0];
+      expect(updater(false)).toEqual(true);
+      expect(hooks.readCollapsedPreference()).toEqual(true);
+      expect(updater(true)).toEqual(false);
+      expect(hooks.readCollapsedPreference()).toEqual(false);
+    });
+    test('is never collapsed while masquerading', () => {
+      state.mockVal(state.keys.isCollapsed, true);
+      expect(createHook().isCollapsed).toEqual(true);
+      expect(createHook({ isMasquerading: true }).isCollapsed).toEqual(false);
+    });
+  });
+
+  describe('collapsed preference', () => {
+    beforeEach(() => window.localStorage.clear());
+    test('defaults to expanded when nothing is stored', () => {
+      expect(hooks.readCollapsedPreference()).toEqual(false);
+    });
+    test('round-trips through storage', () => {
+      hooks.writeCollapsedPreference(true);
+      expect(hooks.readCollapsedPreference()).toEqual(true);
+      hooks.writeCollapsedPreference(false);
+      expect(hooks.readCollapsedPreference()).toEqual(false);
+    });
+    test('survives storage that throws on access', () => {
+      const getItem = jest.spyOn(Storage.prototype, 'getItem')
+        .mockImplementation(() => { throw new Error('denied'); });
+      const setItem = jest.spyOn(Storage.prototype, 'setItem')
+        .mockImplementation(() => { throw new Error('denied'); });
+      expect(hooks.readCollapsedPreference()).toEqual(false);
+      expect(() => hooks.writeCollapsedPreference(true)).not.toThrow();
+      getItem.mockRestore();
+      setItem.mockRestore();
     });
   });
 

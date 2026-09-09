@@ -42,6 +42,15 @@ exports[`MasqueradeBar snapshot can masquerade 1`] = `
         variant="brand"
       />
     </Fragment>
+    <IconButton
+      alt="Minimize the view as controls"
+      aria-expanded={true}
+      className="masquerade-toggle"
+      iconAs="Icon"
+      onClick={[MockFunction handleToggleCollapsed]}
+      size="sm"
+      type="button"
+    />
   </Form>
 </div>
 `;
@@ -88,11 +97,41 @@ exports[`MasqueradeBar snapshot can masquerade with input 1`] = `
         variant="brand"
       />
     </Fragment>
+    <IconButton
+      alt="Minimize the view as controls"
+      aria-expanded={true}
+      className="masquerade-toggle"
+      iconAs="Icon"
+      onClick={[MockFunction handleToggleCollapsed]}
+      size="sm"
+      type="button"
+    />
   </Form>
 </div>
 `;
 
 exports[`MasqueradeBar snapshot cannot masquerade 1`] = `null`;
+
+exports[`MasqueradeBar snapshot is collapsed 1`] = `
+<div
+  className="w-100 shadow-sm px-2"
+>
+  <div
+    className="masquerade-bar masquerade-bar--collapsed"
+  >
+    <IconButton
+      alt="Show the view as controls"
+      aria-expanded={false}
+      className="masquerade-toggle"
+      iconAs="Icon"
+      onClick={[MockFunction handleToggleCollapsed]}
+      size="sm"
+      src={[MockFunction icons.PersonSearch]}
+      type="button"
+    />
+  </div>
+</div>
+`;
 
 exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
 <div
@@ -140,6 +179,15 @@ exports[`MasqueradeBar snapshot is masquerading failed with error 1`] = `
         variant="brand"
       />
     </Fragment>
+    <IconButton
+      alt="Minimize the view as controls"
+      aria-expanded={true}
+      className="masquerade-toggle"
+      iconAs="Icon"
+      onClick={[MockFunction handleToggleCollapsed]}
+      size="sm"
+      type="button"
+    />
   </Form>
 </div>
 `;
@@ -186,6 +234,15 @@ exports[`MasqueradeBar snapshot is masquerading pending 1`] = `
         variant="brand"
       />
     </Fragment>
+    <IconButton
+      alt="Minimize the view as controls"
+      aria-expanded={true}
+      className="masquerade-toggle"
+      iconAs="Icon"
+      onClick={[MockFunction handleToggleCollapsed]}
+      size="sm"
+      type="button"
+    />
   </Form>
 </div>
 `;

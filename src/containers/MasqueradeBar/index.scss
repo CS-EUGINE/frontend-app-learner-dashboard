@@ -18,8 +18,8 @@
     font-size: $font-size-sm;
 
     &>.pgn__icon {
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 1.375rem;
+      height: 1.375rem;
       margin-right: map-get($spacers, 2);
     }
   }
@@ -29,12 +29,12 @@
   // a utility strip rather than as the page's main input.
   .masquerade-form-input {
     margin-bottom: 0;
-    flex: 0 1 18rem;
-    max-width: 18rem;
+    flex: 0 1 22rem;
+    max-width: 22rem;
 
     .form-control {
       height: auto;
-      padding: 0.25rem 0.625rem;
+      padding: 0.375rem 0.75rem;
       font-size: $font-size-sm;
       line-height: 1.5;
     }
@@ -44,13 +44,23 @@
   // put `brand` on the same blue as `primary`. This only shrinks the button to
   // match the rest of the strip.
   .btn.btn-brand {
-    padding: 0.25rem 0.875rem;
+    padding: 0.375rem 1.125rem;
     font-size: $font-size-sm;
   }
 
   .masquerade-chip {
     padding: map-get($spacers, 1) map-get($spacers, 2);
     font-size: $font-size-sm;
+  }
+
+  // Far right, whatever else is in the bar: `margin-left: auto` rather than a
+  // spacer, so the gap is whatever is left over instead of a fixed guess.
+  // Colour is left to Paragon's own IconButton styling, which matches the bell
+  // and cart icons in the header above -- this is a minimize affordance sitting
+  // in chrome, not one of the app's actions.
+  .masquerade-toggle {
+    margin-left: auto;
+    flex: none;
   }
 }
 
@@ -65,4 +75,13 @@
       max-width: none;
     }
   }
+}
+
+// Minimized: a thin strip carrying nothing but the way back. It keeps the
+// bar's own left/right padding so the icon lands on the same right edge it
+// occupies when the bar is open, and the control does not appear to jump.
+.masquerade-bar--collapsed {
+  justify-content: flex-end;
+  padding-top: map-get($spacers, 1);
+  padding-bottom: map-get($spacers, 1);
 }
