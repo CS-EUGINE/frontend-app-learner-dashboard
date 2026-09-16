@@ -76,11 +76,6 @@ const messages = defineMessages({
     defaultMessage: 'Staff Dashboard',
     description: 'User menu link to the LMS staff dashboard, shown only to staff.',
   },
-  bulkRegistration: {
-    id: 'learnerVariantDashboard.bulkRegistration',
-    defaultMessage: 'Bulk user registration',
-    description: 'User menu link to bulk user registration, shown only to superusers.',
-  },
   purchaseHistory: {
     id: 'learnerVariantDashboard.purchaseHistory',
     defaultMessage: 'Purchase History',

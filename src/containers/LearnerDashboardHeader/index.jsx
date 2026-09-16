@@ -15,7 +15,6 @@ import {
   useLearnerDashboardHeaderMenu,
   useCartItemCount,
   useAuthoredCourseCount,
-  useBulkRegistrationAccess,
   findCoursesNavClicked,
   isCartPath,
   isPurchasesPath,
@@ -39,7 +38,6 @@ export const LearnerDashboardHeader = () => {
 
   const cartItemCount = useCartItemCount();
   const authoredCourseCount = useAuthoredCourseCount();
-  const canBulkRegisterUsers = useBulkRegistrationAccess();
 
   // The bell's state lives here, not in the menu item, because the drawer is
   // rendered outside <Header>: it owns the right-hand edge of the window rather
@@ -57,7 +55,6 @@ export const LearnerDashboardHeader = () => {
     isCartPage: isCartPath(),
     isPurchasesPage: isPurchasesPath(),
     authoredCourseCount,
-    canBulkRegisterUsers,
     notifications: {
       unreadCount,
       // A plain click opens the panel; anything else (middle-click, ctrl-click,

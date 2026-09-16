@@ -10,7 +10,6 @@ const build = (authenticatedUser) => getLearnerHeaderMenu(
   false,
   0,
   {},
-  false,
 );
 
 const labels = (menu) => menu.userMenu.flatMap(group => group.items.map(item => item.content));
@@ -36,30 +35,6 @@ describe('staff dashboard entry in the user menu', () => {
     const all = labels(menu);
     expect(all.indexOf('Staff Dashboard')).toBeLessThan(all.indexOf('Sign Out'));
     expect(all.indexOf('Dashboard')).toBeLessThan(all.indexOf('Staff Dashboard'));
-  });
-});
-
-describe('bulk registration entry in the user menu', () => {
-  test('superusers see it and it points to the LMS bulk registration page', () => {
-    const menu = getLearnerHeaderMenu(
-      (msg) => msg.defaultMessage,
-      '/courses',
-      { username: 'cloudswyft_admin' },
-      () => {},
-      0,
-      false,
-      false,
-      0,
-      {},
-      true,
-    );
-    expect(labels(menu)).toContain('Bulk user registration');
-    expect(hrefs(menu).some(href => href && href.endsWith('/support/bulk_registration'))).toBe(true);
-  });
-
-  test('the entry is hidden when the server does not grant access', () => {
-    const menu = build({ username: 'cloudswyft_staff', administrator: true });
-    expect(labels(menu)).not.toContain('Bulk user registration');
   });
 });
 

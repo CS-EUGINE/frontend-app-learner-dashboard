@@ -18,7 +18,6 @@ const getLearnerHeaderMenu = (
   isPurchasesPage = false,
   authoredCourseCount = 0,
   notifications = {},
-  canBulkRegisterUsers = false,
 ) => ({
   mainMenu: [
     {
@@ -138,16 +137,6 @@ const getLearnerHeaderMenu = (
           type: 'item',
           href: urls.baseAppUrl('/staff'),
           content: formatMessage(messages.staffDashboard),
-        },
-      ],
-    }] : []),
-    ...(canBulkRegisterUsers ? [{
-      heading: '',
-      items: [
-        {
-          type: 'item',
-          href: urls.baseAppUrl('/support/bulk_registration'),
-          content: formatMessage(messages.bulkRegistration),
         },
       ],
     }] : []),
