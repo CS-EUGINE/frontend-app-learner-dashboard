@@ -1,10 +1,12 @@
 import React from 'react';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import track from 'tracking';
 import { StrictDict } from 'utils';
 import { linkNames } from 'tracking/constants';
 import api from 'data/services/lms/api';
+import urls from 'data/services/lms/urls';
 
 import getLearnerHeaderMenu from './LearnerDashboardMenu';
 
@@ -89,9 +91,35 @@ export const useAuthoredCourseCount = () => {
   return count;
 };
 
+/**
+ * Resolve the server-side permission for the superuser-only bulk registration link.
+ * The backend remains authoritative; this only controls whether the navigation item
+ * is displayed in the learner dashboard.
+ */
+export const useBulkRegistrationAccess = () => {
+  const [allowed, setAllowed] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    try {
+      getAuthenticatedHttpClient()
+        .get(urls.baseAppUrl('/support/bulk_registration_access'))
+        .then(({ data }) => {
+          if (!cancelled) { setAllowed(data.is_superuser === true); }
+        })
+        .catch(() => {});
+    } catch (e) {
+      // Navigation permission must never break the dashboard.
+    }
+    return () => { cancelled = true; };
+  }, []);
+
+  return allowed;
+};
+
 export const useLearnerDashboardHeaderMenu = ({
   courseSearchUrl, authenticatedUser, exploreCoursesClick, cartItemCount = 0, isCartPage = false,
-  isPurchasesPage = false, authoredCourseCount = 0, notifications = {},
+  isPurchasesPage = false, authoredCourseCount = 0, notifications = {}, canBulkRegisterUsers = false,
 }) => {
   const { formatMessage } = useIntl();
   return getLearnerHeaderMenu(
@@ -104,6 +132,7 @@ export const useLearnerDashboardHeaderMenu = ({
     isPurchasesPage,
     authoredCourseCount,
     notifications,
+    canBulkRegisterUsers,
   );
 };
 
@@ -123,6 +152,7 @@ export default {
   findCoursesNavDropdownClicked,
   useCartItemCount,
   useAuthoredCourseCount,
+  useBulkRegistrationAccess,
   useLearnerDashboardHeaderData,
   useLearnerDashboardHeaderMenu,
 };
