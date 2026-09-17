@@ -18,7 +18,6 @@ import {
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
 import urls from 'data/services/lms/urls';
-import { SubsiteBrandingContext } from './SubsiteBrandingContext';
 
 import track from 'tracking';
 
@@ -29,6 +28,7 @@ import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
 
 import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
+import { SubsiteBrandingContext } from './SubsiteBrandingContext';
 import './App.scss';
 import './sass/_tailwind.scss';
 
@@ -61,7 +61,9 @@ export const App = () => {
   }, []);
 
   React.useEffect(() => {
-    if (!branding) return undefined;
+    if (!branding) {
+      return undefined;
+    }
     const root = document.documentElement;
     root.style.setProperty('--subsite-primary', branding.primary_color);
     root.style.setProperty('--subsite-secondary', branding.secondary_color);
@@ -100,41 +102,69 @@ export const App = () => {
       }
     }
   }, [authenticatedUser, loadData]);
+  const hasBrandingContent = Boolean(
+    branding && (branding.banner_url || branding.description || branding.contact_email || branding.labs_site),
+  );
   return (
     <SubsiteBrandingContext.Provider value={branding}>
       <>
-      <Helmet>
-        <title>{formatMessage(messages.pageTitle)}</title>
-        <link
-          rel="shortcut icon"
-          href={branding?.favicon_url || getConfig().FAVICON_URL}
-          type="image/x-icon"
-        />
-      </Helmet>
-      <div>
-        <AppWrapper>
-          <LearnerDashboardHeader />
-          <main>
-            {branding?.banner_url && (
-              <div
+        <Helmet>
+          <title>{formatMessage(messages.pageTitle)}</title>
+          <link
+            rel="shortcut icon"
+            href={branding?.favicon_url || getConfig().FAVICON_URL}
+            type="image/x-icon"
+          />
+        </Helmet>
+        <div>
+          <AppWrapper>
+            <LearnerDashboardHeader />
+            <main>
+              {hasBrandingContent && (
+              <section
                 className="subsite-dashboard-banner"
-                style={{ backgroundImage: `url(${branding.banner_url})` }}
+                aria-label={branding.name || 'Organization information'}
+                style={branding.banner_url ? { backgroundImage: `url(${branding.banner_url})` } : undefined}
               >
-                <span>{branding.name}</span>
-              </div>
-            )}
-            {hasNetworkFailure
-              ? (
-                <Alert variant="danger">
-                  <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
-                </Alert>
-              ) : (
-                <Dashboard />
+                <div className="subsite-dashboard-banner-content">
+                  {branding.name && <h1 className="subsite-dashboard-banner-title">{branding.name}</h1>}
+                  {branding.description && (
+                    <p className="subsite-dashboard-banner-description">{branding.description}</p>
+                  )}
+                  {(branding.contact_email || branding.labs_site) && (
+                    <div className="subsite-dashboard-links">
+                      {branding.contact_email && (
+                        <a href={`mailto:${branding.contact_email}`} className="subsite-dashboard-link">
+                          Contact support
+                        </a>
+                      )}
+                      {branding.labs_site && (
+                        <a
+                          href={branding.labs_site}
+                          className="subsite-dashboard-link"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Virtual labs
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </section>
               )}
-          </main>
-        </AppWrapper>
-        <FooterSlot />
-      </div>
+              {hasNetworkFailure
+                ? (
+                  <Alert variant="danger">
+                    <ErrorPage message={formatMessage(messages.errorMessage, { supportEmail })} />
+                  </Alert>
+                ) : (
+                  <Dashboard />
+                )}
+            </main>
+          </AppWrapper>
+          <FooterSlot />
+        </div>
       </>
     </SubsiteBrandingContext.Provider>
   );
