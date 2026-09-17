@@ -43,6 +43,10 @@ const cartOrdersUrl = () => `${getApiUrl()}/course_cart/orders/`;
 const notificationsUrl = () => `${getApiUrl()}/notifications/`;
 const notificationsReadUrl = () => `${getApiUrl()}/notifications/read/`;
 
+// Runtime organization branding. This is fetched once per dashboard load so
+// new customer branding does not require an MFE rebuild.
+const subsiteBrandingUrl = () => `${getConfig().LMS_BASE_URL}/api/branding/v1/subsite/current`;
+
 // Learner reviews of the courses they are enrolled in. One GET for the whole
 // dashboard, one POST per review.
 const courseFeedbackUrl = () => `${getApiUrl()}/course_feedback/`;
@@ -67,6 +71,7 @@ export default StrictDict({
   courseFeedbackUrl,
   notificationsUrl,
   notificationsReadUrl,
+  subsiteBrandingUrl,
   courseUnenroll,
   creditPurchaseUrl,
   creditRequestUrl,

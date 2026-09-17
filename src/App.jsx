@@ -17,6 +17,8 @@ import {
 } from 'data/redux';
 import { reduxHooks } from 'hooks';
 import Dashboard from 'containers/Dashboard';
+import urls from 'data/services/lms/urls';
+import { SubsiteBrandingContext } from './SubsiteBrandingContext';
 
 import track from 'tracking';
 
@@ -33,6 +35,7 @@ import './sass/_tailwind.scss';
 export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
   const { formatMessage } = useIntl();
+  const [branding, setBranding] = React.useState(null);
   const isFailed = {
     initialize: reduxHooks.useRequestIsFailed(RequestKeys.initialize),
     refreshList: reduxHooks.useRequestIsFailed(RequestKeys.refreshList),
@@ -40,6 +43,31 @@ export const App = () => {
   const hasNetworkFailure = isFailed.initialize || isFailed.refreshList;
   const { supportEmail } = reduxHooks.usePlatformSettingsData();
   const loadData = reduxHooks.useLoadData();
+
+  React.useEffect(() => {
+    let mounted = true;
+    fetch(urls.subsiteBrandingUrl(), { credentials: 'include' })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        if (mounted && payload?.subsite) {
+          setBranding(payload.subsite);
+        }
+      })
+      .catch(() => {
+        // Runtime branding is an enhancement; keep the compiled default if
+        // the LMS branding endpoint is temporarily unavailable.
+      });
+    return () => { mounted = false; };
+  }, []);
+
+  React.useEffect(() => {
+    if (!branding) return undefined;
+    const root = document.documentElement;
+    root.style.setProperty('--subsite-primary', branding.primary_color);
+    root.style.setProperty('--subsite-secondary', branding.secondary_color);
+    root.style.setProperty('--subsite-accent', branding.accent_color);
+    return undefined;
+  }, [branding]);
 
   React.useEffect(() => {
     if (authenticatedUser?.administrator || getConfig().NODE_ENV === 'development') {
@@ -73,15 +101,28 @@ export const App = () => {
     }
   }, [authenticatedUser, loadData]);
   return (
-    <>
+    <SubsiteBrandingContext.Provider value={branding}>
+      <>
       <Helmet>
         <title>{formatMessage(messages.pageTitle)}</title>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+        <link
+          rel="shortcut icon"
+          href={branding?.favicon_url || getConfig().FAVICON_URL}
+          type="image/x-icon"
+        />
       </Helmet>
       <div>
         <AppWrapper>
           <LearnerDashboardHeader />
           <main>
+            {branding?.banner_url && (
+              <div
+                className="subsite-dashboard-banner"
+                style={{ backgroundImage: `url(${branding.banner_url})` }}
+              >
+                <span>{branding.name}</span>
+              </div>
+            )}
             {hasNetworkFailure
               ? (
                 <Alert variant="danger">
@@ -94,7 +135,8 @@ export const App = () => {
         </AppWrapper>
         <FooterSlot />
       </div>
-    </>
+      </>
+    </SubsiteBrandingContext.Provider>
   );
 };
 

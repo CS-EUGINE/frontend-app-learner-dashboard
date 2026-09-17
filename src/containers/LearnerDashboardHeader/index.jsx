@@ -3,6 +3,7 @@ import React from 'react';
 import MasqueradeBar from 'containers/MasqueradeBar';
 import { AppContext } from '@edx/frontend-platform/react';
 import Header from '@edx/frontend-component-header';
+import { getConfig } from '@edx/frontend-platform';
 import { reduxHooks } from 'hooks';
 import urls from 'data/services/lms/urls';
 
@@ -10,6 +11,7 @@ import NotificationsPanel from 'containers/Notifications/NotificationsPanel';
 import { useNotifications } from 'containers/Notifications/hooks';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
+import { useSubsiteBranding } from '../../SubsiteBrandingContext';
 
 import {
   useLearnerDashboardHeaderMenu,
@@ -25,7 +27,17 @@ import './index.scss';
 
 export const LearnerDashboardHeader = () => {
   const { authenticatedUser } = React.useContext(AppContext);
+  const branding = useSubsiteBranding();
   const platformSettings = reduxHooks.usePlatformSettingsData();
+
+  // The packaged header reads its logo and accessible site name from the
+  // frontend configuration. Update those values after the runtime branding
+  // request resolves so one compiled MFE can serve every customer subsite.
+  if (branding) {
+    const config = getConfig();
+    config.LOGO_URL = branding.logo_url || config.LOGO_URL;
+    config.SITE_NAME = branding.name || config.SITE_NAME;
+  }
 
   // Pages other than the dashboard (the cart, for one) never populate the redux
   // store, so platform settings can be empty here. Without a default the Discover

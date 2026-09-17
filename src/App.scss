@@ -26,6 +26,22 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
   color: black;
 }
 
+.subsite-dashboard-banner {
+  min-height: 150px;
+  margin: 0 1rem 1.5rem;
+  border-radius: 0.75rem;
+  background-color: var(--subsite-primary, #2f57e8);
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.25rem;
+  color: var(--subsite-secondary, #ffffff);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 50%);
+}
+
 #root {
   // Removing a odd 1.5 scaling on checkboxes.:
   input[type=checkbox] {
