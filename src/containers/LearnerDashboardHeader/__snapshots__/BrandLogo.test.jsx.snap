@@ -2,12 +2,13 @@
 
 exports[`BrandLogo dashboard defined 1`] = `
 <a
-  className="mx-auto"
+  className="brand-logo-link"
   href="url"
 >
   <img
     alt="edX, Inc. Dashboard"
-    className="logo py-3"
+    className="logo"
+    onError={[Function]}
     src="https://edx-cdn.org/v3/default/logo.svg"
   />
 </a>
@@ -15,12 +16,13 @@ exports[`BrandLogo dashboard defined 1`] = `
 
 exports[`BrandLogo dashboard undefined 1`] = `
 <a
-  className="mx-auto"
+  className="brand-logo-link"
   href="/"
 >
   <img
     alt="edX, Inc. Dashboard"
-    className="logo py-3"
+    className="logo"
+    onError={[Function]}
     src="https://edx-cdn.org/v3/default/logo.svg"
   />
 </a>
