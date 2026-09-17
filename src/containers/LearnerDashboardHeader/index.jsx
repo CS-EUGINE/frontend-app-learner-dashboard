@@ -12,6 +12,7 @@ import { useNotifications } from 'containers/Notifications/hooks';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
 import { useSubsiteBranding } from '../../SubsiteBrandingContext';
+import cloudswyftLogo from '../../assets/cloudswyft-logo.png';
 
 import {
   useLearnerDashboardHeaderMenu,
@@ -31,13 +32,12 @@ export const LearnerDashboardHeader = () => {
   const platformSettings = reduxHooks.usePlatformSettingsData();
 
   // The packaged header reads its logo and accessible site name from the
-  // frontend configuration. Update those values after the runtime branding
-  // request resolves so one compiled MFE can serve every customer subsite.
-  if (branding) {
-    const config = getConfig();
-    config.LOGO_URL = branding.logo_url || config.LOGO_URL;
-    config.SITE_NAME = branding.name || config.SITE_NAME;
-  }
+  // frontend configuration. Keep a local compiled default because production
+  // deployments may not provide LOGO_URL in their environment. Runtime
+  // subsite branding still takes priority when it is available.
+  const config = getConfig();
+  config.LOGO_URL = branding?.logo_url || config.LOGO_URL || cloudswyftLogo;
+  config.SITE_NAME = branding?.name || config.SITE_NAME || 'Cloudswyft LMS';
 
   // Pages other than the dashboard (the cart, for one) never populate the redux
   // store, so platform settings can be empty here. Without a default the Discover
