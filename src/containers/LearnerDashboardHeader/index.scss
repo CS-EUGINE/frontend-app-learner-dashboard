@@ -51,6 +51,28 @@
   object-fit: contain;
 }
 
+// The dashboard uses frontend-component-header's `logo_slot`, whose markup is
+// an anchor.logo containing an image. Keep the real rendered logo aligned and
+// constrain the complete Cloudswyft wordmark rather than styling the unused
+// legacy BrandLogo component.
+#root header.site-header-desktop .logo,
+#root header.site-header-mobile .logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 34px;
+  margin-right: 1rem;
+}
+
+#root header.site-header-desktop .logo img,
+#root header.site-header-mobile .logo img {
+  display: block;
+  width: auto;
+  height: 34px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
 // Breathing room between header nav items, which otherwise sit flush together.
 // Scoped to the header so it cannot leak into .nav-link elsewhere on the page.
 .site-header-desktop,
