@@ -51,6 +51,10 @@ const subsiteBrandingUrl = () => `${getConfig().LMS_BASE_URL}/api/branding/v1/su
 // dashboard, one POST per review.
 const courseFeedbackUrl = () => `${getApiUrl()}/course_feedback/`;
 
+// The Copilot session itself is rendered by the LMS, so no Direct Line token
+// or Microsoft endpoint ever becomes part of the MFE bundle.
+const aiAssistantStatusUrl = () => `${getBaseUrl()}/api/dashboard/v0/ai-assistant/status/`;
+
 // Course approval: how many courses this user authors, used to decide whether
 // the header should offer a "My courses" link at all.
 const authoredCoursesUrl = () => `${getApiUrl()}/course-approval/v1/authored/`;
@@ -67,6 +71,7 @@ export default StrictDict({
   cartVerifyUrl,
   cartOrdersUrl,
   authoredCoursesUrl,
+  aiAssistantStatusUrl,
   courseCatalogUrl,
   courseFeedbackUrl,
   notificationsUrl,
