@@ -37,6 +37,7 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
   align-items: stretch;
   padding: 1.25rem;
   color: var(--subsite-secondary, #ffffff);
+  font-size: 1.25rem;
   font-weight: 700;
   text-shadow: 0 1px 3px rgb(0 0 0 / 50%);
 }
@@ -93,7 +94,6 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
   color: #0f2a54;
   text-decoration: underline;
 }
-
 #root {
   // Removing a odd 1.5 scaling on checkboxes.:
   input[type=checkbox] {

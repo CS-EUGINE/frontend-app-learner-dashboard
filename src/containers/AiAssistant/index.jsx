@@ -24,15 +24,27 @@ const AiAssistant = () => {
 
   React.useEffect(() => {
     let cancelled = false;
-    api.fetchAiAssistantStatus()
-      .then(({ data }) => {
-        if (!cancelled && data.enabled) {
-          setAssistant(data);
-        }
-      })
-      // A disabled or temporarily unavailable assistant must not affect the
-      // learner dashboard. It simply stays out of the interface.
-      .catch((error) => { logError(error); });
+    const fetchStatus = api.fetchAiAssistantStatus;
+
+    // The assistant is strictly optional. A stale deployment or unavailable
+    // LMS endpoint must never prevent the learner dashboard itself from
+    // rendering.
+    if (typeof fetchStatus !== 'function') {
+      return () => { cancelled = true; };
+    }
+
+    try {
+      Promise.resolve(fetchStatus())
+        .then(({ data }) => {
+          if (!cancelled && data.enabled) {
+            setAssistant(data);
+          }
+        })
+        .catch((error) => { logError(error); });
+    } catch (error) {
+      logError(error);
+    }
+
     return () => { cancelled = true; };
   }, []);
 
