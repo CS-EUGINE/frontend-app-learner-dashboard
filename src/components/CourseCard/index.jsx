@@ -71,7 +71,7 @@ const CourseCard = ({
       </div>
 
       <div className="tw:p-4">
-        <h3 className="tw:text-center tw:text-[18px]/[24px] tw:font-bold tw:text-[#6255A1] tw:m-0 tw:line-clamp-2">
+        <h3 className="tw:text-center tw:text-h6 tw:font-bold tw:text-ink tw:m-0 tw:line-clamp-2">
           {title}
         </h3>
         {orgName && (
@@ -91,7 +91,7 @@ const CourseCard = ({
             of the card's shape, on this surface and on /courses. */}
         <div className="tw:flex tw:items-center tw:gap-2 tw:mb-2.5 tw:text-[13px] tw:text-[#6B7280]">
           <span className="tw:flex tw:text-[14px]">
-            <StarRating max={5} value={rating} disabled color="#F5A623" />
+            <StarRating max={5} value={rating} disabled color="#F8B84E" />
           </span>
           <span aria-hidden="true" className="tw:text-[#D1D5DB]">|</span>
           <span className="tw:whitespace-nowrap">{`${rating} Reviews`}</span>

@@ -1,0 +1,126 @@
+// The site footer. Identical in the learner-dashboard, account, profile and
+// learning forks; see the note at the top of SiteFooter.jsx.
+//
+// The rules are the LMS footer's (the <style> block in the theme's
+// footer.html), carried over one for one, so an MFE page and an LMS page end
+// on the same footer. What is added here only fights the MFEs' own globals:
+// Indigo's `* { font-family: Inter !important }` on staging, and apps that
+// paint every <footer> element (`#root footer { background: ... }`).
+
+.cs-footer-wrapper {
+  border-top: 1px solid #E1EBF0;
+  background: #fff;
+  padding: 56px 0 24px;
+  // The LMS body is 16px/24px; the MFEs' Paragon body is 18px, and inherited
+  // line height would space the link list out wider than the LMS footer.
+  font-size: 16px;
+  line-height: 1.5;
+
+  &,
+  & * {
+    font-family: 'Quicksand', ui-sans-serif, system-ui, sans-serif !important;
+    box-sizing: border-box;
+  }
+}
+
+.cs-footer-wrapper .cs-footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  color: #555555;
+  background: transparent !important;
+  border: 0;
+  flex: none;
+}
+
+.cs-footer-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+@media (min-width: 768px) { .cs-footer-grid { grid-template-columns: 1.4fr 1fr 1.1fr; gap: 48px; } }
+
+.cs-footer-brand { max-width: 420px; }
+// Logo and "LEARNING PLATFORM" share one width, as in the brand lockup.
+.cs-footer-logo { display: flex; flex-direction: column; width: 250px; max-width: 100%; text-decoration: none !important; }
+.cs-footer-logo img { width: 100%; height: auto; display: block; }
+.cs-footer-tagline {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 2px solid #4EA1C9;
+  font-size: 1.16rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #092C4C !important;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.cs-footer-blurb { margin: 20px 0 0; font-size: 0.9rem; line-height: 1.65; color: #555555; }
+
+.cs-footer-links ul,
+.cs-footer-social { list-style: none; margin: 0; padding: 0; }
+.cs-footer-links li + li { margin-top: 14px; }
+// Pinned: link colours are repainted on hover by the apps' global styles.
+.cs-footer-links a {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #092C4C !important;
+  text-decoration: none !important;
+}
+.cs-footer-links a:hover,
+.cs-footer-links a:focus { color: #2848E4 !important; text-decoration: underline !important; }
+
+.cs-footer-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #092C4C !important;
+  text-decoration: none !important;
+  font-size: 0.95rem;
+}
+.cs-footer-email svg { width: 20px; height: 20px; color: #4EA1C9; flex: none; }
+.cs-footer-email:hover,
+.cs-footer-email:focus { color: #2848E4 !important; text-decoration: underline !important; }
+
+.cs-footer-social { display: flex; gap: 10px; margin-top: 22px; }
+.cs-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #fff !important;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.cs-social svg { width: 20px; height: 20px; }
+.cs-social:hover,
+.cs-social:focus { transform: translateY(-2px); opacity: 0.9; color: #fff !important; }
+.cs-social:focus-visible { outline: 3px solid rgba(78, 161, 201, 0.55); outline-offset: 2px; }
+.cs-social-facebook { background: #1877F2; }
+.cs-social-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+.cs-social-linkedin { background: #0A66C2; }
+.cs-social-youtube { background: #FF0000; }
+
+.cs-footer-powered { display: flex; align-items: center; gap: 10px; margin-top: 26px; font-size: 0.8rem; color: #555555; }
+.cs-footer-powered img { height: 26px; width: auto; display: block; }
+
+.cs-footer-bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid #E1EBF0; text-align: center; }
+.cs-footer-copyright { margin: 0; font-size: 0.85rem; color: #555555; }
+.cs-footer-sep { margin: 0 12px; color: #C4E0EE; }
+@media (max-width: 767px) {
+  .cs-footer-sep { display: none; }
+  .cs-footer-part { display: block; }
+}
+
+// Dark theme: the logo's "Cloud" is black, so flatten logos to white.
+body.indigo-dark-theme .cs-footer-wrapper { background: transparent; border-top-color: rgba(255, 255, 255, 0.12); }
+body.indigo-dark-theme .cs-footer,
+body.indigo-dark-theme .cs-footer-blurb,
+body.indigo-dark-theme .cs-footer-copyright,
+body.indigo-dark-theme .cs-footer-powered { color: #DDDFE2; }
+body.indigo-dark-theme .cs-footer-links a,
+body.indigo-dark-theme .cs-footer-email,
+body.indigo-dark-theme .cs-footer-tagline { color: #F8F8F8 !important; }
+body.indigo-dark-theme .cs-footer-logo img,
+body.indigo-dark-theme .cs-footer-powered img { filter: brightness(0) invert(1); }
+body.indigo-dark-theme .cs-footer-bottom { border-top-color: rgba(255, 255, 255, 0.12); }

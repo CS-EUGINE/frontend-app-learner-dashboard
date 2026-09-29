@@ -1,11 +1,9 @@
 import React from 'react';
 
-import MasqueradeBar from 'containers/MasqueradeBar';
-import { AppContext } from '@edx/frontend-platform/react';
-import Header from '@edx/frontend-component-header';
 import { getConfig } from '@edx/frontend-platform';
-import { reduxHooks } from 'hooks';
-import urls from 'data/services/lms/urls';
+
+import MasqueradeBar from 'containers/MasqueradeBar';
+import SiteHeader from 'site-header/SiteHeader';
 
 import NotificationsPanel from 'containers/Notifications/NotificationsPanel';
 import { useNotifications } from 'containers/Notifications/hooks';
@@ -14,78 +12,55 @@ import ConfirmEmailBanner from './ConfirmEmailBanner';
 import { useSubsiteBranding } from '../../SubsiteBrandingContext';
 import cloudswyftLogo from '../../assets/cloudswyft-logo.png';
 
-import {
-  useLearnerDashboardHeaderMenu,
-  useCartItemCount,
-  useAuthoredCourseCount,
-  findCoursesNavClicked,
-  isCartPath,
-  isPurchasesPath,
-  DEFAULT_COURSE_SEARCH_URL,
-} from './hooks';
+import { useCartItemCount, isCartPath, isPurchasesPath } from './hooks';
 
 import './index.scss';
 
+/**
+ * The learner dashboard's header: the shared site header (src/site-header,
+ * the same component every MFE renders, matching the LMS navbar), plus what
+ * only this app has around it: the email-confirmation banner, the
+ * notifications drawer and the masquerade bar.
+ *
+ * The dashboard hosts My courses, the cart, purchases and notifications
+ * itself, so it passes its own routes rather than the LMS redirects the other
+ * MFEs use. PUBLIC_PATH, not '/': the router basename is /learner-dashboard/,
+ * and a bare '/' would land at the origin root and render a blank page.
+ */
 export const LearnerDashboardHeader = () => {
-  const { authenticatedUser } = React.useContext(AppContext);
   const branding = useSubsiteBranding();
-  const platformSettings = reduxHooks.usePlatformSettingsData();
 
-  // The packaged header reads its logo and accessible site name from the
-  // frontend configuration. Keep a local compiled default because production
-  // deployments may not provide LOGO_URL in their environment. Runtime
-  // subsite branding still takes priority when it is available.
+  // The site header reads its logo from the frontend configuration. Keep a
+  // local compiled default because production deployments may not provide
+  // LOGO_URL in their environment. Runtime subsite branding still takes
+  // priority when it is available.
   const config = getConfig();
   config.LOGO_URL = branding?.logo_url || config.LOGO_URL || cloudswyftLogo;
   config.SITE_NAME = branding?.name || config.SITE_NAME || 'Cloudswyft LMS';
 
-  // Pages other than the dashboard (the cart, for one) never populate the redux
-  // store, so platform settings can be empty here. Without a default the Discover
-  // New link resolves to the string "undefined".
-  const courseSearchUrl = platformSettings.courseSearchUrl || DEFAULT_COURSE_SEARCH_URL;
-
-  const exploreCoursesClick = () => {
-    findCoursesNavClicked(urls.baseAppUrl(courseSearchUrl));
-  };
-
+  const base = config.PUBLIC_PATH;
   const cartItemCount = useCartItemCount();
-  const authoredCourseCount = useAuthoredCourseCount();
 
-  // The bell's state lives here, not in the menu item, because the drawer is
-  // rendered outside <Header>: it owns the right-hand edge of the window rather
-  // than hanging off the bell, so the packaged header cannot clip or displace it.
-  const {
-    notifications, unreadCount, markRead,
-  } = useNotifications();
+  // The drawer is rendered outside the header: it owns the right-hand edge of
+  // the window rather than hanging off the bell, so nothing can clip it. Its
+  // feed also gives the header its unread count, so that is not fetched twice.
+  const { notifications, unreadCount, markRead } = useNotifications();
   const [isPanelOpen, setIsPanelOpen] = React.useState(false);
 
-  const learnerHomeHeaderMenu = useLearnerDashboardHeaderMenu({
-    courseSearchUrl,
-    authenticatedUser,
-    exploreCoursesClick,
-    cartItemCount,
-    isCartPage: isCartPath(),
-    isPurchasesPage: isPurchasesPath(),
-    authoredCourseCount,
-    notifications: {
-      unreadCount,
-      // A plain click opens the panel; anything else (middle-click, ctrl-click,
-      // Enter on the link) is left alone and follows the href to the full page.
-      onBellClick: (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button > 0) { return; }
-        event.preventDefault();
-        setIsPanelOpen((open) => !open);
-      },
-    },
-  });
+  const onOwnPage = isCartPath() || isPurchasesPath();
 
   return (
     <>
       <ConfirmEmailBanner />
-      <Header
-        mainMenuItems={learnerHomeHeaderMenu.mainMenu}
-        secondaryMenuItems={learnerHomeHeaderMenu.secondaryMenu}
-        userMenuItems={learnerHomeHeaderMenu.userMenu}
+      <SiteHeader
+        active={onOwnPage ? null : 'my-courses'}
+        myCoursesHref={base}
+        notificationsHref={`${base}notifications`}
+        cartHref={`${base}cart`}
+        purchasesHref={`${base}purchases`}
+        unreadCount={unreadCount}
+        cartCount={cartItemCount}
+        onBellClick={() => setIsPanelOpen((open) => !open)}
       />
       <NotificationsPanel
         notifications={notifications}

@@ -1,7 +1,7 @@
 // Gold rather than a brand blue: a row of navy stars reads as five buttons,
 // not as a rating. The empty state is a light blue-grey so the row still sits
 // inside the palette.
-$feedback-star-on: #F5A623;
+$feedback-star-on: #F8B84E; // style guide "Star"
 $feedback-star-off: #D9E4EA;
 
 .course-feedback-modal {
@@ -45,7 +45,7 @@ $feedback-star-off: #D9E4EA;
   }
 
   .course-feedback-stars__input:focus-visible + .course-feedback-stars__star {
-    outline: 2px solid #15376D;
+    outline: 2px solid #2848E4;
     outline-offset: 2px;
   }
 
@@ -53,7 +53,7 @@ $feedback-star-off: #D9E4EA;
     margin-left: 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #0F2A54;
+    color: #092C4C;
   }
 }
 

@@ -1,57 +1,60 @@
-import { mergeConfig } from '@edx/frontend-platform';
+import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
-import Header from '@edx/frontend-component-header';
 
-import urls from 'data/services/lms/urls';
+import SiteHeader from 'site-header/SiteHeader';
 import LearnerDashboardHeader from '.';
-import { findCoursesNavClicked } from './hooks';
+import { isCartPath } from './hooks';
 
-jest.mock('hooks', () => ({
-  reduxHooks: {
-    usePlatformSettingsData: jest.fn(() => ({
-      courseSearchUrl: '/course-search-url',
-    })),
-  },
-}));
 jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),
-  findCoursesNavClicked: jest.fn(),
   // Stubbed out so the header does not reach for the cart API during render.
-  useCartItemCount: jest.fn(() => 0),
+  useCartItemCount: jest.fn(() => 2),
+  isCartPath: jest.fn(() => false),
+  isPurchasesPath: jest.fn(() => false),
+}));
+jest.mock('containers/Notifications/hooks', () => ({
+  useNotifications: () => ({ notifications: [], unreadCount: 3, markRead: jest.fn() }),
 }));
 jest.mock('containers/MasqueradeBar', () => 'MasqueradeBar');
+jest.mock('containers/Notifications/NotificationsPanel', () => 'NotificationsPanel');
 jest.mock('./ConfirmEmailBanner', () => 'ConfirmEmailBanner');
-jest.mock('@edx/frontend-component-header', () => 'Header');
+jest.mock('site-header/SiteHeader', () => 'SiteHeader');
+
+const headerProps = (wrapper) => wrapper.instance.findByType(SiteHeader)[0].props;
 
 describe('LearnerDashboardHeader', () => {
-  test('render', () => {
-    mergeConfig({ ORDER_HISTORY_URL: 'test-url' });
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    expect(wrapper.snapshot).toMatchSnapshot();
-    expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
-    expect(wrapper.instance.findByType('MasqueradeBar')).toHaveLength(1);
-    expect(wrapper.instance.findByType(Header)).toHaveLength(1);
-    wrapper.instance.findByType(Header)[0].props.mainMenuItems[1].onClick();
-    expect(findCoursesNavClicked).toHaveBeenCalledWith(urls.baseAppUrl('/course-search-url'));
-    // Only the cart icon, which lives in the right-hand secondary menu.
-    expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(1);
+  // setupTest stubs React.useState with a bare jest.fn(); the drawer's open
+  // state needs a real [value, setter] pair to render at all.
+  beforeEach(() => {
+    React.useState.mockImplementation((initial) => [initial, jest.fn()]);
   });
 
-  test('should display Help link if SUPPORT_URL is set', () => {
-    mergeConfig({ SUPPORT_URL: 'http://localhost:18000/support' });
+  test('renders the shared site header with the banner, drawer and masquerade bar', () => {
     const wrapper = shallow(<LearnerDashboardHeader />);
-    // Help plus the cart icon.
-    expect(wrapper.instance.findByType(Header)[0].props.secondaryMenuItems.length).toBe(2);
+    expect(wrapper.instance.findByType(SiteHeader)).toHaveLength(1);
+    expect(wrapper.instance.findByType('ConfirmEmailBanner')).toHaveLength(1);
+    expect(wrapper.instance.findByType('NotificationsPanel')).toHaveLength(1);
+    expect(wrapper.instance.findByType('MasqueradeBar')).toHaveLength(1);
   });
-  test('should display Programs link if it is enabled by configuration', () => {
-    mergeConfig({ ENABLE_PROGRAMS: true });
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    // Courses, Programs, and Discover New.
-    expect(wrapper.instance.findByType(Header)[0].props.mainMenuItems.length).toBe(3);
+
+  test('links to its own routes inside the router basename', () => {
+    const props = headerProps(shallow(<LearnerDashboardHeader />));
+    expect(props.myCoursesHref).not.toEqual('/');
+    expect(props.cartHref.endsWith('/cart') || props.cartHref.endsWith('cart')).toBe(true);
+    expect(props.notificationsHref.endsWith('notifications')).toBe(true);
+    expect(props.purchasesHref.endsWith('purchases')).toBe(true);
   });
-  test('should link to the cart page from the secondary menu', () => {
-    const wrapper = shallow(<LearnerDashboardHeader />);
-    const { secondaryMenuItems } = wrapper.instance.findByType(Header)[0].props;
-    expect(secondaryMenuItems.some(item => item.href.endsWith('/cart'))).toBe(true);
+
+  test('hands the header the counts it already has', () => {
+    const props = headerProps(shallow(<LearnerDashboardHeader />));
+    expect(props.unreadCount).toEqual(3);
+    expect(props.cartCount).toEqual(2);
+    expect(typeof props.onBellClick).toBe('function');
+  });
+
+  test('My courses is the active item on the dashboard, and not on the cart', () => {
+    expect(headerProps(shallow(<LearnerDashboardHeader />)).active).toEqual('my-courses');
+    isCartPath.mockReturnValueOnce(true);
+    expect(headerProps(shallow(<LearnerDashboardHeader />)).active).toBeNull();
   });
 });

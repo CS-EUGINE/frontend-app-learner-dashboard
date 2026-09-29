@@ -1,28 +1,6 @@
-// Brand navy for the unread cues; the bell itself inherits the header's colour.
-$notif-accent: #15376D;
+// Secondary blue for the unread cues.
+$notif-accent: #2848E4;
 $notif-security: #B26A00;
-
-.notification-bell {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-
-  &__badge {
-    position: absolute;
-    top: -6px;
-    right: -8px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 999px;
-    background: #dc2626;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 18px;
-    text-align: center;
-  }
-}
 
 // The drawer and its backdrop. Both are ours rather than a Paragon Sheet: that
 // component ships a stylesheet whose width rules a page-level override could
@@ -103,7 +81,7 @@ $notif-duration: 260ms;
   &__heading {
     font-size: 1.0625rem;
     font-weight: 700;
-    color: #0F2A54;
+    color: #092C4C;
   }
 
   &__actions {
@@ -130,7 +108,7 @@ $notif-duration: 260ms;
     text-align: center;
   }
 
-  &__empty-title { font-weight: 600; color: #0F2A54; margin: 0 0 4px; }
+  &__empty-title { font-weight: 600; color: #092C4C; margin: 0 0 4px; }
   &__empty-hint { font-size: 0.8125rem; color: #6b7280; margin: 0; }
 
   &__footer {
@@ -147,7 +125,7 @@ $notif-duration: 260ms;
     &:focus {
       background: #E7F2F8;
       // Pinned: the platform repaints every anchor #0079bc on hover.
-      color: #0F2A54 !important;
+      color: #1834BE !important;
       text-decoration: none;
     }
   }
@@ -194,7 +172,7 @@ $notif-duration: 260ms;
   }
 
   &__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
-  &__title { font-size: 0.875rem; font-weight: 600; color: #0F2A54; }
+  &__title { font-size: 0.875rem; font-weight: 600; color: #092C4C; }
   &__body { font-size: 0.8125rem; color: #6b7280; }
   &__time { font-size: 0.75rem; color: #9ca3af; }
 
@@ -210,7 +188,7 @@ $notif-duration: 260ms;
 
 .notifications-page {
   &__empty { padding: 48px 24px; text-align: center; }
-  &__empty-title { font-weight: 600; color: #0F2A54; margin: 0 0 4px; }
+  &__empty-title { font-weight: 600; color: #092C4C; margin: 0 0 4px; }
   &__empty-hint { font-size: 0.8125rem; color: #6b7280; margin: 0; }
 
   &__header {
@@ -220,7 +198,7 @@ $notif-duration: 260ms;
     margin-bottom: 1rem;
   }
 
-  &__title { font-size: 1.5rem; font-weight: 700; color: #0F2A54; margin: 0; }
+  &__title { font-size: 1.5rem; font-weight: 700; color: #092C4C; margin: 0; }
 
   &__list {
     background: #fff;
@@ -236,6 +214,6 @@ $notif-duration: 260ms;
     color: $notif-accent;
 
     &:hover,
-    &:focus { color: #0F2A54 !important; text-decoration: none; }
+    &:focus { color: #1834BE !important; text-decoration: none; }
   }
 }

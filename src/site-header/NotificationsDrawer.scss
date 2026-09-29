@@ -1,0 +1,209 @@
+// The shared notifications drawer (NotificationsDrawer.jsx). Geometry, timing
+// and colours copy the learner dashboard's own drawer
+// (containers/Notifications/index.scss); keep the two in step. Class names are
+// `cs-notif*` so they cannot collide with that drawer's in the dashboard app.
+
+$cs-notif-accent: #2848E4;
+$cs-notif-security: #B26A00;
+$cs-notif-ease: cubic-bezier(0.4, 0, 0.2, 1);
+$cs-notif-duration: 260ms;
+
+.cs-notif-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(9, 22, 40, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $cs-notif-duration $cs-notif-ease, visibility 0s linear $cs-notif-duration;
+
+  &.is-open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity $cs-notif-duration $cs-notif-ease, visibility 0s;
+  }
+}
+
+.cs-notif {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1041;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  min-width: 320px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -8px 0 28px rgba(9, 22, 40, 0.18);
+  outline: none;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform $cs-notif-duration $cs-notif-ease, visibility 0s linear $cs-notif-duration;
+
+  // Quicksand, as in the header (Indigo sets Inter with !important on staging).
+  &,
+  & * { font-family: 'Quicksand', ui-sans-serif, system-ui, sans-serif !important; }
+
+  &.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform $cs-notif-duration $cs-notif-ease, visibility 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    &.is-open { transition: none; }
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    min-width: 0;
+  }
+
+  button {
+    font-family: inherit;
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
+}
+
+.cs-notif__header {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 14px 10px 14px 20px;
+  border-bottom: 1px solid #E1EBF0;
+}
+
+.cs-notif__heading { color: #092C4C; font-size: 1.0625rem; font-weight: 700; }
+.cs-notif__actions { display: flex; align-items: center; gap: 2px; }
+
+.cs-notif__markall {
+  padding: 6px 8px;
+  border: 0;
+  background: none;
+  color: $cs-notif-accent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover,
+  &:focus { color: #1834BE; text-decoration: underline; }
+}
+
+.cs-notif__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: #555555;
+  cursor: pointer;
+
+  &:hover,
+  &:focus { background: #F2F7F8; color: #092C4C; }
+}
+
+// The only part that scrolls, so the heading and the footer stay put.
+.cs-notif__list { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+.cs-notif__state {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.cs-notif__state-title { margin: 0 0 4px; color: #092C4C; font-weight: 600; }
+.cs-notif__state-hint { margin: 0; color: #555555; font-size: 0.8125rem; }
+.cs-notif__retry {
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: $cs-notif-accent;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cs-notif__footer,
+.cs-notif__footer:hover,
+.cs-notif__footer:focus {
+  display: block;
+  flex: none;
+  padding: 14px 16px;
+  border-top: 1px solid #E1EBF0;
+  color: $cs-notif-accent !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none !important;
+}
+.cs-notif__footer:hover,
+.cs-notif__footer:focus { background: #E7F2F8; color: #1834BE !important; }
+
+.cs-notif-item,
+.cs-notif-item:hover,
+.cs-notif-item:focus {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid #F1F5F8;
+  border-radius: 0;
+  background: transparent;
+  color: inherit !important;
+  text-align: left;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+.cs-notif-item:last-child { border-bottom: 0; }
+.cs-notif-item.is-unread { background: #F7FBFD; }
+.cs-notif-item:hover,
+.cs-notif-item:focus { background: #F5F9FB; }
+
+.cs-notif-item__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #E7F2F8;
+  color: $cs-notif-accent;
+
+  // Security notices are the ones a learner must not skim past.
+  &.is-security { background: #FDF3E3; color: $cs-notif-security; }
+
+  .pgn__icon { width: 1.15rem; height: 1.15rem; }
+}
+
+.cs-notif-item__text { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.cs-notif-item__title { color: #092C4C; font-size: 0.875rem; font-weight: 600; }
+.cs-notif-item__body { color: #555555; font-size: 0.8125rem; }
+.cs-notif-item__time { color: #555555; opacity: 0.8; font-size: 0.75rem; }
+
+.cs-notif-item__dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: $cs-notif-accent;
+}

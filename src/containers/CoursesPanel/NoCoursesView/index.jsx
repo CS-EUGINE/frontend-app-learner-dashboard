@@ -15,7 +15,7 @@ export const NoCoursesView = () => {
       className="tw:flex tw:flex-col tw:items-center tw:justify-center tw:border tw:border-gray-200 tw:rounded-lg tw:py-32 tw:px-6 tw:bg-no-repeat tw:bg-center"
       style={{ backgroundImage: `url(${noCourseSVG})`, backgroundSize: '340px' }}
     >
-      <h2 className="tw:text-xl tw:font-bold tw:text-secondary tw:mb-4">
+      <h2 className="tw:text-h6 tw:font-bold tw:text-ink tw:mb-4">
         {formatMessage(messages.lookingForChallengePrompt)}
       </h2>
       <a

@@ -93,7 +93,7 @@ const AnnouncementsList = () => {
 
   return (
     <div className="tw:py-8">
-      <h6 className="tw:text-secondary tw:text-[28px] tw:font-semibold tw:py-4">
+      <h6 className="tw:text-ink tw:text-h4 tw:font-semibold tw:py-4">
         {formatMessage(messages.announcements)}
       </h6>
 
@@ -141,7 +141,7 @@ const AnnouncementsList = () => {
               key={announcement.id}
               className={`announcement-card announcement-card--${levelName} tw:rounded-lg tw:p-6`}
             >
-              <h3 className="tw:text-lg tw:font-bold tw:text-secondary tw:mb-1">
+              <h3 className="tw:text-h6 tw:font-bold tw:text-ink tw:mb-1">
                 <span className="sr-only">{`${formatMessage(LEVEL_LABELS[levelName])}: `}</span>
                 {announcement.title}
               </h3>

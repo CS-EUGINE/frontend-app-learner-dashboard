@@ -7,7 +7,6 @@ import {
   Alert, Button, Icon, Pagination, Spinner,
 } from '@openedx/paragon';
 import { Receipt } from '@openedx/paragon/icons';
-import FooterSlot from '@openedx/frontend-slot-footer';
 
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
@@ -18,6 +17,7 @@ import OrderCard from './OrderCard';
 import { usePurchaseHistory } from './hooks';
 import messages from './messages';
 import './index.scss';
+import SiteFooter from '../../site-footer/SiteFooter';
 
 export const PurchaseHistoryPage = () => {
   const { formatMessage } = useIntl();
@@ -134,7 +134,7 @@ export const PurchaseHistoryPage = () => {
             </div>
           </main>
         </AppWrapper>
-        <FooterSlot />
+        <SiteFooter />
       </div>
     </>
   );

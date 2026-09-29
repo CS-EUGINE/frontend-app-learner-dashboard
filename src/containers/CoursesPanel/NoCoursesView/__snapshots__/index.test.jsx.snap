@@ -11,7 +11,7 @@ exports[`NoCoursesView snapshot 1`] = `
   }
 >
   <h2
-    className="tw:text-xl tw:font-bold tw:text-secondary tw:mb-4"
+    className="tw:text-h6 tw:font-bold tw:text-ink tw:mb-4"
   >
     Complete First Your Courses
   </h2>

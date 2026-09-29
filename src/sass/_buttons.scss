@@ -13,9 +13,10 @@
 // info carry meaning rather than brand. So is `tertiary`, which is Paragon's
 // neutral light button rather than a primary action.
 
-$btn-blue: #2f57e8;
-$btn-blue-hover: #1e48e3;
-$btn-blue-tint: #eef2fe;
+// The style guide's Secondary, and a darker step of it for hover.
+$btn-blue: #2848E4;
+$btn-blue-hover: #1834BE;
+$btn-blue-tint: #eef1fd;
 
 // Solid. `brand` is Paragon's magenta accent, which reads as a warning sitting
 // next to everything else here, so it joins primary rather than keeping its own
@@ -104,8 +105,8 @@ $btn-blue-tint: #eef2fe;
 
 // The empty state's "Explore Courses" call to action is a plain <a>, not a
 // Paragon Button, so none of the above reaches it. It was painted with the
-// Tailwind `secondary` token, which is the same #6255A1 that paints the panel
-// headings -- retinting the token would have repainted those too, so the
+// Tailwind `secondary` token, which used to be the purple #6255A1 that painted
+// the panel headings -- retinting the token would have repainted those too, so the
 // anchor carries a class of its own instead. Note the generated Tailwind
 // utilities are all `!important`, which is why the colour classes had to come
 // off the element rather than be overridden from here.

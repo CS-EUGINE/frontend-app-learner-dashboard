@@ -16,6 +16,16 @@ $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.
 // the header and footer packages ship inside their own bundles.
 @import "sass/buttons";
 
+// Quicksand everywhere, per the house style guide (the font is loaded in
+// public/index.html). On staging the image build swaps in Indigo's brand,
+// whose overrides set `body, * { font-family: Inter !important }`; `html body`
+// and `html body *` outrank those at equal !important, locally and there.
+// Icon fonts and monospace keep their own families.
+html body,
+html body *:not(.fa):not([class*="fa-"]):not(code):not(pre):not(kbd):not(.text-monospace) {
+  font-family: "Quicksand", ui-sans-serif, system-ui, sans-serif !important;
+}
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;

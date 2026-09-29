@@ -5,7 +5,6 @@ import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Alert, Button, Icon, Spinner } from '@openedx/paragon';
 import { ShoppingCart } from '@openedx/paragon/icons';
-import FooterSlot from '@openedx/frontend-slot-footer';
 
 import AppWrapper from 'containers/WidgetContainers/AppWrapper';
 import LearnerDashboardHeader from 'containers/LearnerDashboardHeader';
@@ -15,6 +14,7 @@ import CartSummary from './CartSummary';
 import { useCartData } from './hooks';
 import messages from './messages';
 import './index.scss';
+import SiteFooter from '../../site-footer/SiteFooter';
 
 export const CartPage = () => {
   const { formatMessage } = useIntl();
@@ -152,7 +152,7 @@ export const CartPage = () => {
             </div>
           </main>
         </AppWrapper>
-        <FooterSlot />
+        <SiteFooter />
       </div>
     </>
   );

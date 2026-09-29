@@ -33,7 +33,7 @@ const CourseStrip = ({ heading, courses }) => {
 
   return (
     <div className="tw:py-8">
-      <h6 className="tw:text-secondary tw:text-[28px] tw:font-semibold tw:py-4">{heading}</h6>
+      <h6 className="tw:text-ink tw:text-h4 tw:font-semibold tw:py-4">{heading}</h6>
 
       <div className="tw:grid tw:grid-cols-1 tw:gap-6 tw:md:grid-cols-4">
         {courses.map((course) => (

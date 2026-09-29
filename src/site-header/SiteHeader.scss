@@ -1,0 +1,285 @@
+// The site header. Identical in the learner-dashboard, account, profile and
+// learning forks; see the note at the top of SiteHeader.jsx.
+//
+// Values are measured from the LMS navbar (Indigo's extra/_header.scss plus
+// navbar-authenticated.html), so an MFE page and an LMS page draw the same bar.
+// Everything is scoped under .cs-header, and the few rules that fight the
+// global stylesheets (Indigo's `* { font-family: Inter !important }`,
+// Bootstrap's link and button styles) say so.
+
+$cs-secondary: #2848E4;
+$cs-secondary-dark: #1834BE;
+$cs-text: #374151;
+$cs-text-strong: #111827;
+$cs-hover-bg: #F2F7F8;
+$cs-badge: #c32d3a;
+$cs-desktop: 992px; // where the LMS navbar swaps to its hamburger
+
+.cs-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  // Outranks Indigo's `* { font-family: Inter !important }` on staging.
+  &,
+  & * {
+    font-family: 'Quicksand', ui-sans-serif, system-ui, sans-serif !important;
+    box-sizing: border-box;
+  }
+
+  a,
+  a:hover,
+  a:focus {
+    text-decoration: none;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid $cs-secondary;
+    outline-offset: 2px;
+  }
+}
+
+.cs-header__skip {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 2;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: $cs-secondary;
+  color: #fff !important;
+  font-size: 14px;
+
+  &:focus { left: 8px; }
+}
+
+.cs-header__bar {
+  display: flex;
+  align-items: center;
+  max-width: 1600px;
+  height: 64px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.cs-header__burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 8px 0 -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: $cs-text-strong;
+  cursor: pointer;
+
+  &:hover { background: $cs-hover-bg; }
+}
+
+.cs-header__logo {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+
+  img {
+    display: block;
+    height: 24px;
+    width: auto;
+  }
+}
+
+.cs-header__main {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  margin-left: 38px;
+}
+
+.cs-header__tab {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 16px;
+  padding: 20px 0;
+  border-bottom: 2px solid transparent;
+  color: $cs-text !important;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+
+  // Same as the LMS: hover and active share the underline.
+  &:hover,
+  &:focus,
+  &.is-active {
+    border-bottom-color: $cs-secondary;
+    color: $cs-text-strong !important;
+  }
+}
+
+.cs-header__secondary {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.cs-header__icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  color: #222 !important;
+
+  &:hover { opacity: 0.75; }
+
+  svg { display: block; }
+}
+
+.cs-header__badge {
+  position: absolute;
+  top: -6px;
+  right: -9px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9999px;
+  background-color: $cs-badge;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.cs-header__user {
+  position: relative;
+  margin-left: 10px;
+}
+
+.cs-header__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 38px;
+  margin: 0;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 6px;
+  background: $cs-hover-bg;
+  box-shadow: none;
+  color: $cs-secondary;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover,
+  &[aria-expanded='true'] { background: #E7F2F8; }
+
+  svg { display: block; width: 8px; height: 8px; }
+}
+
+.cs-header__menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 224px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  &[hidden] { display: none; }
+}
+
+.cs-header__menu-item {
+  display: block;
+  padding: 10px;
+  color: $cs-text !important;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+
+  &:hover,
+  &:focus {
+    background: $cs-hover-bg;
+    color: $cs-text-strong !important;
+  }
+}
+
+.cs-header__auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cs-header__btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 17px;
+  border: 1px solid $cs-secondary;
+  border-radius: 6px;
+  background: $cs-secondary;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover,
+  &:focus { background: $cs-secondary-dark; border-color: $cs-secondary-dark; }
+
+  &--outline {
+    background: #fff;
+    color: $cs-secondary !important;
+
+    &:hover,
+    &:focus { background: #E7F2F8; border-color: $cs-secondary; }
+  }
+}
+
+.cs-header__mobile {
+  border-bottom: 2px solid $cs-secondary;
+  background: #fff;
+
+  &[hidden] { display: none; }
+}
+
+.cs-header__mobile-item {
+  display: block;
+  padding: 16px;
+  color: $cs-text-strong !important;
+  font-size: 14px;
+  line-height: 20px;
+
+  &::after {
+    content: '\00BB';
+    padding-left: 6px;
+  }
+
+  &:hover,
+  &:focus,
+  &.is-active { background: $cs-hover-bg; }
+}
+
+// Below 992px: hamburger, logo, bell and cart, as the LMS navbar does. The
+// main items and the account menu move into the hamburger list.
+@media (max-width: #{$cs-desktop - 1}) {
+  .cs-header__burger { display: inline-flex; }
+  .cs-header__main,
+  .cs-header__user,
+  .cs-header__auth { display: none; }
+}
+
+// The list is only reachable from the hamburger, so hide it when the window
+// grows past the breakpoint with the menu still open.
+@media (min-width: $cs-desktop) {
+  .cs-header__mobile { display: none !important; }
+}
