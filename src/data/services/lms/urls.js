@@ -43,9 +43,17 @@ const cartOrdersUrl = () => `${getApiUrl()}/course_cart/orders/`;
 const notificationsUrl = () => `${getApiUrl()}/notifications/`;
 const notificationsReadUrl = () => `${getApiUrl()}/notifications/read/`;
 
+// Runtime organization branding. This is fetched once per dashboard load so
+// new customer branding does not require an MFE rebuild.
+const subsiteBrandingUrl = () => `${getConfig().LMS_BASE_URL}/api/branding/v1/subsite/current`;
+
 // Learner reviews of the courses they are enrolled in. One GET for the whole
 // dashboard, one POST per review.
 const courseFeedbackUrl = () => `${getApiUrl()}/course_feedback/`;
+
+// The Copilot session itself is rendered by the LMS, so no Direct Line token
+// or Microsoft endpoint ever becomes part of the MFE bundle.
+const aiAssistantStatusUrl = () => `${getBaseUrl()}/api/dashboard/v0/ai-assistant/status/`;
 
 // Course approval: how many courses this user authors, used to decide whether
 // the header should offer a "My courses" link at all.
@@ -63,10 +71,12 @@ export default StrictDict({
   cartVerifyUrl,
   cartOrdersUrl,
   authoredCoursesUrl,
+  aiAssistantStatusUrl,
   courseCatalogUrl,
   courseFeedbackUrl,
   notificationsUrl,
   notificationsReadUrl,
+  subsiteBrandingUrl,
   courseUnenroll,
   creditPurchaseUrl,
   creditRequestUrl,

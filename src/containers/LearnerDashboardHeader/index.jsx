@@ -9,6 +9,8 @@ import NotificationsPanel from 'containers/Notifications/NotificationsPanel';
 import { useNotifications } from 'containers/Notifications/hooks';
 
 import ConfirmEmailBanner from './ConfirmEmailBanner';
+import { useSubsiteBranding } from '../../SubsiteBrandingContext';
+import cloudswyftLogo from '../../assets/cloudswyft-logo.png';
 
 import { useCartItemCount, isCartPath, isPurchasesPath } from './hooks';
 
@@ -26,7 +28,17 @@ import './index.scss';
  * and a bare '/' would land at the origin root and render a blank page.
  */
 export const LearnerDashboardHeader = () => {
-  const base = getConfig().PUBLIC_PATH;
+  const branding = useSubsiteBranding();
+
+  // The site header reads its logo from the frontend configuration. Keep a
+  // local compiled default because production deployments may not provide
+  // LOGO_URL in their environment. Runtime subsite branding still takes
+  // priority when it is available.
+  const config = getConfig();
+  config.LOGO_URL = branding?.logo_url || config.LOGO_URL || cloudswyftLogo;
+  config.SITE_NAME = branding?.name || config.SITE_NAME || 'Cloudswyft LMS';
+
+  const base = config.PUBLIC_PATH;
   const cartItemCount = useCartItemCount();
 
   // The drawer is rendered outside the header: it owns the right-hand edge of

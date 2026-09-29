@@ -108,6 +108,13 @@ export const fetchAuthoredCourses = () => get(urls.authoredCoursesUrl());
 export const fetchCourseFeedback = () => get(urls.courseFeedbackUrl());
 
 /*********************************************************************************
+ * AI assistant
+ *********************************************************************************/
+// Availability is intentionally discovered at runtime: enabling or disabling
+// Copilot in the LMS does not require rebuilding this MFE.
+export const fetchAiAssistantStatus = () => get(urls.aiAssistantStatusUrl());
+
+/*********************************************************************************
  * Notifications
  *********************************************************************************/
 export const fetchNotifications = () => get(urls.notificationsUrl());
@@ -177,6 +184,7 @@ export default {
   verifyCartPayment,
   fetchAuthoredCourses,
   fetchCourseFeedback,
+  fetchAiAssistantStatus,
   postCourseFeedback,
   fetchNotifications,
   markNotificationsRead,

@@ -58,10 +58,18 @@ subscribe(APP_INIT_ERROR, (error) => {
 
 export const appName = 'LearnerHomeAppConfig';
 
+// Tutor supplies the shared MFE configuration at runtime.  This application
+// only owns a small set of optional overrides.  Do not merge an undefined
+// build-time value over a valid runtime value (for example LOGO_URL), because
+// frontend-platform treats missing configuration as a startup error.
+const definedConfiguration = Object.fromEntries(
+  Object.entries(configuration).filter(([, value]) => value !== undefined),
+);
+
 initialize({
   handlers: {
     config: () => {
-      mergeConfig(configuration, appName);
+      mergeConfig(definedConfiguration, appName);
     },
   },
   messages,

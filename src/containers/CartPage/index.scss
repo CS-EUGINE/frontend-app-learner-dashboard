@@ -1,4 +1,7 @@
-$cart-indigo: #372ea8;
+// Keep the cart on the same Cloudswyft blue used by the dashboard's primary
+// actions. The old indigo heading/price colour made the cart look like a
+// different product from the rest of the learner experience.
+$cart-indigo: #2f57e8;
 $cart-blue: #2f57e8;
 $cart-blue-hover: #1e48e3;
 $cart-border: #e6e6ef;

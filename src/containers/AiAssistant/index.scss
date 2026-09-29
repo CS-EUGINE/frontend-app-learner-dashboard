@@ -1,0 +1,41 @@
+.cloudswyft-ai-assistant__launcher {
+  align-items: center;
+  border-radius: 999px;
+  bottom: 1.5rem;
+  box-shadow: 0 0.5rem 1.5rem rgb(18 53 107 / 25%);
+  display: inline-flex;
+  position: fixed;
+  right: 1.5rem;
+  z-index: 1040;
+}
+
+.cloudswyft-ai-assistant__dialog {
+  max-width: 42rem;
+
+  .pgn__modal-content {
+    overflow: hidden;
+  }
+}
+
+.cloudswyft-ai-assistant__frame {
+  border: 0;
+  display: block;
+  height: min(70vh, 42rem);
+  width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  .cloudswyft-ai-assistant__launcher {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .cloudswyft-ai-assistant__dialog {
+    margin: 0.5rem;
+    width: calc(100% - 1rem);
+  }
+
+  .cloudswyft-ai-assistant__frame {
+    height: 72vh;
+  }
+}

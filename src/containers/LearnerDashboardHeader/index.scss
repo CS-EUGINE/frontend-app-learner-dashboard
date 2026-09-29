@@ -1,7 +1,21 @@
 // The header itself is src/site-header (the shared site header, styled in its
 // own SiteHeader.scss). What is left here is BrandLogo's size.
 
-.logo {
-  // copy from legacy dashboard
-  height: 40px;
+.brand-logo-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  flex: 0 0 auto;
+  margin-right: 1rem;
+}
+
+#root header .brand-logo-link .logo {
+  display: block;
+  position: static;
+  top: auto;
+  width: auto;
+  height: 34px;
+  max-width: 180px;
+  margin-right: 0;
+  object-fit: contain;
 }
