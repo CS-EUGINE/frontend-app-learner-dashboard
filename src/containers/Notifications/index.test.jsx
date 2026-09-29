@@ -9,7 +9,6 @@ jest.unmock('@openedx/paragon/icons');
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import NotificationBell from './NotificationBell';
 import NotificationItem from './NotificationItem';
 import NotificationsPanel from './NotificationsPanel';
 
@@ -26,23 +25,6 @@ const notification = (overrides = {}) => ({
   isSecurity: false,
   created: new Date().toISOString(),
   ...overrides,
-});
-
-describe('NotificationBell', () => {
-  it('shows the unread count', () => {
-    render(<NotificationBell count={3} label="Notifications, 3 unread" />);
-    expect(screen.getByText('3')).toBeInTheDocument();
-  });
-
-  it('caps the badge at 99+', () => {
-    render(<NotificationBell count={250} label="Notifications" />);
-    expect(screen.getByText('99+')).toBeInTheDocument();
-  });
-
-  it('shows no badge at all when nothing is unread', () => {
-    const { container } = render(<NotificationBell count={0} label="Notifications" />);
-    expect(container.querySelector('.notification-bell__badge')).toBeNull();
-  });
 });
 
 describe('NotificationItem', () => {

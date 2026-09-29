@@ -1,12 +1,9 @@
 import React from 'react';
 import { useWindowSize, breakpoints } from '@openedx/paragon';
-import { useIntl } from '@edx/frontend-platform/i18n';
 import track from 'tracking';
 import { StrictDict } from 'utils';
 import { linkNames } from 'tracking/constants';
 import api from 'data/services/lms/api';
-
-import getLearnerHeaderMenu from './LearnerDashboardMenu';
 
 import * as module from './hooks';
 
@@ -64,49 +61,6 @@ export const useCartItemCount = () => {
   return count;
 };
 
-/**
- * useAuthoredCourseCount()
- * How many courses the viewer authors. Drives whether the header offers a
- * "My courses" link -- learners who author nothing should never see an
- * authoring entry point. Failures are swallowed for the same reason as the
- * cart: this is a nav affordance, not something worth breaking the header for.
- */
-export const useAuthoredCourseCount = () => {
-  const [count, setCount] = React.useState(0);
-  React.useEffect(() => {
-    let cancelled = false;
-    try {
-      api.fetchAuthoredCourses()
-        .then(({ data }) => {
-          if (!cancelled) { setCount(data.count || 0); }
-        })
-        .catch(() => {});
-    } catch (e) {
-      // An approval-service outage must never break the header.
-    }
-    return () => { cancelled = true; };
-  }, []);
-  return count;
-};
-
-export const useLearnerDashboardHeaderMenu = ({
-  courseSearchUrl, authenticatedUser, exploreCoursesClick, cartItemCount = 0, isCartPage = false,
-  isPurchasesPage = false, authoredCourseCount = 0, notifications = {},
-}) => {
-  const { formatMessage } = useIntl();
-  return getLearnerHeaderMenu(
-    formatMessage,
-    courseSearchUrl,
-    authenticatedUser,
-    exploreCoursesClick,
-    cartItemCount,
-    isCartPage,
-    isPurchasesPage,
-    authoredCourseCount,
-    notifications,
-  );
-};
-
 export const useLearnerDashboardHeaderData = () => {
   const [isOpen, setIsOpen] = module.state.isOpen(false);
   const toggleIsOpen = () => setIsOpen(!isOpen);
@@ -122,7 +76,5 @@ export default {
   findCoursesNavClicked,
   findCoursesNavDropdownClicked,
   useCartItemCount,
-  useAuthoredCourseCount,
   useLearnerDashboardHeaderData,
-  useLearnerDashboardHeaderMenu,
 };

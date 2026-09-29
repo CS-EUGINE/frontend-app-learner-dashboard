@@ -14,6 +14,7 @@ import { App } from './App';
 import messages from './messages';
 
 jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'Footer' }));
+jest.mock('./site-footer/SiteFooter', () => 'SiteFooter');
 
 jest.mock('containers/Dashboard', () => 'Dashboard');
 jest.mock('containers/LearnerDashboardHeader', () => 'LearnerDashboardHeader');

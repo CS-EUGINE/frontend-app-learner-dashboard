@@ -6,7 +6,6 @@ import { logError } from '@edx/frontend-platform/logging';
 import { initializeHotjar } from '@edx/frontend-enterprise-hotjar';
 
 import { ErrorPage, AppContext } from '@edx/frontend-platform/react';
-import FooterSlot from '@openedx/frontend-slot-footer';
 import { Alert } from '@openedx/paragon';
 
 import { RequestKeys } from 'data/constants/requests';
@@ -29,6 +28,7 @@ import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
 import './App.scss';
 import './sass/_tailwind.scss';
+import SiteFooter from './site-footer/SiteFooter';
 
 export const App = () => {
   const { authenticatedUser } = React.useContext(AppContext);
@@ -92,7 +92,7 @@ export const App = () => {
               )}
           </main>
         </AppWrapper>
-        <FooterSlot />
+        <SiteFooter />
       </div>
     </>
   );
