@@ -1,7 +1,23 @@
 @import "tailwindcss" important prefix(tw);
 
 @theme {
+  /* The house style guide (edx-platform CLAUDE.md, "Brand palette"). */
   --color-primary: #4EA1C9EB;
-  --color-secondary: #6255A1;
+  --color-secondary: #2848E4;
+  --color-ink: #092C4C;
+  --font-sans: "Quicksand", ui-sans-serif, system-ui, sans-serif;
+  /* Heading scale: tw:text-h1 .. tw:text-h6, size and line height. */
+  --text-h1: 56px;
+  --text-h1--line-height: 61.6px;
+  --text-h2: 48px;
+  --text-h2--line-height: 52.8px;
+  --text-h3: 40px;
+  --text-h3--line-height: 44px;
+  --text-h4: 32px;
+  --text-h4--line-height: 35.2px;
+  --text-h5: 24px;
+  --text-h5--line-height: 26.4px;
+  --text-h6: 20px;
+  --text-h6--line-height: 22px;
   --color-grey-neutral: #858585;
 }

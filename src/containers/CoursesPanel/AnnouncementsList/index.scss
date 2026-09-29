@@ -5,13 +5,13 @@
 // flatten the rail — beating even an inline style trying to restore it.
 .announcement-card {
   border: 1px solid #E1EBF0;
-  border-left: 6px solid #15376D; // info, and the fallback for an unknown level
+  border-left: 6px solid #2848E4; // info, and the fallback for an unknown level
 }
 
 .announcement-card--success {
-  border-left-color: #1B7F5A;
+  border-left-color: #27AE60; // style guide Success
 }
 
 .announcement-card--warning {
-  border-left-color: #B26A00;
+  border-left-color: #F89C03; // style guide Warning
 }
