@@ -207,7 +207,7 @@ const SiteHeader = ({
     // No ecommerce "Order history": purchases here are Paymongo cart orders
     // (Purchase history), and some MFEs ship a stock ORDER_HISTORY_URL that
     // would put an entry in their menu the LMS and the dashboard do not have.
-    ...(authored > 0 ? [{ href: lms('/my-courses'), label: formatMessage(messages.authored) }] : []),
+    ...(authored > 0 ? [{ href: lms('/authored-courses'), label: formatMessage(messages.authored) }] : []),
     // `administrator` is the JWT's name for is_staff.
     ...(authenticatedUser.administrator ? [{ href: lms('/staff'), label: formatMessage(messages.staff) }] : []),
     { href: config.LOGOUT_URL, label: formatMessage(messages.logout) },
