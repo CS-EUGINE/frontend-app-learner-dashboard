@@ -23,6 +23,7 @@ jest.mock('hooks', () => ({
 
 jest.mock('containers/EnterpriseDashboardModal', () => 'EnterpriseDashboardModal');
 jest.mock('containers/CoursesPanel', () => 'CoursesPanel');
+jest.mock('containers/FaqSupportWidget', () => () => null);
 jest.mock('containers/CourseFeedbackModal/context', () => ({
   CourseFeedbackProvider: 'CourseFeedbackProvider',
 }));

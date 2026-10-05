@@ -6,7 +6,7 @@ import EnterpriseDashboardModal from 'containers/EnterpriseDashboardModal';
 import SelectSessionModal from 'containers/SelectSessionModal';
 import CoursesPanel from 'containers/CoursesPanel';
 import { CourseFeedbackProvider } from 'containers/CourseFeedbackModal/context';
-import AiAssistant from 'containers/AiAssistant';
+import FaqSupportWidget from 'containers/FaqSupportWidget';
 
 import LoadingView from './LoadingView';
 import DashboardLayout from './DashboardLayout';
@@ -43,7 +43,7 @@ export const Dashboard = () => {
             </DashboardLayout>
           )}
       </div>
-      <AiAssistant />
+      <FaqSupportWidget />
     </div>
   );
 };
