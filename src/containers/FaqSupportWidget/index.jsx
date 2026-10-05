@@ -17,12 +17,25 @@ const FaqSupportWidget = () => {
   const [query, setQuery] = React.useState('');
   const [answer, setAnswer] = React.useState(null);
   const [hasSearched, setHasSearched] = React.useState(false);
+  const [isTyping, setIsTyping] = React.useState(false);
+  const answerTimer = React.useRef(null);
+
+  React.useEffect(() => () => window.clearTimeout(answerTimer.current), []);
 
   const ask = (question) => {
     const normalizedQuestion = question.trim();
+    if (!normalizedQuestion || isTyping) {
+      return;
+    }
+    window.clearTimeout(answerTimer.current);
     setQuery(normalizedQuestion);
-    setAnswer(findFaqAnswer(normalizedQuestion));
+    setAnswer(null);
     setHasSearched(true);
+    setIsTyping(true);
+    answerTimer.current = window.setTimeout(() => {
+      setAnswer(findFaqAnswer(normalizedQuestion));
+      setIsTyping(false);
+    }, 550);
   };
 
   const handleSubmit = (event) => {
@@ -34,6 +47,8 @@ const FaqSupportWidget = () => {
     setQuery('');
     setAnswer(null);
     setHasSearched(false);
+    setIsTyping(false);
+    window.clearTimeout(answerTimer.current);
   };
 
   return (
@@ -64,20 +79,21 @@ const FaqSupportWidget = () => {
             <label className="sr-only" htmlFor="faq-support-question">Ask a frequently asked question</label>
             <div className="cloudswyft-faq-support__search">
               <input
+                disabled={isTyping}
                 id="faq-support-question"
                 onChange={event => setQuery(event.target.value)}
                 placeholder="For example: I forgot my password"
                 type="search"
                 value={query}
               />
-              <Button type="submit" variant="primary">Search</Button>
+              <Button disabled={isTyping} type="submit" variant="primary">Search</Button>
             </div>
           </form>
 
           <div className="cloudswyft-faq-support__suggestions">
             <p>{hasSearched ? 'Recommended questions' : 'Try a recommended question'}</p>
             {SUGGESTED_QUESTIONS.map(item => (
-              <button key={item.id} onClick={() => ask(item.question)} type="button">
+              <button disabled={isTyping} key={item.id} onClick={() => ask(item.question)} type="button">
                 {item.question}
               </button>
             ))}
@@ -86,14 +102,20 @@ const FaqSupportWidget = () => {
           {!hasSearched && <p className="cloudswyft-faq-support__tip">Tip: ask about enrollment, payments, certificates, or account access.</p>}
 
           <div aria-live="polite" className="cloudswyft-faq-support__answer">
-            {hasSearched && answer && (
+            {isTyping && (
+              <p className="cloudswyft-faq-support__typing" role="status">
+                <span aria-hidden="true"><i /><i /><i /></span>
+                Cloudswyft Help is typing
+              </p>
+            )}
+            {hasSearched && !isTyping && answer && (
               <>
                 <h3>{answer.question}</h3>
                 <p>{answer.answer}</p>
                 <a href="/faq">Browse all FAQs</a>
               </>
             )}
-            {hasSearched && !answer && (
+            {hasSearched && !isTyping && !answer && (
               <>
                 <h3>We could not find that in the FAQs</h3>
                 <p>
