@@ -111,8 +111,51 @@ const FAQ_ITEMS = [
 
 const STOP_WORDS = new Set(['a', 'an', 'and', 'are', 'can', 'do', 'for', 'how', 'i', 'is', 'my', 'of', 'the', 'to', 'what', 'where', 'with']);
 
+const SYNONYMS = {
+  account: ['profile', 'user'],
+  certificate: ['cert', 'credential', 'completion'],
+  course: ['class', 'lesson', 'training'],
+  enroll: ['enrol', 'register', 'join'],
+  login: ['log', 'signin', 'sign'],
+  password: ['passcode', 'credential'],
+  payment: ['pay', 'billing', 'purchase'],
+  refund: ['refund', 'reimburse', 'cancel'],
+};
+
+export const RECOMMENDED_QUESTIONS = [
+  'How do I enroll in a course?',
+  'I forgot my password. What should I do?',
+  'How do I earn and share a certificate?',
+  'How do I pay for a course?',
+];
+
 const termsFor = value => (value.toLowerCase().match(/[a-z0-9]+/g) || [])
-  .filter(term => term.length > 1 && !STOP_WORDS.has(term));
+  .filter(term => term.length > 1 && !STOP_WORDS.has(term))
+  .map((term) => {
+    if (term.endsWith('ing') && term.length > 5) {
+      return term.slice(0, -3);
+    }
+    if (term.endsWith('ed') && term.length > 4) {
+      return term.slice(0, -2);
+    }
+    if (term.endsWith('s') && !term.endsWith('ss') && term.length > 3) {
+      return term.slice(0, -1);
+    }
+    return term;
+  });
+
+const expandTerms = (terms) => {
+  const expanded = new Set(terms);
+  terms.forEach((term) => {
+    Object.entries(SYNONYMS).forEach(([intent, variants]) => {
+      if (term === intent || variants.includes(term)) {
+        expanded.add(intent);
+        variants.forEach(variant => expanded.add(variant));
+      }
+    });
+  });
+  return [...expanded];
+};
 
 /**
  * Return an FAQ answer only when the supplied words meaningfully match it.
@@ -120,19 +163,30 @@ const termsFor = value => (value.toLowerCase().match(/[a-z0-9]+/g) || [])
  * transmit the learner's question to any service.
  */
 export const findFaqAnswer = (query) => {
-  const queryTerms = termsFor(query);
+  const queryTerms = expandTerms(termsFor(query));
   if (!queryTerms.length) {
     return null;
   }
 
   const ranked = FAQ_ITEMS.map((item) => {
-    const searchable = termsFor(`${item.question} ${item.answer} ${item.keywords.join(' ')}`);
-    const matches = queryTerms.filter(term => searchable.includes(term));
-    return { item, score: matches.length / queryTerms.length, matches: matches.length };
-  }).sort((left, right) => right.score - left.score || right.matches - left.matches);
+    const primarySearchable = expandTerms(termsFor(`${item.question} ${item.keywords.join(' ')}`));
+    const answerSearchable = expandTerms(termsFor(item.answer));
+    const primaryMatches = queryTerms.filter(term => primarySearchable.includes(term)).length;
+    const answerMatches = queryTerms.filter(term => answerSearchable.includes(term)).length;
+    return {
+      item,
+      score: ((primaryMatches * 2) + (answerMatches * 0.25)) / queryTerms.length,
+      matches: primaryMatches + answerMatches,
+      primaryMatches,
+    };
+  }).sort((left, right) => (
+    right.score - left.score
+    || right.primaryMatches - left.primaryMatches
+    || right.matches - left.matches
+  ));
 
   const best = ranked[0];
-  if (!best || !best.matches || best.score < (queryTerms.length === 1 ? 1 : 0.5)) {
+  if (!best || !best.primaryMatches || best.score < (queryTerms.length === 1 ? 1 : 0.5)) {
     return null;
   }
   return best.item;

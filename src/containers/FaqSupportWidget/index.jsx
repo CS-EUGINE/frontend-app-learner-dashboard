@@ -5,10 +5,12 @@ import {
   ModalDialog,
 } from '@openedx/paragon';
 
-import { FAQ_ITEMS, findFaqAnswer } from './faqData';
+import { FAQ_ITEMS, findFaqAnswer, RECOMMENDED_QUESTIONS } from './faqData';
 import './index.scss';
 
-const SUGGESTED_QUESTIONS = FAQ_ITEMS.slice(0, 4);
+const SUGGESTED_QUESTIONS = RECOMMENDED_QUESTIONS
+  .map(question => FAQ_ITEMS.find(item => item.question === question))
+  .filter(Boolean);
 
 const FaqSupportWidget = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -55,7 +57,8 @@ const FaqSupportWidget = () => {
         </ModalDialog.Header>
         <ModalDialog.Body>
           <p className="cloudswyft-faq-support__intro">
-            Search our frequently asked questions. Your question stays in this browser and is not sent to an AI service.
+            Ask in your own words. The local FAQ assistant matches common phrases and keeps your
+            question in this browser.
           </p>
           <form onSubmit={handleSubmit}>
             <label className="sr-only" htmlFor="faq-support-question">Ask a frequently asked question</label>
@@ -71,16 +74,16 @@ const FaqSupportWidget = () => {
             </div>
           </form>
 
-          {!hasSearched && (
-            <div className="cloudswyft-faq-support__suggestions">
-              <p>Common questions</p>
-              {SUGGESTED_QUESTIONS.map(item => (
-                <button key={item.id} onClick={() => ask(item.question)} type="button">
-                  {item.question}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="cloudswyft-faq-support__suggestions">
+            <p>{hasSearched ? 'Recommended questions' : 'Try a recommended question'}</p>
+            {SUGGESTED_QUESTIONS.map(item => (
+              <button key={item.id} onClick={() => ask(item.question)} type="button">
+                {item.question}
+              </button>
+            ))}
+          </div>
+
+          {!hasSearched && <p className="cloudswyft-faq-support__tip">Tip: ask about enrollment, payments, certificates, or account access.</p>}
 
           <div aria-live="polite" className="cloudswyft-faq-support__answer">
             {hasSearched && answer && (

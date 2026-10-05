@@ -5,6 +5,10 @@ describe('FAQ support matching', () => {
     expect(findFaqAnswer('I forgot my password')).toMatchObject({ id: 'password' });
   });
 
+  it('matches a common phrasing variation through the local intent matcher', () => {
+    expect(findFaqAnswer('How can I join a class?')).toMatchObject({ id: 'enroll' });
+  });
+
   it('does not invent an answer for an unrelated request', () => {
     expect(findFaqAnswer('Can you write my assignment for me?')).toBeNull();
   });
