@@ -55,7 +55,7 @@ const SOCIAL_LINKS = [
   ['youtube', 'YouTube', 'https://www.youtube.com/c/CloudSwyft_Official'],
 ];
 
-const COPYRIGHT_HOLDER = 'CloudSwyft Global Systems, Ltd.';
+const COPYRIGHT_HOLDER = 'CloudSwyft Global Systems, Inc.';
 
 // Fallback only; the LMS sends the real address in the MFE runtime config.
 const DEFAULT_EMAIL = 'info@cloudswyft.com';
