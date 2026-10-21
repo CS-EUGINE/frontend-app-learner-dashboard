@@ -46,7 +46,7 @@ const FOOTER_LINKS = [
 ];
 
 const FOOTER_BLURB = 'CloudSwyft has one of the fastest-growing technology learning platforms '
-  + 'with future-ready technology skills for education, governments, and organizations.';
+  + 'with future-ready technology skills for education, governments, and enterprises.';
 
 const SOCIAL_LINKS = [
   ['facebook', 'Facebook', 'https://www.facebook.com/cloudswyft/'],
