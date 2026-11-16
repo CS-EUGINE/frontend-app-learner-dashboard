@@ -46,7 +46,7 @@ const FOOTER_LINKS = [
 ];
 
 const FOOTER_BLURB = 'CloudSwyft has one of the fastest-growing technology learning platforms '
-  + 'with future-ready technology skills for education, governments, and organizations.';
+  + 'with future-ready technology skills for education, governments, and enterprises.';
 
 const SOCIAL_LINKS = [
   ['facebook', 'Facebook', 'https://www.facebook.com/cloudswyft/'],
@@ -55,7 +55,7 @@ const SOCIAL_LINKS = [
   ['youtube', 'YouTube', 'https://www.youtube.com/c/CloudSwyft_Official'],
 ];
 
-const COPYRIGHT_HOLDER = 'CloudSwyft Global Systems, Ltd.';
+const COPYRIGHT_HOLDER = 'CloudSwyft Global Systems, Inc.';
 
 // Fallback only; the LMS sends the real address in the MFE runtime config.
 const DEFAULT_EMAIL = 'info@cloudswyft.com';

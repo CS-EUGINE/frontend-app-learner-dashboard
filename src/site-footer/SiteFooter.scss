@@ -81,7 +81,7 @@
 .cs-footer-email:hover,
 .cs-footer-email:focus { color: #2848E4 !important; text-decoration: underline !important; }
 
-.cs-footer-social { display: flex; gap: 10px; margin-top: 22px; }
+.cs-footer-social { display: flex; justify-content: center; gap: 10px; margin-top: 22px; }
 .cs-social {
   display: inline-flex;
   align-items: center;
@@ -101,7 +101,7 @@
 .cs-social-linkedin { background: #0A66C2; }
 .cs-social-youtube { background: #FF0000; }
 
-.cs-footer-powered { display: flex; align-items: center; gap: 10px; margin-top: 26px; font-size: 0.8rem; color: #555555; }
+.cs-footer-powered { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 26px; font-size: 0.8rem; color: #555555; }
 .cs-footer-powered img { height: 26px; width: auto; display: block; }
 
 .cs-footer-bottom { margin-top: 48px; padding-top: 20px; border-top: 1px solid #E1EBF0; text-align: center; }
