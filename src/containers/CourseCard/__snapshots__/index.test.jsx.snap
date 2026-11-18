@@ -15,7 +15,7 @@ exports[`CourseCard component snapshot: collapsed 1`] = `
       <div>
         <CourseCardImage
           cardId="test-card-id"
-          orientation="horizontal"
+          orientation="vertical"
         />
         <Card.Body>
           <Card.Header

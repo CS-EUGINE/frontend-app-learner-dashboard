@@ -3,19 +3,19 @@ const FAQ_ITEMS = [
     id: 'browse-account',
     question: 'Do I need an account to browse courses?',
     answer: 'No. You can browse the course catalog and course descriptions without signing in. You need an account to enroll, track progress, or earn a certificate.',
-    keywords: ['browse', 'catalog', 'account', 'sign in'],
+    keywords: ['browse', 'catalog', 'account', 'guest'],
   },
   {
     id: 'create-account',
     question: 'How do I create an account?',
     answer: 'Select Register for free in the top navigation, then enter a working email address, username, and password. Registration is free.',
-    keywords: ['register', 'sign up', 'create account', 'username'],
+    keywords: ['register', 'registration', 'sign up', 'create account', 'username'],
   },
   {
     id: 'enroll',
     question: 'How do I enroll in a course?',
     answer: 'Open a course from the catalog and select Enroll. Free courses open immediately. Paid courses are added to your cart and become available after payment is confirmed.',
-    keywords: ['enroll', 'enrollment', 'join course', 'start course'],
+    keywords: ['enroll', 'enrollment', 'join course', 'start course', 'register for a course', 'sign up for a course'],
   },
   {
     id: 'devices',
@@ -87,7 +87,7 @@ const FAQ_ITEMS = [
     id: 'password',
     question: 'I forgot my password. What should I do?',
     answer: 'Use the Forgot password link on the sign-in page. A time-limited reset link is sent to your registered email address.',
-    keywords: ['password', 'reset', 'forgot password', 'login'],
+    keywords: ['password', 'reset', 'forgot password', 'login', 'sign in', 'log in'],
   },
   {
     id: 'profile',
@@ -113,12 +113,12 @@ const STOP_WORDS = new Set(['a', 'an', 'and', 'are', 'can', 'do', 'for', 'how', 
 
 const SYNONYMS = {
   account: ['profile', 'user'],
-  certificate: ['cert', 'credential', 'completion'],
+  certificate: ['cert', 'certification', 'completion'],
   course: ['class', 'lesson', 'training'],
-  enroll: ['enrol', 'register', 'join'],
-  login: ['log', 'signin', 'sign'],
+  enroll: ['enrol', 'enrollment', 'join'],
+  login: ['signin'],
   password: ['passcode', 'credential'],
-  payment: ['pay', 'billing', 'purchase'],
+  payment: ['pay', 'bill', 'billing', 'purchase'],
   refund: ['refund', 'reimburse', 'cancel'],
 };
 
@@ -163,19 +163,25 @@ const expandTerms = (terms) => {
  * transmit the learner's question to any service.
  */
 export const findFaqAnswer = (query) => {
-  const queryTerms = expandTerms(termsFor(query));
+  const directTerms = termsFor(query);
+  const queryTerms = expandTerms(directTerms);
   if (!queryTerms.length) {
     return null;
   }
 
   const ranked = FAQ_ITEMS.map((item) => {
-    const primarySearchable = expandTerms(termsFor(`${item.question} ${item.keywords.join(' ')}`));
+    const directSearchable = termsFor(`${item.question} ${item.keywords.join(' ')}`);
+    const primarySearchable = expandTerms(directSearchable);
     const answerSearchable = expandTerms(termsFor(item.answer));
     const primaryMatches = queryTerms.filter(term => primarySearchable.includes(term)).length;
     const answerMatches = queryTerms.filter(term => answerSearchable.includes(term)).length;
+    const directMatches = directTerms.filter(term => directSearchable.includes(term)).length;
+    const confidence = ((primaryMatches * 2) + (answerMatches * 0.25)) / queryTerms.length;
     return {
       item,
-      score: ((primaryMatches * 2) + (answerMatches * 0.25)) / queryTerms.length,
+      // Prefer the learner's actual words over a match introduced by synonyms.
+      score: confidence + directMatches / directTerms.length,
+      confidence,
       matches: primaryMatches + answerMatches,
       primaryMatches,
     };
@@ -186,7 +192,7 @@ export const findFaqAnswer = (query) => {
   ));
 
   const best = ranked[0];
-  if (!best || !best.primaryMatches || best.score < (queryTerms.length === 1 ? 1 : 0.5)) {
+  if (!best || !best.primaryMatches || best.confidence < (queryTerms.length === 1 ? 1 : 0.5)) {
     return null;
   }
   return best.item;

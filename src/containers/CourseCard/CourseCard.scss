@@ -1,7 +1,19 @@
 @import "@openedx/paragon/scss/core/core";
 
 .course-card {
+  min-width: 0;
+
   .card {
+    .pgn__card-body,
+    .pgn__card-header-content {
+      min-width: 0;
+    }
+
+    .course-card-title,
+    .pgn__card-section {
+      overflow-wrap: anywhere;
+    }
+
     .pgn__card-wrapper-image-cap.vertical {
       display: flex;
       min-height: $card-image-vertical-max-height;
@@ -24,7 +36,18 @@
 
       .pgn__action-row {
         align-self: flex-end;
-        white-space: nowrap;
+        width: 100%;
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: $action-row-gap-y $action-row-gap-x;
+
+        > * {
+          margin: 0;
+          min-width: 0;
+          max-width: 100%;
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
       }
     }
 
