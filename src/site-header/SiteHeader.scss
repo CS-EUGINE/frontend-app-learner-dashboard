@@ -246,8 +246,18 @@ $cs-desktop: 992px; // where the LMS navbar swaps to its hamburger
 }
 
 .cs-header__mobile {
+  // Keep the 64px header in flow; the menu floats over the page beneath it.
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: calc(100vh - 64px);
+  max-height: calc(100dvh - 64px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border-bottom: 2px solid $cs-secondary;
   background: #fff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
 
   &[hidden] { display: none; }
 }
